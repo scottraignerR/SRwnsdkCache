@@ -18,9 +18,10 @@ public class WearActionBar extends View {
 
     public WearActionBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
     }
 
-    public WearActionBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+    protected void init(){
+        //View.inflate(getContext(), R.layout.gi_button_layout, this);
     }
 }

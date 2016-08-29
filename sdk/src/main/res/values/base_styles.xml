@@ -1,0 +1,18 @@
+<resources xmlns:android="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="WearStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="fontThin">fonts/Montserrat-Regular.ttf</item>
+        <item name="android:textViewStyle">@style/AppTheme.Widget.TextView</item>
+    </style>
+
+    <style name="AppTheme.Widget.TextView" parent="android:Widget.Holo.Light.TextView">
+        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+    </style>
+
+    <style name="SpeechButton_Foreground" parent="android:Widget.Holo.Light.TextView">
+        <item name="fontPath">?attr/fontThin</item>
+    </style>
+
+
+</resources>

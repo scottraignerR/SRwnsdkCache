@@ -1,0 +1,10 @@
+<resources xmlns:android="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="WearDark" parent="WearStyle">
+        <item name="backgroundColor">#000000</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="wearActionBarColor">#292929</item>
+    </style>
+
+
+</resources>

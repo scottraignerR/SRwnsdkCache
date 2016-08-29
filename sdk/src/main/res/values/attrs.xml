@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="backgroundColor" format="color" />
+    <attr name="wearActionBarColor" format="color"/>
+    <attr name="fontThin" format="string"/>
+    <declare-styleable name="Themes">
+        <attr name="styleLight" format="reference" />
+        <attr name="styleDark" format="reference" />
+    </declare-styleable>
+</resources>
