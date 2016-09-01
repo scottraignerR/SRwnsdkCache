@@ -3,15 +3,27 @@
     <style name="WearStyle" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
         <item name="fontThin">fonts/Montserrat-Regular.ttf</item>
-        <item name="android:textViewStyle">@style/AppTheme.Widget.TextView</item>
+        <item name="android:textViewStyle">@style/SpeechButton</item>
     </style>
 
-    <style name="AppTheme.Widget.TextView" parent="android:Widget.Holo.Light.TextView">
-        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
-    </style>
-
-    <style name="SpeechButton_Foreground" parent="android:Widget.Holo.Light.TextView">
+    <style name="SpeechButton_smallest" parent="android:Widget.Holo.Light.TextView">
         <item name="fontPath">?attr/fontThin</item>
+        <item name="android:textSize">@dimen/font_smallest</item>
+    </style>
+
+    <style name="SpeechButton_small" parent="android:Widget.Holo.Light.TextView">
+        <item name="fontPath">?attr/fontThin</item>
+        <item name="android:textSize">@dimen/font_small</item>
+    </style>
+
+    <style name="SpeechButton" parent="android:Widget.Holo.Light.TextView">
+        <item name="fontPath">?attr/fontThin</item>
+        <item name="android:textSize">@dimen/font_med</item>
+    </style>
+
+    <style name="SpeechButton_large" parent="android:Widget.Holo.Light.TextView">
+        <item name="fontPath">?attr/fontThin</item>
+        <item name="android:textSize">@dimen/font_large</item>
     </style>
 
 

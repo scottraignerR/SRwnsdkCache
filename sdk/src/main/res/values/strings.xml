@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SDK</string>
+    <string name="my_controls">My Controls</string>
+    <string name="show_help">Show Help</string>
 </resources>
