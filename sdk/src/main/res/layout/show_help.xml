@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/dim_background"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:elevation="9dp"
+        android:layout_margin="38dp"
+        android:layout_marginBottom="@dimen/action_bar_dp_plus"
+        android:layout_centerInParent="true"
+        android:background="?attr/wearActionBarColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/commandView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"></LinearLayout>
+
+        <LinearLayout
+            android:background="@color/dim_background"
+            android:layout_below="@+id/commandView"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <TextView
+                style="@style/SpeechButton_smallest"
+                android:padding="@dimen/dp_8"
+                android:layout_toLeftOf="@+id/show_help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/go_back"/>
+            <TextView
+                style="@style/SpeechButton_smallest"
+                android:padding="@dimen/dp_8"
+                android:layout_toLeftOf="@+id/show_help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/go_home"/>
+            <TextView
+                style="@style/SpeechButton_smallest"
+                android:padding="@dimen/dp_8"
+                android:layout_toLeftOf="@+id/show_help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_controls"/>
+
+            <TextView
+                style="@style/SpeechButton_smallest"
+                android:padding="@dimen/dp_8"
+                android:layout_toLeftOf="@+id/show_help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/listening_off"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

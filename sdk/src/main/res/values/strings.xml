@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">SDK</string>
     <string name="my_controls">My Controls</string>
+    <string name="go_home">Go Home</string>
+    <string name="go_back">Go Back</string>
+    <string name="listening_off">Listening Off</string>
+    <string name="listening_on">Listening On</string>
     <string name="show_help">Show Help</string>
 </resources>

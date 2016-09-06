@@ -9,11 +9,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.core.wearnext.sdk.views.HiddenControls;
+
 /**
  * Created by Fin on 23/08/2016.
  */
 public class WearActionBar extends RelativeLayout implements View.OnClickListener {
     private TextView mMyControls, mShowHelp;
+    private HiddenControls mHiddenCommandsView;
 
     public WearActionBar(Context context) {
         super(context);
@@ -36,6 +39,8 @@ public class WearActionBar extends RelativeLayout implements View.OnClickListene
         mShowHelp = (TextView)findViewById(R.id.show_help);
         mMyControls = (TextView)findViewById(R.id.my_controls);
         mMyControls.setOnClickListener(this);
+        mShowHelp.setOnClickListener(this);
+        mHiddenCommandsView = (HiddenControls)findViewById(R.id.hiddenControl);
     }
 
     @Override
@@ -44,11 +49,17 @@ public class WearActionBar extends RelativeLayout implements View.OnClickListene
             Intent intent = new Intent();
             intent.setComponent(new ComponentName("com.android.settings","com.android.settings.Settings"));
             getContext().startActivity(intent);
+        }else if (view.equals(mShowHelp)){
+            if(mHiddenCommandsView.getVisibility() == View.INVISIBLE)
+                mHiddenCommandsView.showCommands();
+            else{
+                mHiddenCommandsView.hideCommands();
+            }
         }
     }
 
-    public void addCommands(View view){
-        addView(view);
+    public void setHiddenLayout(int resourceId){
+        mHiddenCommandsView.setResourceId(resourceId);
     }
 
 }
