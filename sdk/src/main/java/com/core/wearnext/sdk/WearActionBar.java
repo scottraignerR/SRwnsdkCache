@@ -17,6 +17,7 @@ import com.core.wearnext.sdk.views.HiddenControls;
 public class WearActionBar extends RelativeLayout implements View.OnClickListener {
     private TextView mMyControls, mShowHelp;
     private HiddenControls mHiddenCommandsView;
+    private TextView mShowCommandText;
 
     public WearActionBar(Context context) {
         super(context);
@@ -41,6 +42,7 @@ public class WearActionBar extends RelativeLayout implements View.OnClickListene
         mMyControls.setOnClickListener(this);
         mShowHelp.setOnClickListener(this);
         mHiddenCommandsView = (HiddenControls)findViewById(R.id.hiddenControl);
+        mShowCommandText = (TextView) findViewById(R.id.show_help);
     }
 
     @Override
@@ -50,9 +52,12 @@ public class WearActionBar extends RelativeLayout implements View.OnClickListene
             intent.setComponent(new ComponentName("com.android.settings","com.android.settings.Settings"));
             getContext().startActivity(intent);
         }else if (view.equals(mShowHelp)){
-            if(mHiddenCommandsView.getVisibility() == View.INVISIBLE)
+            if(mHiddenCommandsView.getVisibility() == View.INVISIBLE) {
+                mShowCommandText.setText(getContext().getString(R.string.hide_help));
                 mHiddenCommandsView.showCommands();
+            }
             else{
+                mShowCommandText.setText(getContext().getString(R.string.show_help));
                 mHiddenCommandsView.hideCommands();
             }
         }
@@ -62,4 +67,10 @@ public class WearActionBar extends RelativeLayout implements View.OnClickListene
         mHiddenCommandsView.setResourceId(resourceId);
     }
 
+    public void showCommands() {
+        if(mHiddenCommandsView.getVisibility() == View.VISIBLE) {
+            mShowCommandText.setText(getContext().getString(R.string.show_help));
+            mHiddenCommandsView.hideCommands();
+        }
+    }
 }

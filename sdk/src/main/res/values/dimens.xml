@@ -10,6 +10,6 @@
     <dimen name="dp_14">14dp</dimen>
     <dimen name="dp_24">24dp</dimen>
 
-    <dimen name="action_bar_dp">60dp</dimen>
-    <dimen name="action_bar_dp_plus">95dp</dimen>
+    <dimen name="action_bar_dp">45dp</dimen>
+    <dimen name="action_bar_dp_plus">80dp</dimen>
 </resources>
