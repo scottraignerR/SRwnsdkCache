@@ -18,6 +18,7 @@ public class WearActionBar extends RelativeLayout implements View.OnClickListene
     private TextView mMyControls, mShowHelp;
     private HiddenControls mHiddenCommandsView;
     private TextView mShowCommandText;
+    private RelativeLayout mInnerLayout;
 
     public WearActionBar(Context context) {
         super(context);
@@ -43,6 +44,7 @@ public class WearActionBar extends RelativeLayout implements View.OnClickListene
         mShowHelp.setOnClickListener(this);
         mHiddenCommandsView = (HiddenControls)findViewById(R.id.hiddenControl);
         mShowCommandText = (TextView) findViewById(R.id.show_help);
+        mInnerLayout = (RelativeLayout)findViewById(R.id.innerCommands);
     }
 
     @Override
@@ -72,5 +74,12 @@ public class WearActionBar extends RelativeLayout implements View.OnClickListene
             mShowCommandText.setText(getContext().getString(R.string.show_help));
             mHiddenCommandsView.hideCommands();
         }
+    }
+
+    @Override
+    public void addView(View child) {
+        //super.addView(child);
+        mInnerLayout.addView(child);
+
     }
 }
