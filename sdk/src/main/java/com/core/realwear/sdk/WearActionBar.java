@@ -1,15 +1,14 @@
-package com.core.wearnext.sdk;
+package com.core.realwear.sdk;
 
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.core.wearnext.sdk.views.HiddenControls;
+import com.core.realwear.sdk.views.HiddenControls;
 
 /**
  * Created by Fin on 23/08/2016.

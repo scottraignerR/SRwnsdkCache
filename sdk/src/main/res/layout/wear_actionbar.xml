@@ -32,7 +32,7 @@
 
     </RelativeLayout>
 
-    <com.core.wearnext.sdk.views.HiddenControls
+    <com.core.realwear.sdk.views.HiddenControls
         android:id="@+id/hiddenControl"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"/>

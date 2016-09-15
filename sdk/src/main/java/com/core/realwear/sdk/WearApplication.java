@@ -1,4 +1,4 @@
-package com.core.wearnext.sdk;
+package com.core.realwear.sdk;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -17,7 +17,7 @@ import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.WindowManager;
 
-import com.core.wearnext.sdk.R;
+import com.core.realwear.sdk.R;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;

@@ -1,4 +1,4 @@
-package com.core.wearnext.sdk;
+package com.core.realwear.sdk;
 
 import org.junit.Test;
 

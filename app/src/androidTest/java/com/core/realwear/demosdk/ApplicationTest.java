@@ -1,4 +1,4 @@
-package com.core.wearnext.sdk;
+package com.core.realwear.demosdk;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

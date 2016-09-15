@@ -1,4 +1,4 @@
-package com.core.wearnext.sdk.Util;
+package com.core.realwear.sdk.Util;
 
 /**
  * Created by Fin on 05/09/2016.

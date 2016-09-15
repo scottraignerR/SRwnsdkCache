@@ -1,4 +1,4 @@
-package com.core.wearnext.demosdk;
+package com.core.realwear.demosdk;
 
 import org.junit.Test;
 
