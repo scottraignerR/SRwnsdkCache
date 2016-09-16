@@ -1,4 +1,4 @@
-package com.core.wearnext.sdk.views;
+package com.core.realwear.sdk.views;
 
 import android.content.Context;
 import android.util.AttributeSet;

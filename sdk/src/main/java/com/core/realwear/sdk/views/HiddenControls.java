@@ -1,19 +1,12 @@
-package com.core.wearnext.sdk.views;
+package com.core.realwear.sdk.views;
 
-import android.app.Activity;
-import android.app.Application;
-import android.app.Dialog;
 import android.content.Context;
-import android.os.Bundle;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.core.wearnext.sdk.R;
+import com.core.realwear.sdk.R;
 
 /**
  * Created by Fin on 05/09/2016.
