@@ -35,7 +35,7 @@ public class WearApplication extends Application implements Application.Activity
         super.onCreate();
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath("fonts/Montserrat-Bold.ttf")
+                        .setDefaultFontPath("fonts/Montserrat-Medium.otf")
                         .setFontAttrId(R.attr.fontPath)
                         .build());
 
