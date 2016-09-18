@@ -59,13 +59,13 @@ public class WearApplication extends Application implements Application.Activity
         int themeSaved = settings.getInt("Theme", -1);
 
         switch (themeSaved) {
-            case -1:
             case 0:
                 if (darkStyle != -1)
                     theme.applyStyle(darkStyle, true);
                 else
                     theme.applyStyle(R.style.WearDark, true);
                 break;
+            case -1:
             case 1:
                 if (lightStyle != -1)
                     theme.applyStyle(lightStyle, true);

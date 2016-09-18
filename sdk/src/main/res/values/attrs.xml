@@ -3,6 +3,7 @@
     <attr name="backgroundColor" format="color" />
     <attr name="wearActionBarColor" format="color"/>
     <attr name="fontThin" format="string"/>
+    <attr name="flipFontColor" format="color" />
     <declare-styleable name="Themes">
         <attr name="styleLight" format="reference" />
         <attr name="styleDark" format="reference" />

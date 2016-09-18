@@ -18,6 +18,7 @@ public class WearActionBar extends RelativeLayout implements View.OnClickListene
     private HiddenControls mHiddenCommandsView;
     private TextView mShowCommandText;
     private RelativeLayout mInnerLayout;
+    private View mHiddenCommands;
 
     public WearActionBar(Context context) {
         super(context);
@@ -38,9 +39,9 @@ public class WearActionBar extends RelativeLayout implements View.OnClickListene
         View.inflate(getContext(), R.layout.wear_actionbar, this);
 
         mShowHelp = (TextView)findViewById(R.id.show_help);
-        mMyControls = (TextView)findViewById(R.id.my_controls);
+        /*mMyControls = (TextView)findViewById(R.id.my_controls);
         mMyControls.setOnClickListener(this);
-        mShowHelp.setOnClickListener(this);
+        mShowHelp.setOnClickListener(this);*/
         mHiddenCommandsView = (HiddenControls)findViewById(R.id.hiddenControl);
         mShowCommandText = (TextView) findViewById(R.id.show_help);
         mInnerLayout = (RelativeLayout)findViewById(R.id.innerCommands);
@@ -65,20 +66,20 @@ public class WearActionBar extends RelativeLayout implements View.OnClickListene
     }
 
     public void setHiddenLayout(int resourceId){
-        mHiddenCommandsView.setResourceId(resourceId);
+        if(mHiddenCommands != null)
+            removeView(mHiddenCommands);
+
+        mHiddenCommands = View.inflate(getContext(),resourceId, null);
+
+        addView(mHiddenCommands, 0);
+        //mHiddenCommandsView.setResourceId(resourceId);
     }
 
     public void showCommands() {
-        if(mHiddenCommandsView.getVisibility() == View.VISIBLE) {
+       /* if(mHiddenCommandsView.getVisibility() == View.VISIBLE) {
             mShowCommandText.setText(getContext().getString(R.string.show_help));
             mHiddenCommandsView.hideCommands();
-        }
+        }*/
     }
 
-    @Override
-    public void addView(View child) {
-        //super.addView(child);
-        mInnerLayout.addView(child);
-
-    }
 }
