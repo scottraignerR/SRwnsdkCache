@@ -2,7 +2,9 @@
     <!-- Base application theme. -->
     <style name="WearLight" parent="WearStyle">
         <item name="backgroundColor">#FFFFFF</item>
-        <item name="wearActionBarColor">#FFFFFF</item>
+        <item name="wearActionBarColor">#000000</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="flipFontColor">#000000</item>
     </style>
 
 
