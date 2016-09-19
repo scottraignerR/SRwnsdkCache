@@ -60,11 +60,11 @@ public class WearApplication extends Application implements Application.Activity
 
         switch (themeSaved) {
             case 0:
-                if (darkStyle != -1)
+                /*if (darkStyle != -1)
                     theme.applyStyle(darkStyle, true);
                 else
                     theme.applyStyle(R.style.WearDark, true);
-                break;
+                break;*/
             case -1:
             case 1:
                 if (lightStyle != -1)
