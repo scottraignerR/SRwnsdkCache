@@ -2,4 +2,6 @@
 <resources>
     <color name="dim_background">#73000000</color>
     <color name="barTop">#EAEAEA</color>
+    <color name="radio">#8F26FD</color>
+    <color name="outline">#BEBEBE</color>
 </resources>
