@@ -1,54 +1,92 @@
 package com.core.realwear.sdk.Util;
 
+import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Fin on 26/09/2016.
  */
 public class Microphone {
+    private static final String ACTION_RELEASE_MIC = "com.realware.wearhf.intent.action.RELEASE_MIC";
+    private static final String ACTION_MIC_RELEASED = "com.realware.wearhf.intent.action.MIC_RELEASED";
 
-    //TODO MAKE CONSTANT AND TIDY UP
-    public static void stopMicrophone(Context context, final onMicReleased listener){
+    private static final String EXTRA_MUTE_TEXT = "com.realware.wearhf.intent.extra.MUTE_TEXT";
+    private static final String EXTRA_SOURCE_PACKAGE = "com.realware.wearhf.intent.extra.SOURCE_PACKAGE";
+
+    private static final String PACKAGE_NAME = "com.realwear.wearhf";
+
+
+    private static BroadcastReceiver broadcastReceiver = null;
+    private static List<OnMicReleased> micReleasedListeners = new ArrayList<>();
+
+    // TODO: MAKE CONSTANT AND TIDY UP
+    public static void stopMicrophone(Context context, String text, final OnMicReleased listener) {
         final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-
             @Override
             public void onReceive(Context context, Intent intent) {
                 final String action = intent.getAction();
 
-                if (action.equals("com.realware.wearhf.intent.action.MIC_RELEASED")) {
-                    if(listener != null)
-                    {
-                        listener.onMicrophoneReleased();
+                if (action.equals(ACTION_MIC_RELEASED)) {
+                    if (listener != null) {
+                        listener.onReleased();
                     }
                 }
             }
         };
 
-        IntentFilter filter1 = new IntentFilter("com.realware.wearhf.intent.action.MIC_RELEASED");
-        context.registerReceiver(mBroadcastReceiver, filter1);
+        IntentFilter filter = new IntentFilter(ACTION_MIC_RELEASED);
+        context.registerReceiver(mBroadcastReceiver, filter);
 
         Intent intent = new Intent();
-        intent.setPackage("com.realware.wearhf");
-        intent.setAction("com.realware.wearhf.intent.action.RELEASE_MIC");
-        intent.putExtra("com.realware.wearhf.intent.extra.MUTE_TEXT", "Press PTT button to stop recording");
+        intent.setPackage(PACKAGE_NAME);
+        intent.setAction(ACTION_RELEASE_MIC);
+        intent.putExtra(EXTRA_MUTE_TEXT, text);
+        intent.putExtra(EXTRA_SOURCE_PACKAGE, context.getPackageName());
         context.sendBroadcast(intent);
     }
 
+    /**
+     * Register a microphone listener. Note only one listener can be registered at a time.
+     *
+     * @param context Application context.
+     * @param listener Listener for the microphone released events.
+     */
+    public static void registerMicrophoneListener(Context context, final OnMicReleased listener) {
+        if (broadcastReceiver == null) {
+            broadcastReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    if (intent.getAction().equals(ACTION_RELEASE_MIC)) {
+                        for (OnMicReleased listener : micReleasedListeners) {
+                            listener.onReleased();
+                        }
+                    }
+                }
+            };
 
+            context.registerReceiver(broadcastReceiver, new IntentFilter(ACTION_RELEASE_MIC));
+        }
 
-    public static void startMicrophone(Context context,onMicReleased listener){
-        Intent intent = new Intent();
-        intent.setPackage("com.realware.wearhf");
-        intent.setAction("com.realware.wearhf.intent.action.MIC_RELEASED");
-        context.sendBroadcast(intent);
+        micReleasedListeners.add(listener);
     }
 
-
-    public interface onMicReleased{
-        void onMicrophoneReleased();
+    /**
+     * Unregister a microphone listener.
+     *
+     * @param context Application context.
+     * @param listener
+     */
+    public static void unregisterMicrophoneListener(Context context, final OnMicReleased listener) {
+        micReleasedListeners.remove(listener);
     }
 
+    public interface OnMicReleased {
+        void onReleased();
+    }
 }
