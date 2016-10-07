@@ -11,7 +11,7 @@ public class ExtensionTypes {
         JPEG,
         JPG,
         MP4,
-        NOT_SUPPORTED
+        BMP, NOT_SUPPORTED
     }
 
     public static final String PNG = ".png";
@@ -19,6 +19,7 @@ public class ExtensionTypes {
     public static final String JPEG = ".jpeg";
     public static final String JPG = ".jpg";
     public static final String MP4 = ".mp4";
+    public static final String BMP = ".bmp";
 
     public static Supported ParseLocationToType(String location)
     {
@@ -32,6 +33,8 @@ public class ExtensionTypes {
             return Supported.JPG;
         }else if(location.toLowerCase().endsWith(MP4)) {
             return Supported.MP4;
+        }else if(location.toLowerCase().endsWith(BMP)) {
+            return Supported.BMP;
         }
         return Supported.NOT_SUPPORTED;
     }
