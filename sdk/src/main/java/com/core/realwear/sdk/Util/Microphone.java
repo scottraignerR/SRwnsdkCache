@@ -67,6 +67,13 @@ public class Microphone {
                             listener.onReleased();
                         }
                     }
+
+                    // Indicate that the mic has been released.
+                    Intent releasedIntent = new Intent();
+                    releasedIntent.setPackage(PACKAGE_NAME);
+                    releasedIntent.setAction(ACTION_MIC_RELEASED);
+                    releasedIntent.putExtra(EXTRA_SOURCE_PACKAGE, context.getPackageName());
+                    context.sendBroadcast(releasedIntent);
                 }
             };
 
