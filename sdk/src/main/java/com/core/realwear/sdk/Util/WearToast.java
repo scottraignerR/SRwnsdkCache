@@ -3,6 +3,8 @@ package com.core.realwear.sdk.Util;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Resources;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +35,7 @@ public class WearToast extends Toast {
         mView = (TextView)layout.findViewById(R.id.textView);
 
         // gravity, xOffset, yOffset
-        setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        //setGravity(Gravity.CENTER, 0, 0);
 
         setView(layout);//setting the view of custom toast layout
     }
@@ -52,7 +54,9 @@ public class WearToast extends Toast {
         TextView view = (TextView)layout.findViewById(R.id.textView);
         view.setText(text);
         // gravity, xOffset, yOffset
-        result.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        Resources r = context.getResources();
+        int px = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 58, r.getDisplayMetrics());
+        result.setGravity(Gravity.CENTER, 0, px);
 
         result.setView(layout);
         result.setDuration(duration);
