@@ -11,15 +11,21 @@ public class ExtensionTypes {
         JPEG,
         JPG,
         MP4,
+        MKV,
+        GPP,
+        WEBM,
         BMP, NOT_SUPPORTED
     }
 
     public static final String PNG = ".png";
     public static final String PDF = ".pdf";
+    public static final String BMP = ".bmp";
     public static final String JPEG = ".jpeg";
     public static final String JPG = ".jpg";
     public static final String MP4 = ".mp4";
-    public static final String BMP = ".bmp";
+    public static final String MKV = ".mkv";
+    public static final String GPP = ".3gp";
+    public static final String WEBM = ".webm";
 
     public static Supported ParseLocationToType(String location)
     {
@@ -36,6 +42,19 @@ public class ExtensionTypes {
         }else if(location.toLowerCase().endsWith(BMP)) {
             return Supported.BMP;
         }
+        else if(location.toLowerCase().endsWith(BMP)) {
+            return Supported.BMP;
+        }
+        else if(location.toLowerCase().endsWith(MKV)) {
+            return Supported.MKV;
+        }
+        else if(location.toLowerCase().endsWith(GPP)) {
+            return Supported.GPP;
+        }
+        else if(location.toLowerCase().endsWith(WEBM)) {
+            return Supported.WEBM;
+        }
+
         return Supported.NOT_SUPPORTED;
     }
 
