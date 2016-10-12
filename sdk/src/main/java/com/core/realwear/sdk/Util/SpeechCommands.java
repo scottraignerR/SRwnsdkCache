@@ -10,19 +10,25 @@ import java.util.Arrays;
  * Created by Fin on 18/09/2016.
  */
 public class SpeechCommands {
+    public static final String ACTION_UPDATE_HELP_COMMANDS = "com.realwear.wearhf.intent.action.UPDATE_HELP_COMMANDS";
+    public static final String EXTRA_HELP_COMMANDS = "com.realwear.wearhf.intent.extra.HELP_COMMANDS";
 
     @Deprecated
     public static void UpdateHelp(Context context, String commands) {
         ArrayList<String> list = new ArrayList<>(Arrays.asList(commands.split(",")));
-        UpdateHelp(context, list);
+        updateHelp(context, list);
     }
 
+    @Deprecated
     public static void UpdateHelp(Context context, ArrayList<String> commands){
-        Intent intent = new Intent();
-        intent.setAction("com.realware.wearhf.intent.action.UPDATE_HELP_COMMANDS");
-        intent.putStringArrayListExtra("com.realware.wearhf.intent.extra.HELP_COMMANDS", commands);
+        updateHelp(context, commands);
+    }
+
+    public static void updateHelp(Context context, ArrayList<String> commands) {
+        final Intent intent = new Intent();
+        intent.setAction(ACTION_UPDATE_HELP_COMMANDS);
+        intent.setPackage("com.realwear.wearhf");
+        intent.putStringArrayListExtra(EXTRA_HELP_COMMANDS, commands);
         context.sendBroadcast(intent);
     }
-
-
 }

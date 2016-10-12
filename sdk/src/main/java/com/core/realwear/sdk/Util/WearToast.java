@@ -29,7 +29,7 @@ public class WearToast extends Toast {
         super(context);
 
         LayoutInflater myInflator = context.getLayoutInflater();
-        View layout = myInflator.inflate(R.layout.toast,null);
+        View layout = myInflator.inflate(R.layout.toast, null);
         mView = (TextView)layout.findViewById(R.id.textView);
 
         // gravity, xOffset, yOffset
