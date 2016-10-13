@@ -1,6 +1,5 @@
 package com.core.realwear.sdk.Util;
 
-import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,11 +12,11 @@ import java.util.List;
  * Created by Fin on 26/09/2016.
  */
 public class Microphone {
-    private static final String ACTION_RELEASE_MIC = "com.realware.wearhf.intent.action.RELEASE_MIC";
-    private static final String ACTION_MIC_RELEASED = "com.realware.wearhf.intent.action.MIC_RELEASED";
+    private static final String ACTION_RELEASE_MIC = "com.realwear.wearhf.intent.action.RELEASE_MIC";
+    private static final String ACTION_MIC_RELEASED = "com.realwear.wearhf.intent.action.MIC_RELEASED";
 
-    private static final String EXTRA_MUTE_TEXT = "com.realware.wearhf.intent.extra.MUTE_TEXT";
-    private static final String EXTRA_SOURCE_PACKAGE = "com.realware.wearhf.intent.extra.SOURCE_PACKAGE";
+    private static final String EXTRA_MUTE_TEXT = "com.realwear.wearhf.intent.extra.MUTE_TEXT";
+    private static final String EXTRA_SOURCE_PACKAGE = "com.realwear.wearhf.intent.extra.SOURCE_PACKAGE";
 
     private static final String PACKAGE_NAME = "com.realwear.wearhf";
 

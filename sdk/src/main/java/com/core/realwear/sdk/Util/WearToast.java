@@ -2,7 +2,6 @@ package com.core.realwear.sdk.Util;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 import android.content.res.Resources;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -30,32 +29,33 @@ public class WearToast extends Toast {
     public WearToast(Activity context) {
         super(context);
 
-        LayoutInflater myInflator = context.getLayoutInflater();
-        View layout = myInflator.inflate(R.layout.toast, null);
+        final LayoutInflater inflater = context.getLayoutInflater();
+        final View layout = inflater.inflate(R.layout.toast, null);
         mView = (TextView)layout.findViewById(R.id.textView);
-
-        // gravity, xOffset, yOffset
-        //setGravity(Gravity.CENTER, 0, 0);
 
         setView(layout);//setting the view of custom toast layout
     }
 
     @Override
     public void setText(CharSequence s) {
-        //super.setText(s);
-        mView.setText(s);
+        final String nbspString = s.toString().replaceAll(" ", Character.toString((char)0xA0));
+        mView.setText(nbspString);
     }
 
     public static WearToast makeWearText(Activity context, CharSequence text, int duration) {
-        WearToast result = new WearToast(context);
+        final WearToast result = new WearToast(context);
 
-        LayoutInflater myInflator = context.getLayoutInflater();
-        View layout = myInflator.inflate(R.layout.toast,null);
-        TextView view = (TextView)layout.findViewById(R.id.textView);
-        view.setText(text);
+        final String nbspString = text.toString().replaceAll(" ", Character.toString((char)0xA0));
+
+        final LayoutInflater inflater = context.getLayoutInflater();
+        final View layout = inflater.inflate(R.layout.toast, null);
+
+        final TextView view = (TextView)layout.findViewById(R.id.textView);
+        view.setText(nbspString);
+
         // gravity, xOffset, yOffset
-        Resources r = context.getResources();
-        int px = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 58, r.getDisplayMetrics());
+        final Resources r = context.getResources();
+        final int px = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 58, r.getDisplayMetrics());
         result.setGravity(Gravity.CENTER, 0, px);
 
         result.setView(layout);

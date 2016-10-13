@@ -12,6 +12,7 @@ import java.util.Arrays;
 public class SpeechCommands {
     public static final String ACTION_UPDATE_HELP_COMMANDS = "com.realwear.wearhf.intent.action.UPDATE_HELP_COMMANDS";
     public static final String EXTRA_HELP_COMMANDS = "com.realwear.wearhf.intent.extra.HELP_COMMANDS";
+    public static final String EXTRA_SOURCE_PACKAGE = "com.realwear.wearhf.intent.extra.SOURCE_PACKAGE";
 
     @Deprecated
     public static void UpdateHelp(Context context, String commands) {
@@ -27,8 +28,8 @@ public class SpeechCommands {
     public static void updateHelp(Context context, ArrayList<String> commands) {
         final Intent intent = new Intent();
         intent.setAction(ACTION_UPDATE_HELP_COMMANDS);
-        intent.setPackage("com.realwear.wearhf");
         intent.putStringArrayListExtra(EXTRA_HELP_COMMANDS, commands);
+        intent.putExtra(EXTRA_SOURCE_PACKAGE, context.getPackageName());
         context.sendBroadcast(intent);
     }
 }
