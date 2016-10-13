@@ -66,11 +66,21 @@ public class WearActionBar extends RelativeLayout implements View.OnClickListene
 
     public void setHiddenLayout(int resourceId){
         if(mHiddenCommands != null)
-            removeView(mHiddenCommands);
+            mInnerLayout.removeView(mHiddenCommands);
 
         mHiddenCommands = View.inflate(getContext(),resourceId, null);
 
-        //addView(mHiddenCommands, 0);
+        //mInnerLayout.addView(mHiddenCommands, 0);
+        //mHiddenCommandsView.setResourceId(resourceId);
+    }
+
+    public void addHiddenLayout(int resourceId){
+        if(mHiddenCommands != null)
+            mInnerLayout.removeView(mHiddenCommands);
+
+        mHiddenCommands = View.inflate(getContext(),resourceId, null);
+
+        mInnerLayout.addView(mHiddenCommands, 0);
         //mHiddenCommandsView.setResourceId(resourceId);
     }
 
