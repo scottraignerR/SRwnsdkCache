@@ -24,7 +24,8 @@ public class ExtensionTypes {
     public static final String JPG = ".jpg";
     public static final String MP4 = ".mp4";
     public static final String MKV = ".mkv";
-    public static final String GPP = ".3gp";
+    public static final String GP = ".3gp";
+    public static final String GPP = ".3gpp";
     public static final String WEBM = ".webm";
 
     public static Supported ParseLocationToType(String location)
@@ -49,6 +50,9 @@ public class ExtensionTypes {
             return Supported.MKV;
         }
         else if(location.toLowerCase().endsWith(GPP)) {
+            return Supported.GPP;
+        }
+        else if(location.toLowerCase().endsWith(GP)) {
             return Supported.GPP;
         }
         else if(location.toLowerCase().endsWith(WEBM)) {
