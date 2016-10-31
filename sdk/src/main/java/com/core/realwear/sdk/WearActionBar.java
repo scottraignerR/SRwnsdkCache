@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.core.realwear.sdk.views.HiddenControls;
-
 /**
  * Created by Fin on 23/08/2016.
  */
