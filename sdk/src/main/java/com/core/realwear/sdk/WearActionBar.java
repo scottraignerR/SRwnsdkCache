@@ -35,12 +35,12 @@ public class WearActionBar extends RelativeLayout implements View.OnClickListene
     protected void init(){
         View.inflate(getContext(), R.layout.wear_actionbar, this);
 
-        mShowHelp = (TextView)findViewById(R.id.show_help);
+//        mShowHelp = (TextView)findViewById(R.id.show_help);
         /*mMyControls = (TextView)findViewById(R.id.my_controls);
         mMyControls.setOnClickListener(this);
         mShowHelp.setOnClickListener(this);*/
        // mHiddenCommandsView = (HiddenControls)findViewById(R.id.hiddenControl);
-        mShowCommandText = (TextView) findViewById(R.id.show_help);
+//        mShowCommandText = (TextView) findViewById(R.id.show_help);
         mInnerLayout = (RelativeLayout)findViewById(R.id.innerCommands);
     }
 
