@@ -1,0 +1,30 @@
+<resources>
+<!--SDK-->
+<string name="app_name">SDK</string>
+<!--My Controls-->
+<string name="my_controls">Mis controles</string>
+<!--Go Home-->
+<string name="go_home">Vete a casa</string>
+<!--Go Back-->
+<string name="go_back">Volver</string>
+<!--Listening Off-->
+<string name="listening_off">Escucha de</string>
+<!--Listening On-->
+<string name="listening_on">Escucha en</string>
+<!--Show Commands-->
+<string name="show_help">Mostrar comandos</string>
+<!--Hide Commands-->
+<string name="hide_help">Ocultar comandos</string>
+<!--zoom level 1-->
+<string name="zoom_level_1">nivel de zoom 1</string>
+<!--zoom level 2-->
+<string name="zoom_level_2">nivel de zoom 2</string>
+<!--zoom level 3-->
+<string name="zoom_level_3">nivel de zoom 3</string>
+<!--zoom level 4-->
+<string name="zoom_level_4">nivel de zoom 4</string>
+<!--zoom level 5-->
+<string name="zoom_level_5">nivel de zoom 5</string>
+<!--Zoom Level 1-5-->
+<string name="zoom_level_instruction">Zoom Level 1-5</string>
+</resources>
