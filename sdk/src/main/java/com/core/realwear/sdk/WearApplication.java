@@ -9,8 +9,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.WindowManager;
 
-import com.core.realwear.sdk.R;
-
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**

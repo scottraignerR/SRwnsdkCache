@@ -15,7 +15,6 @@ import com.core.realwear.sdk.R;
 /**
  * Created by Luke Hopkins on 03/10/2016.
  */
-
 public class WearToast extends Toast {
     private final TextView mView;
 

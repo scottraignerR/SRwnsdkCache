@@ -1,0 +1,30 @@
+<resources>
+<!--SDK-->
+<string name="app_name">SDK</string>
+<!--My Controls-->
+<string name="my_controls">내 컨트롤</string>
+<!--Go Home-->
+<string name="go_home">집에 가세요</string>
+<!--Go Back-->
+<string name="go_back">뒤로 이동</string>
+<!--Listening Off-->
+<string name="listening_off">듣기</string>
+<!--Listening On-->
+<string name="listening_on">수신 대기</string>
+<!--Show Commands-->
+<string name="show_help">명령 표시</string>
+<!--Hide Commands-->
+<string name="hide_help">명령을 숨기기</string>
+<!--zoom level 1-->
+<string name="zoom_level_1">확대/축소 수준 1</string>
+<!--zoom level 2-->
+<string name="zoom_level_2">확대/축소 수준 2</string>
+<!--zoom level 3-->
+<string name="zoom_level_3">확대/축소 수준 3</string>
+<!--zoom level 4-->
+<string name="zoom_level_4">확대/축소 수준 4</string>
+<!--zoom level 5-->
+<string name="zoom_level_5">확대/축소 레벨 5</string>
+<!--Zoom Level 1-5-->
+<string name="zoom_level_instruction">확대/축소 수준 1-5</string>
+</resources>
