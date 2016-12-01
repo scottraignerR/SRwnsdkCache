@@ -35,8 +35,7 @@ android:orientation="horizontal">
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/footerTextview"
-            android:contentDescription="@string/zoom_level_1"
-            android:onClick="onZoomLevel1" />
+            android:contentDescription="@string/zoom_level_1" />
 
         <RadioButton
             android:paddingRight="2dp"
@@ -46,8 +45,7 @@ android:orientation="horizontal">
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/radioButton1"
-            android:contentDescription="@string/zoom_level_2"
-            android:onClick="onZoomLevel2" />
+            android:contentDescription="@string/zoom_level_2" />
 
         <RadioButton
             android:paddingRight="2dp"
@@ -57,8 +55,7 @@ android:orientation="horizontal">
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/radioButton2"
-            android:contentDescription="@string/zoom_level_3"
-            android:onClick="onZoomLevel3" />
+            android:contentDescription="@string/zoom_level_3" />
 
         <RadioButton
             android:paddingRight="2dp"
@@ -68,8 +65,7 @@ android:orientation="horizontal">
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/radioButton3"
-            android:contentDescription="@string/zoom_level_4"
-            android:onClick="onZoomLevel4" />
+            android:contentDescription="@string/zoom_level_4" />
 
         <RadioButton
             android:paddingLeft="2dp"
@@ -80,7 +76,6 @@ android:orientation="horizontal">
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/radioButton4"
-            android:contentDescription="@string/zoom_level_5"
-            android:onClick="onZoomLevel5" />
+            android:contentDescription="@string/zoom_level_5" />
     </LinearLayout>
 </LinearLayout>
