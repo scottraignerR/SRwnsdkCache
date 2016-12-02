@@ -16,15 +16,15 @@
 <!--Hide Commands-->
 <string name="hide_help">Ocultar Comandos</string>
 <!--zoom level 1-->
-<string name="zoom_level_1">Zoom 1</string>
+<string name="zoom_level_1">Selecione Zoom 1</string>
 <!--zoom level 2-->
-<string name="zoom_level_2">Zoom 2</string>
+<string name="zoom_level_2">Selecione Zoom 2</string>
 <!--zoom level 3-->
-<string name="zoom_level_3">Zoom 3</string>
+<string name="zoom_level_3">Selecione Zoom 3</string>
 <!--zoom level 4-->
-<string name="zoom_level_4">Zoom 4</string>
+<string name="zoom_level_4">Selecione Zoom 4</string>
 <!--zoom level 5-->
-<string name="zoom_level_5">Zoom 5</string>
+<string name="zoom_level_5">Selecione Zoom 5</string>
 <!--Zoom Level 1-5-->
-<string name="zoom_level_instruction">Zoom 1-5</string>
+<string name="zoom_level_instruction">Selecione Zoom 1-5</string>
 </resources>
