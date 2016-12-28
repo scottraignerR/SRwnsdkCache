@@ -1,0 +1,43 @@
+package com.core.realwear.sdk.Util;
+
+import com.core.realwear.sdk.R;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+/**
+ * Created by Luke Hopkins on 28/12/2016.
+ */
+public class WearLanguage {
+
+    public String Name;
+    public int ResourceId;
+    public String ISO_Lang_Code;
+    public Locale Android_Locale;
+
+    public static List<WearLanguage> getCurrentLanguages(){
+        List<WearLanguage> langs = new ArrayList<>();
+
+        WearLanguage en = new WearLanguage();
+        en.Name = "English";
+        en.Android_Locale = new Locale("en");
+        en.ResourceId = R.drawable.en;
+
+        WearLanguage ch = new WearLanguage();
+        ch.Name = "中国人的";
+        ch.Android_Locale = new Locale("ch");
+        ch.ResourceId = R.drawable.ch;
+
+        WearLanguage pr = new WearLanguage();
+        pr.Name = "Português";
+        pr.Android_Locale = new Locale("pt");
+        pr.ResourceId = R.drawable.pt;
+
+        langs.add(pr);
+        langs.add(en);
+        langs.add(ch);
+
+        return langs;
+    }
+}
