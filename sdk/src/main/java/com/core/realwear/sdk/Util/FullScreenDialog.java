@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
@@ -38,7 +39,7 @@ public class FullScreenDialog extends Dialog {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         // Making dialog content transparent.
         this.getWindow().setBackgroundDrawable(
-                new ColorDrawable(Color.TRANSPARENT));
+                new ColorDrawable(Color.WHITE));
         // Removing window dim normally visible when dialog are shown.
         this.getWindow().clearFlags(
                 WindowManager.LayoutParams.FLAG_DIM_BEHIND);
@@ -47,8 +48,9 @@ public class FullScreenDialog extends Dialog {
         // Setting position of content, relative to window.
         WindowManager.LayoutParams params = this.getWindow().getAttributes();
         params.gravity = Gravity.TOP | Gravity.LEFT;
-        params.x = 100;
-        params.y = 20;
+        params.x = 0;
+        params.y = 0;
+
         // If user taps anywhere on the screen, dialog will be cancelled.
         this.setCancelable(false);
         setContentView( getLayout());
