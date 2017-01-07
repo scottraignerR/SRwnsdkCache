@@ -21,12 +21,12 @@ public class WearLanguage {
 
         WearLanguage en = new WearLanguage();
         en.Name = "English";
-        en.Android_Locale = new Locale("en");
+        en.Android_Locale = Locale.ENGLISH;
         en.ResourceId = R.drawable.en;
 
         WearLanguage ch = new WearLanguage();
         ch.Name = "中国人的";
-        ch.Android_Locale = new Locale("ch");
+        ch.Android_Locale = Locale.CHINA;
         ch.ResourceId = R.drawable.ch;
 
         WearLanguage pr = new WearLanguage();

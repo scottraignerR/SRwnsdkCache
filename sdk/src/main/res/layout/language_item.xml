@@ -1,18 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="0dp"
-    android:layout_weight="0.25"
+    android:orientation="vertical" android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/langimg"
-        android:layout_centerInParent="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <TextView
-        android:layout_below="@+id/langimg"
-        android:id="@+id/langtxt"
+    <RelativeLayout
+        android:padding="40dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+
+
+
+        <RelativeLayout
+            android:layout_centerVertical="true"
+            android:layout_width="140dp"
+            android:layout_height="210dp">
+            <View
+                android:layout_marginBottom="24dp"
+                android:background="#ededed"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_alignParentBottom="true">
+
+
+            </View>
+    <ImageView
+        android:layout_centerInParent="true"
+        android:src="@drawable/en"
+        android:id="@+id/langimg"
+        android:layout_width="140dp"
+        android:layout_height="140dp" />
+
+
+        <TextView
+            android:text="english"
+            android:background="@drawable/lang_hightlight"
+            style="@style/SpeechButton_large"
+            android:textColor="#808080"
+            android:id="@+id/langtxt"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
 </RelativeLayout>

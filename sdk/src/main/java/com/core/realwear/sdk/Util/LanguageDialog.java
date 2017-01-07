@@ -3,6 +3,7 @@ package com.core.realwear.sdk.Util;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
@@ -26,6 +27,9 @@ public class LanguageDialog extends FullScreenDialog {
     HorizontalScrollView mScrollview;
     private Handler mHandler;
     private LinearLayout mPlaceHolder;
+    private boolean canGoNext = true;
+    private boolean hasPosted = true;
+    private boolean mShowing = false;
 
     public LanguageDialog(Context context) {
         super(context);
@@ -44,124 +48,33 @@ public class LanguageDialog extends FullScreenDialog {
     }
 
     public void gotoNextLanguage(){
-        //mScrollview.scrollBy(100,0);
         //clone
         final View newView = createLangView((WearLanguage) mPlaceHolder.getChildAt(0).getTag());
         mPlaceHolder.addView(newView);
-        mPlaceHolder.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+
+
+        Handler h = new Handler();
+        h.postDelayed(new Runnable() {
             @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                mPlaceHolder.removeOnLayoutChangeListener(this);
-                newView.animate().translationX(-newView.getWidth()).setDuration(500).withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        mPlaceHolder.removeView(mPlaceHolder.getChildAt(0));
-
-                        for(int i = 0; i < mPlaceHolder.getChildCount(); i++) {
-                            View v = mPlaceHolder.getChildAt(i);
-                            v.setTranslationX(0);
-                        }
-                    }
-                }).start();
+            public void run() {
+                mPlaceHolder.removeViewAt(0);
+                mSelectedLang = (WearLanguage) (mPlaceHolder.getChildAt(1)).getTag();
             }
-        });
+        }, 50);
 
-        for(int i = 0; i < mPlaceHolder.getChildCount(); i++){
-            View v = mPlaceHolder.getChildAt(i);
-            final View rV = v;
-            if(i == 0){
-                v.animate().translationX(-v.getWidth()).setDuration(500).withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        //mPlaceHolder.removeView(rV);
-                    }
-                }).start();
-            }else if(i == mPlaceHolder.getChildCount() - 1){
-            }
-            else{
-                v.animate().translationX(-v.getWidth()).setDuration(500).start();
-            }
 
-            if(i == 1) {
-                mSelectedLang = (WearLanguage) v.getTag();
-            }
 
-        }
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                gotoNextLanguage();
+                hasPosted = true;
+                if(canGoNext)
+                    gotoNextLanguage();
+                else
+                    dismiss();
             }
         }, 2000);
 
-    }
-
-    public Animation.AnimationListener mNewView = new Animation.AnimationListener() {
-        @Override
-        public void onAnimationStart(Animation animation) {
-
-            for(int i = 0; i < mPlaceHolder.getChildCount(); i++){
-                View v = mPlaceHolder.getChildAt(i);
-                final View rV = v;
-                if(i == 0){
-                    v.animate().translationX(-v.getWidth()).setDuration(500).withEndAction(new Runnable() {
-                        @Override
-                        public void run() {
-                            mPlaceHolder.removeView(rV);
-                        }
-                    }).start();
-                }else if(i == mPlaceHolder.getChildCount() - 1){
-                    v.animate().translationX(0).setDuration(500).withEndAction(new Runnable() {
-                        @Override
-                        public void run() {
-                            for(int i = 0; i < mPlaceHolder.getChildCount() -1; i++) {
-                                View v = mPlaceHolder.getChildAt(i);
-                                v.setTranslationX(0);
-                            }
-                        }
-                    }).start();
-                }
-                else{
-                    v.animate().translationX(-v.getWidth()).setDuration(500).start();
-                }
-
-                if(i == 1) {
-                    mSelectedLang = (WearLanguage) v.getTag();
-                }
-
-            }
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    gotoNextLanguage();
-                }
-            }, 2000);
-        }
-
-        @Override
-        public void onAnimationEnd(Animation animation) {
-
-        }
-
-        @Override
-        public void onAnimationRepeat(Animation animation) {
-
-        }
-    };
-
-    public void gotoPreviousLanguage(){
-
-    }
-
-    private Animation inFromRightAnimation() {
-
-        Animation inFromRight = new TranslateAnimation(
-                Animation.RELATIVE_TO_PARENT, +1.0f,
-                Animation.RELATIVE_TO_PARENT, 0.0f,
-                Animation.RELATIVE_TO_PARENT, 0.0f,
-                Animation.RELATIVE_TO_PARENT, 0.0f);
-        inFromRight.setDuration(500);
-        return inFromRight;
     }
 
     public WearLanguage getSelectedLanguage(){
@@ -172,20 +85,36 @@ public class LanguageDialog extends FullScreenDialog {
     public void show() {
         super.show();
 
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                gotoNextLanguage();
-            }
-        }, 2000);
+
+
+        if(!mShowing) {
+            mShowing = true;
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    gotoNextLanguage();
+                }
+            }, 2000);
+        }
+
     }
 
     @Override
     public void hide() {
         super.hide();
-
+        mShowing = false;
         mHandler.removeCallbacks(null);
     }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+
+        if(keyCode == 500){
+            canGoNext = false;
+        }
+        return super.onKeyUp(keyCode, event);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

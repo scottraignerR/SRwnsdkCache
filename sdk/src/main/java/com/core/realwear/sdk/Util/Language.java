@@ -24,42 +24,30 @@ public class Language {
      * for a while during the Locale migration, so the caller need to take care of it.
      */
     public static void setLanguage(Locale locale) {
-       /* try {
 
-            //Log.e("Language","Tring to set to" + locale.getCountry());
+		/*IActivityManager am = ActivityManagerNative.getDefault();
+		Configuration config;
+		try {
+			config = am.getConfiguration();
+			config.locale = Locale.CHINA;
+			am.updateConfiguration(config);
+			//Trigger the dirty bit for the Settings Provider.
+			BackupManager.dataChanged("com.android.providers.settings");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}*/
+		try {
+			Class<?> activityManagerNative = Class.forName("android.app.ActivityManagerNative");
+			Object am=activityManagerNative.getMethod("getDefault").invoke(activityManagerNative);
+			Object config=am.getClass().getMethod("getConfiguration").invoke(am);
+			config.getClass().getDeclaredField("locale").set(config, locale);
+			config.getClass().getDeclaredField("userSetLocale").setBoolean(config, true);
 
-            IActivityManager am = ActivityManagerNative.getDefault();
-            Configuration config = am.getConfiguration();
+			am.getClass().getMethod("updateConfiguration",android.content.res.Configuration.class).invoke(am,config);
 
-            // Will set userSetLocale to indicate this isn't some passing default - the user
-            // wants this remembered
-            config.setLocale(locale);
-
-            // Log.e("Language","SET locale");
-
-            am.updateConfiguration(config);
-
-            // Log.e("Language","Config updated");
-            // Trigger the dirty bit for the Settings Provider.
-            BackupManager.dataChanged("com.android.providers.settings");
-
-            // Log.e("Language","SET");
-        } catch (RemoteException e) {
-            // Intentionally left blank
-        }*/
-
-	        try {
-	            Class<?> activityManagerNative = Class.forName("android.app.ActivityManagerNative");
-	            Object am=activityManagerNative.getMethod("getDefault").invoke(activityManagerNative);
-	            Object config=am.getClass().getMethod("getConfiguration").invoke(am);
-	            config.getClass().getDeclaredField("locale").set(config, locale);
-	            config.getClass().getDeclaredField("userSetLocale").setBoolean(config, true);
-
-	            am.getClass().getMethod("updateConfiguration",android.content.res.Configuration.class).invoke(am,config);
-
-	        }catch (Exception e) {
-	            e.printStackTrace();
-	        }
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
 }

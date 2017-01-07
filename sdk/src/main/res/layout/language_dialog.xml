@@ -12,17 +12,19 @@
         android:layout_centerInParent="true"
         android:background="@drawable/selected_lang"
         android:layout_marginLeft="32dp"
-        android:layout_width="150dp"
-        android:layout_height="150dp"/>
+        android:layout_width="160dp"
+        android:layout_height="160dp"/>
 
     <HorizontalScrollView
         android:id="@+id/scrollView"
         android:layout_width="fill_parent"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true">
         <LinearLayout
             android:id="@+id/scrollViewplaceholder"
-            android:layout_width="wrap_content"
+            android:animateLayoutChanges="true"
+            android:layout_gravity="center"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" />
 
