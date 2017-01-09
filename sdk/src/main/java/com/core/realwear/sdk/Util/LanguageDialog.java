@@ -121,7 +121,7 @@ public class LanguageDialog extends FullScreenDialog {
         super.onCreate(savedInstanceState);
 
         mHandler = new Handler();
-        mScrollview = (HorizontalScrollView) findViewById(R.id.scrollView);
+//        mScrollview = (HorizontalScrollView) findViewById(R.id.scrollView);
         mPlaceHolder = (LinearLayout) findViewById(R.id.scrollViewplaceholder);
         mCurrentLanguages = WearLanguage.getCurrentLanguages();
 

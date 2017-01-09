@@ -26,7 +26,8 @@
             android:layout_gravity="center"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" />
+            android:orientation="horizontal"
+            android:contentDescription="hf_scroll_horizontal" />
 
     </HorizontalScrollView>
 </RelativeLayout>
