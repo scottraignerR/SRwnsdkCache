@@ -49,6 +49,10 @@ public class LanguageDialog extends FullScreenDialog {
 
     public void gotoNextLanguage(){
         //clone
+
+        if(!canGoNext)
+            dismiss();
+
         final View newView = createLangView((WearLanguage) mPlaceHolder.getChildAt(0).getTag());
         mPlaceHolder.addView(newView);
 
@@ -84,11 +88,10 @@ public class LanguageDialog extends FullScreenDialog {
     @Override
     public void show() {
         super.show();
-
-
-
         if(!mShowing) {
+            setCurrentLanguage();
             mShowing = true;
+            canGoNext = true;
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -99,9 +102,26 @@ public class LanguageDialog extends FullScreenDialog {
 
     }
 
+    private void setCurrentLanguage() {
+        mPlaceHolder.removeAllViews();
+        mCurrentLanguages = WearLanguage.getCurrentLanguages();
+
+        for(WearLanguage lang : mCurrentLanguages){
+            mPlaceHolder.addView(createLangView(lang));
+        }
+    }
+
     @Override
     public void hide() {
         super.hide();
+        mShowing = false;
+        mHandler.removeCallbacks(null);
+    }
+
+    @Override
+    public void dismiss() {
+        super.dismiss();
+
         mShowing = false;
         mHandler.removeCallbacks(null);
     }
@@ -111,9 +131,17 @@ public class LanguageDialog extends FullScreenDialog {
 
         if(keyCode == 500){
             canGoNext = false;
+            mHandler.removeCallbacks(null);
+            dismiss();
+
         }
         return super.onKeyUp(keyCode, event);
     }
+
+    public void canGoNext(boolean value){
+        canGoNext = value;
+    }
+
 
 
     @Override
@@ -123,11 +151,6 @@ public class LanguageDialog extends FullScreenDialog {
         mHandler = new Handler();
 //        mScrollview = (HorizontalScrollView) findViewById(R.id.scrollView);
         mPlaceHolder = (LinearLayout) findViewById(R.id.scrollViewplaceholder);
-        mCurrentLanguages = WearLanguage.getCurrentLanguages();
-
-        for(WearLanguage lang : mCurrentLanguages){
-            mPlaceHolder.addView(createLangView(lang));
-        }
     }
 
     private View createLangView(WearLanguage lang){

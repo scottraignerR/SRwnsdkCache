@@ -34,9 +34,21 @@ public class WearLanguage {
         pr.Android_Locale = new Locale("pt");
         pr.ResourceId = R.drawable.pt;
 
-        langs.add(pr);
-        langs.add(en);
-        langs.add(ch);
+        Locale locale = Language.getLanguage();
+
+        if(locale.getLanguage().equals(en.Android_Locale.getLanguage())) {
+            langs.add(pr);
+            langs.add(en);
+            langs.add(ch);
+        }else if(locale.getLanguage().equals(pr.Android_Locale.getLanguage())){
+            langs.add(ch);
+            langs.add(pr);
+            langs.add(en);
+        }else{
+            langs.add(en);
+            langs.add(ch);
+            langs.add(pr);
+        }
 
         return langs;
     }
