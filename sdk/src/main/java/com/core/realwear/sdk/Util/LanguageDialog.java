@@ -123,7 +123,8 @@ public class LanguageDialog extends FullScreenDialog {
         super.dismiss();
 
         mShowing = false;
-        mHandler.removeCallbacks(null);
+        if(mHandler != null)
+            mHandler.removeCallbacks(null);
     }
 
     @Override
@@ -131,7 +132,8 @@ public class LanguageDialog extends FullScreenDialog {
 
         if(keyCode == 500){
             canGoNext = false;
-            mHandler.removeCallbacks(null);
+            if(mHandler != null)
+                mHandler.removeCallbacks(null);
             dismiss();
 
         }
