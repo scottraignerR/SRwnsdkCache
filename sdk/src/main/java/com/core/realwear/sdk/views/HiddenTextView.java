@@ -1,6 +1,7 @@
 package com.core.realwear.sdk.views;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -32,5 +33,6 @@ public class HiddenTextView extends TextView {
     private void init(){
         setAlpha(0.01f);
         setClickable(true);
+        setTextColor(ContextCompat.getColor(getContext(), android.R.color.transparent));
     }
 }

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Fin on 26/09/2016.
+ * Created by Luke Hopkins on 26/09/2016.
  */
 public class Microphone {
     private static final String ACTION_RELEASE_MIC = "com.realwear.wearhf.intent.action.RELEASE_MIC";
