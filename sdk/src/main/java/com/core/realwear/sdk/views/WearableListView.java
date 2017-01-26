@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import com.core.realwear.sdk.HFHeadtrackerListener;
 import com.core.realwear.sdk.HFHeadtrackerManager;
 import com.core.realwear.sdk.R;
+import com.core.realwear.sdk.RecyclerViewMargin;
 import com.core.realwear.sdk.iAdapter.iVoiceAdapter;
 
 /**
@@ -32,6 +33,7 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
     private View mRootGroup;
 
     private static final String ACTION_SPEECH_EVENT = "com.realwear.wearhf.intent.action.SPEECH_EVENT";
+    private RecyclerViewMargin mDecoration;
 
 
     public WearableListView(Context context) {
@@ -59,13 +61,17 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
 
         mRecycleView = (RecyclerView)view.findViewById(R.id.list2);
         mRecycleView.setContentDescription(NO_SCROLL);
+
+        mDecoration = new RecyclerViewMargin(250, 1);
+        mRecycleView.addItemDecoration(mDecoration);
         mHiddenCommandLayout = (RelativeLayout)view.findViewById(R.id.hidden_commands);
 
     }
 
     public void onResume(){
         if (mHeadTracker != null)
-        mHeadTracker.startHeadtracker(getContext(), HFHeadtrackerManager.TRACK_HORIZONTAL_MOTION);
+            mHeadTracker.startHeadtracker(getContext(), HFHeadtrackerManager.TRACK_HORIZONTAL_MOTION);
+
         getContext().registerReceiver(asrBroadcastReceiver, new IntentFilter(ACTION_SPEECH_EVENT));
     }
 
@@ -99,12 +105,13 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
         mAdapter = adapter;
         mRecycleView.setAdapter(adapter);
 
+
         mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
                 super.onChanged();
                 setCommands();
-
+                mDecoration.setCount(mAdapter.getItemCount());
                 mRecycleView.scrollToPosition((mAdapter.getItemCount() / 10) + 2);
             }
         });
@@ -120,7 +127,7 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
     private void setCommands(){
 
         StringBuilder builder = new StringBuilder();
-        builder.append("hr_override: ");
+        builder.append("hf_override: ");
 
         if(mAdapter instanceof iVoiceAdapter) {
             iVoiceAdapter adapter = (iVoiceAdapter) mAdapter;
@@ -192,14 +199,14 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
             if (action.equals(ACTION_SPEECH_EVENT)) {
                 String asrCommand = intent.getStringExtra("command");
 
-                if(asrCommand.contains("select item")){
-                    String strIndex = asrCommand.substring(asrCommand.length()-1);
+                if(asrCommand.toLowerCase().contains("select item")){
+                    String strIndex = asrCommand.toLowerCase().replace("select item", "").replace(" ", "");
 
                     int i = Integer.parseInt(strIndex);
 
                     if(mAdapter instanceof iVoiceAdapter) {
                         iVoiceAdapter adapter = (iVoiceAdapter) mAdapter;
-                        adapter.clickView(getContext(), i);
+                        adapter.clickView(getContext(), i - 1);
                         return;
                     }
                 }
