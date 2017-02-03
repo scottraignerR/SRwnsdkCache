@@ -54,6 +54,12 @@ public class RecyclerViewMargin extends RecyclerView.ItemDecoration {
             outRect.left = margin;
         }*/
 
+        if(count <= 6)
+            margin = 75;
+
+        if(count <= 4)
+            margin = 50;
+
         int dobotth = count % 2;
         if(position == 0 || position == 1){
             outRect.left = margin;

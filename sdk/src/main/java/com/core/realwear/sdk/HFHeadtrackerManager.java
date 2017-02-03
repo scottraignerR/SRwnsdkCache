@@ -89,7 +89,7 @@ public class HFHeadtrackerManager implements SensorEventListener {
         this.trackingMode=trackingMode;
 
         //Each device has specific tuning parameters here...
-        int sensorSpeed = SensorManager.SENSOR_DELAY_NORMAL;
+        int sensorSpeed = SensorManager.SENSOR_DELAY_FASTEST;
 
         if (deviceType==DEVICE_HMT) {
             minMovementThreshold = 0.02f;
