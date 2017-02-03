@@ -1,20 +1,6 @@
 <resources>
 <!--SDK-->
 <string name="app_name">SDK</string>
-<!--My Controls-->
-<string name="my_controls">Mes contrôles</string>
-<!--Go Home-->
-<string name="go_home">Rentre chez toi</string>
-<!--Go Back-->
-<string name="go_back">Retour</string>
-<!--Listening Off-->
-<string name="listening_off">L’écoute hors</string>
-<!--Listening On-->
-<string name="listening_on">À l’écoute sur</string>
-<!--Show Commands-->
-<string name="show_help">Afficher les commandes</string>
-<!--Hide Commands-->
-<string name="hide_help">Masquer les commandes</string>
 <!--zoom level 1-->
 <string name="zoom_level_1">niveau de zoom 1</string>
 <!--zoom level 2-->

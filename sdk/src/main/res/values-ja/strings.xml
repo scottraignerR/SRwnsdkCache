@@ -1,20 +1,6 @@
 <resources>
 <!--SDK-->
 <string name="app_name">SDK</string>
-<!--My Controls-->
-<string name="my_controls">私のコントロール</string>
-<!--Go Home-->
-<string name="go_home">家へ帰ってください</string>
-<!--Go Back-->
-<string name="go_back">戻ってください</string>
-<!--Listening Off-->
-<string name="listening_off">聞いてください。</string>
-<!--Listening On-->
-<string name="listening_on">リッスン</string>
-<!--Show Commands-->
-<string name="show_help">コマンドを表示</string>
-<!--Hide Commands-->
-<string name="hide_help">コマンドを非表示</string>
 <!--zoom level 1-->
 <string name="zoom_level_1">ズーム レベル 1</string>
 <!--zoom level 2-->
