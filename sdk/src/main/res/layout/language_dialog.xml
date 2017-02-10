@@ -1,35 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="fill_parent"
-    android:background="@android:color/white"
-    android:layout_height="fill_parent">
-
-    <RelativeLayout android:layout_width="fill_parent"
-    android:background="@android:color/white"
-    android:layout_height="fill_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
 
     <View
-        android:layout_centerInParent="true"
-        android:background="@drawable/selected_lang"
-        android:layout_marginLeft="32dp"
+        android:id="@+id/view"
         android:layout_width="160dp"
-        android:layout_height="160dp"/>
+        android:layout_height="160dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/selected_lang" />
 
-    <HorizontalScrollView
-        android:scrollbars="none"
-        android:id="@+id/scrollView"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true">
-        <LinearLayout
-            android:id="@+id/scrollViewplaceholder"
-            android:animateLayoutChanges="true"
-            android:layout_gravity="center"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:contentDescription="hf_scroll_none" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_view"
+        android:enabled="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="hf_scroll_none"/>
 
-    </HorizontalScrollView>
-</RelativeLayout>
 </RelativeLayout>

@@ -18,7 +18,6 @@ public class Language {
         return Locale.getDefault();
     }
 
-
     /**
      * Requests the system to update the system locale. Note that the system looks halted
      * for a while during the Locale migration, so the caller need to take care of it.

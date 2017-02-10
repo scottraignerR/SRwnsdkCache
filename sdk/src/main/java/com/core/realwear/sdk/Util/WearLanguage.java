@@ -22,17 +22,17 @@ public class WearLanguage {
         WearLanguage en = new WearLanguage();
         en.Name = "English";
         en.Android_Locale = Locale.ENGLISH;
-        en.ResourceId = R.drawable.en;
+        en.ResourceId = R.drawable.en_us;
 
         WearLanguage ch = new WearLanguage();
         ch.Name = "中文";
         ch.Android_Locale = Locale.CHINA;
-        ch.ResourceId = R.drawable.ch;
+        ch.ResourceId = R.drawable.zh_cn;
 
         WearLanguage pr = new WearLanguage();
         pr.Name = "Português";
-        pr.Android_Locale = new Locale("pt");
-        pr.ResourceId = R.drawable.pt;
+        pr.Android_Locale = new Locale("pt_br");
+        pr.ResourceId = R.drawable.pt_br;
 
         Locale locale = Language.getLanguage();
 

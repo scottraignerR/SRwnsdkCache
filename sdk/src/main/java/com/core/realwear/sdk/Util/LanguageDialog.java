@@ -1,35 +1,79 @@
 package com.core.realwear.sdk.Util;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.core.realwear.sdk.R;
+import com.core.realwear.sdk.views.LanguageCarouselAdapter;
+import com.core.realwear.sdk.views.LanguageCarouselLayoutManager;
 
+import java.text.Collator;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Luke Hopkins on 28/12/2016.
  */
-
 public class LanguageDialog extends FullScreenDialog {
-    private WearLanguage mSelectedLang;
-    private List<WearLanguage> mCurrentLanguages;
-    HorizontalScrollView mScrollview;
+    private static final String TAG = LanguageDialog.class.getCanonicalName();
+
+    private static final String[] LOCALES_FILTER = new String[]{
+            "en-US",
+            "en-GB",
+            "pt-BR",
+            "zh-CN"
+    };
+
+    public static class LocaleInfo implements Comparable<LocaleInfo> {
+        static final Collator COLLATOR = Collator.getInstance();
+
+        String label;
+        Locale locale;
+
+        public LocaleInfo(String label, Locale locale) {
+            this.label = label;
+            this.locale = locale;
+        }
+
+        public String getLabel() {
+            return label;
+        }
+
+        public Locale getLocale() {
+            return locale;
+        }
+
+        @Override
+        public String toString() {
+            return label;
+        }
+
+        @Override
+        public int compareTo(@NonNull LocaleInfo another) {
+            return COLLATOR.compare(label, another.label);
+        }
+    }
+
+    private Locale mSelectedLocale;
     private Handler mHandler;
-    private LinearLayout mPlaceHolder;
-    private boolean canGoNext = true;
-    private boolean hasPosted = true;
     private boolean mShowing = false;
+    private Timer mAnimationTimer;
+
+    private int mCurrentPosition = -1;
 
     public LanguageDialog(Context context) {
         super(context);
@@ -43,55 +87,46 @@ public class LanguageDialog extends FullScreenDialog {
         super(context, cancelable, cancelListener);
     }
 
-    public void setLanguages(List<WearLanguage> lanagues){
-        mCurrentLanguages = lanagues;
+    private void gotoNextLanguage() {
+        // Clone
+//        if (!canGoNext) {
+//            dismiss();
+//        }
+//
+//        final View newView = createLangView((LocaleInfo) mPlaceHolder.getChildAt(0).getTag());
+//        mPlaceHolder.addView(newView);
+//
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mPlaceHolder.removeViewAt(0);
+//                mSelectedLocale = ((LocaleInfo) (mPlaceHolder.getChildAt(1)).getTag()).locale;
+//            }
+//        }, 50);
+//
+//        mHandler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (canGoNext) {
+//                    gotoNextLanguage();
+//                } else {
+//                    dismiss();
+//                }
+//            }
+//        }, 2000);
     }
 
-    public void gotoNextLanguage(){
-        //clone
-
-        if(!canGoNext)
-            dismiss();
-
-        final View newView = createLangView((WearLanguage) mPlaceHolder.getChildAt(0).getTag());
-        mPlaceHolder.addView(newView);
-
-
-        Handler h = new Handler();
-        h.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mPlaceHolder.removeViewAt(0);
-                mSelectedLang = (WearLanguage) (mPlaceHolder.getChildAt(1)).getTag();
-            }
-        }, 50);
-
-
-
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                hasPosted = true;
-                if(canGoNext)
-                    gotoNextLanguage();
-                else
-                    dismiss();
-            }
-        }, 2000);
-
-    }
-
-    public WearLanguage getSelectedLanguage(){
-        return mSelectedLang;
+    public Locale getSelectedLanguage() {
+        return mSelectedLocale;
     }
 
     @Override
     public void show() {
         super.show();
-        if(!mShowing) {
+
+        if (!mShowing) {
             setCurrentLanguage();
             mShowing = true;
-            canGoNext = true;
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -99,16 +134,88 @@ public class LanguageDialog extends FullScreenDialog {
                 }
             }, 2000);
         }
-
     }
 
     private void setCurrentLanguage() {
-        mPlaceHolder.removeAllViews();
-        mCurrentLanguages = WearLanguage.getCurrentLanguages();
+        final Resources resources = getContext().getResources();
 
-        for(WearLanguage lang : mCurrentLanguages){
-            mPlaceHolder.addView(createLangView(lang));
+        final String[] locales = Resources.getSystem().getAssets().getLocales();
+        final List<String> localeList = new ArrayList<>(locales.length);
+        Collections.addAll(localeList, locales);
+
+        // Remove the pseudolocales.
+        localeList.remove("ar-XB");
+        localeList.remove("en-XA");
+
+        // Sort the locales.
+        Collections.sort(localeList);
+
+        final String[] specialLocaleCodes = resources.getStringArray(R.array.special_locale_codes);
+        final String[] specialLocaleNames = resources.getStringArray(R.array.special_locale_names);
+
+        final List<LocaleInfo> localeInfos = new ArrayList<>(localeList.size());
+
+        for (String localeName : localeList) {
+            if (!filterLanguage(localeName, LOCALES_FILTER)) {
+                continue;
+            }
+
+            final Locale locale;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                locale = Locale.forLanguageTag(localeName.replace("_", "-"));
+            } else {
+                // TODO: Fix this.
+                locale = Locale.CANADA;
+            }
+
+            if (locale == null || "und".equals(locale.getLanguage()) ||
+                    locale.getLanguage().isEmpty() || locale.getCountry().isEmpty()) {
+                continue;
+            }
+
+            if (localeInfos.isEmpty()) {
+                Log.v(TAG, "Adding initial " + toTitleCase(locale.getDisplayLanguage(locale)));
+                localeInfos.add(new LocaleInfo(toTitleCase(locale.getDisplayLanguage(locale)), locale));
+            } else {
+                final LocaleInfo previousInfo = localeInfos.get(localeInfos.size() - 1);
+                if (previousInfo.locale.getLanguage().equals(locale.getLanguage()) &&
+                        !previousInfo.locale.getLanguage().equals("zz")) {
+                    previousInfo.label = toTitleCase(getDisplayName(previousInfo.locale, specialLocaleCodes, specialLocaleNames));
+
+                    localeInfos.add(new LocaleInfo(toTitleCase(getDisplayName(locale, specialLocaleCodes, specialLocaleNames)), locale));
+                } else {
+                    String displayName = toTitleCase(locale.getDisplayLanguage(locale));
+                    localeInfos.add(new LocaleInfo(displayName, locale));
+                }
+            }
         }
+
+        Collections.sort(localeInfos);
+
+        final Locale currentLocale = Locale.getDefault();
+        int index = 0;
+        for (LocaleInfo localeInfo : localeInfos) {
+            if (localeInfo.locale.equals(currentLocale)) {
+                break;
+            }
+
+            index++;
+        }
+
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list_view);
+        recyclerView.setAdapter(new LanguageCarouselAdapter(getContext(), localeInfos));
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return true;
+            }
+        });
+
+        final LinearLayoutManager linearLayoutManager = new LanguageCarouselLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        mCurrentPosition = index * 10;
+        linearLayoutManager.smoothScrollToPosition(recyclerView, null, mCurrentPosition);
     }
 
     @Override
@@ -123,50 +230,74 @@ public class LanguageDialog extends FullScreenDialog {
         super.dismiss();
 
         mShowing = false;
-        if(mHandler != null)
+        if (mHandler != null) {
             mHandler.removeCallbacks(null);
+        }
     }
 
     @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-
-        if(keyCode == 500){
-            canGoNext = false;
-            if(mHandler != null)
+    public boolean onKeyUp(int keyCode, @NonNull KeyEvent event) {
+        if (keyCode == 500) {
+            if (mHandler != null) {
                 mHandler.removeCallbacks(null);
-            dismiss();
+            }
 
+            dismiss();
         }
+
         return super.onKeyUp(keyCode, event);
     }
-
-    public void canGoNext(boolean value){
-        canGoNext = value;
-    }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mHandler = new Handler();
-//        mScrollview = (HorizontalScrollView) findViewById(R.id.scrollView);
-        mPlaceHolder = (LinearLayout) findViewById(R.id.scrollViewplaceholder);
-    }
 
-    private View createLangView(WearLanguage lang){
-        View langView = getLayoutInflater().inflate(R.layout.language_item, null);
-        TextView langTxt = (TextView)langView.findViewById(R.id.langtxt);
-        ImageView imgView = (ImageView)langView.findViewById(R.id.langimg);
-        langView.setTag(lang);
-        langTxt.setText(lang.Name);
-        imgView.setImageResource(lang.ResourceId);
-        return langView;
+        mAnimationTimer = new Timer();
+        mAnimationTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list_view);
+                final LanguageCarouselLayoutManager linearLayoutManager = (LanguageCarouselLayoutManager) recyclerView.getLayoutManager();
+
+                linearLayoutManager.smoothScrollToPosition(recyclerView, null, ++mCurrentPosition);
+            }
+        }, 2000, 2000);
     }
 
     @Override
     public int getLayout() {
         return R.layout.language_dialog;
+    }
+
+    private boolean filterLanguage(String name, String[] locales) {
+        for (String locale : locales) {
+            if (locale.equals(name)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private String toTitleCase(String string) {
+        if (string.length() == 0) {
+            return string;
+        }
+
+        return Character.toUpperCase(string.charAt(0)) + string.substring(1);
+    }
+
+    private String getDisplayName(Locale locale, String[] specialLocaleCodes, String[] specialLocaleNames) {
+        final String code = locale.toString();
+
+        for (int i = 0; i < specialLocaleCodes.length; i++) {
+            if (specialLocaleCodes[i].equals(code)) {
+                return specialLocaleNames[i];
+            }
+        }
+
+        return locale.getDisplayName(locale);
     }
 }
