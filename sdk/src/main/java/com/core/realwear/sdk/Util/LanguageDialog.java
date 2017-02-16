@@ -8,7 +8,9 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,8 +35,7 @@ public class LanguageDialog extends FullScreenDialog {
 
     private static final String[] LOCALES_FILTER = new String[]{
             "en-US",
-            "en-GB",
-            "pt-BR",
+            "pt-PT",
             "zh-CN"
     };
 
@@ -70,7 +71,6 @@ public class LanguageDialog extends FullScreenDialog {
 
     private Locale mSelectedLocale;
     private Handler mHandler;
-    private boolean mShowing = false;
     private Timer mAnimationTimer;
 
     private int mCurrentPosition = -1;
@@ -87,35 +87,6 @@ public class LanguageDialog extends FullScreenDialog {
         super(context, cancelable, cancelListener);
     }
 
-    private void gotoNextLanguage() {
-        // Clone
-//        if (!canGoNext) {
-//            dismiss();
-//        }
-//
-//        final View newView = createLangView((LocaleInfo) mPlaceHolder.getChildAt(0).getTag());
-//        mPlaceHolder.addView(newView);
-//
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                mPlaceHolder.removeViewAt(0);
-//                mSelectedLocale = ((LocaleInfo) (mPlaceHolder.getChildAt(1)).getTag()).locale;
-//            }
-//        }, 50);
-//
-//        mHandler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                if (canGoNext) {
-//                    gotoNextLanguage();
-//                } else {
-//                    dismiss();
-//                }
-//            }
-//        }, 2000);
-    }
-
     public Locale getSelectedLanguage() {
         return mSelectedLocale;
     }
@@ -123,17 +94,6 @@ public class LanguageDialog extends FullScreenDialog {
     @Override
     public void show() {
         super.show();
-
-        if (!mShowing) {
-            setCurrentLanguage();
-            mShowing = true;
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    gotoNextLanguage();
-                }
-            }, 2000);
-        }
     }
 
     private void setCurrentLanguage() {
@@ -214,25 +174,26 @@ public class LanguageDialog extends FullScreenDialog {
         final LinearLayoutManager linearLayoutManager = new LanguageCarouselLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        mCurrentPosition = index * 10;
-        linearLayoutManager.smoothScrollToPosition(recyclerView, null, mCurrentPosition);
+        final DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
+
+        final float itemWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 140 + (24 * 2), displayMetrics);
+
+        // Center the item to the middle of the screen.
+        mCurrentPosition = index + localeInfos.size() * 10;
+        linearLayoutManager.scrollToPositionWithOffset(mCurrentPosition, (int) ((displayMetrics.widthPixels - itemWidth) / 2));
     }
 
     @Override
     public void hide() {
         super.hide();
-        mShowing = false;
-        mHandler.removeCallbacks(null);
     }
 
     @Override
     public void dismiss() {
-        super.dismiss();
+        mAnimationTimer.cancel();
+        mAnimationTimer.purge();
 
-        mShowing = false;
-        if (mHandler != null) {
-            mHandler.removeCallbacks(null);
-        }
+        super.dismiss();
     }
 
     @Override
@@ -252,6 +213,8 @@ public class LanguageDialog extends FullScreenDialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setCurrentLanguage();
+
         mHandler = new Handler();
 
         mAnimationTimer = new Timer();
@@ -262,6 +225,8 @@ public class LanguageDialog extends FullScreenDialog {
                 final LanguageCarouselLayoutManager linearLayoutManager = (LanguageCarouselLayoutManager) recyclerView.getLayoutManager();
 
                 linearLayoutManager.smoothScrollToPosition(recyclerView, null, ++mCurrentPosition);
+
+                mSelectedLocale = ((LanguageCarouselAdapter)recyclerView.getAdapter()).getLocaleForPosition(mCurrentPosition);
             }
         }, 2000, 2000);
     }
