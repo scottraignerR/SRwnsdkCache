@@ -190,8 +190,10 @@ public class LanguageDialog extends FullScreenDialog {
 
     @Override
     public void dismiss() {
-        mAnimationTimer.cancel();
-        mAnimationTimer.purge();
+        if (mAnimationTimer != null) {
+            mAnimationTimer.cancel();
+            mAnimationTimer.purge();
+        }
 
         super.dismiss();
     }
@@ -202,6 +204,8 @@ public class LanguageDialog extends FullScreenDialog {
             if (mHandler != null) {
                 mHandler.removeCallbacks(null);
             }
+
+            Language.setLanguage(mSelectedLocale);
 
             dismiss();
         }

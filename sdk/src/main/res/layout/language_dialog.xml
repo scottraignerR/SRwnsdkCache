@@ -19,12 +19,12 @@
         android:contentDescription="hf_scroll_none"
         android:enabled="false" />
 
-    <ImageView
-        android:layout_width="210dp"
-        android:layout_height="240dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="80dp"
-        android:src="@drawable/selector_box" />
+    <!--<ImageView-->
+        <!--android:layout_width="210dp"-->
+        <!--android:layout_height="240dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginBottom="80dp"-->
+        <!--android:src="@drawable/selector_box" />-->
 
 </RelativeLayout>
