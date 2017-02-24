@@ -34,9 +34,17 @@ public class LanguageDialog extends FullScreenDialog {
     private static final String TAG = LanguageDialog.class.getCanonicalName();
 
     private static final String[] LOCALES_FILTER = new String[]{
-            "en-US",
+            "en-GB",
             "pt-PT",
-            "zh-CN"
+            "zh-CN",
+            "de-DE",
+            "es-ES",
+            "fr-FR",
+            "it-IT",
+            "jp-JP",
+            "kr-KR",
+            "pt-PT",
+            "ru-RU"
     };
 
     public static class LocaleInfo implements Comparable<LocaleInfo> {
