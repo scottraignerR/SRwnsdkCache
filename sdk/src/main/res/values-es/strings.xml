@@ -12,5 +12,5 @@
 <!--zoom level 5-->
 <string name="zoom_level_5">nivel de zoom 5</string>
 <!--Zoom Level 1-5-->
-<string name="zoom_level_instruction">Zoom Level 1-5</string>
+<string name="zoom_level_instruction">nivel de zoom 1-5</string>
 </resources>
