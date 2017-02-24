@@ -13,4 +13,18 @@
     <string name="zoom_level_4">zoom level 4</string>
     <string name="zoom_level_5">zoom level 5</string>
     <string name="zoom_level_instruction">Zoom Level 1-5</string>
+
+    <string-array name="supported_languages" translatable="false">
+        <item>en-GB</item>
+        <item>pt-PT</item>
+        <item>zh-CN</item>
+        <item>de-DE</item>
+        <item>es-ES</item>
+        <item>fr-FR</item>
+        <item>it-IT</item>
+        <item>jp-JP</item>
+        <item>kr-KR</item>
+        <item>pt-PT</item>
+        <item>ru-RU</item>
+    </string-array>
 </resources>

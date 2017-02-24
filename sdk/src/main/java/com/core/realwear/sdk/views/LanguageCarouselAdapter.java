@@ -19,26 +19,32 @@ import java.util.Locale;
  * Created by william on 16/02/17.
  */
 public class LanguageCarouselAdapter extends RecyclerView.Adapter<LanguageCarouselAdapter.ViewHolder> {
-    static class ViewHolder extends RecyclerView.ViewHolder {
-        private View mRootView;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final View mRootView;
 
-        private ImageView mIcon;
-        private TextView mLabel;
+        private final View mBackground;
+        private final ImageView mIcon;
+        private final TextView mLabel;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             mRootView = itemView;
 
+            mBackground = mRootView.findViewById(R.id.background);
             mIcon = (ImageView) mRootView.findViewById(R.id.icon);
             mLabel = (TextView) mRootView.findViewById(R.id.label);
         }
 
-        ImageView getIcon() {
+        public View getBackground() {
+            return mBackground;
+        }
+
+        public ImageView getIcon() {
             return mIcon;
         }
 
-        TextView getLabel() {
+        public TextView getLabel() {
             return mLabel;
         }
     }

@@ -1,10 +1,13 @@
 package com.core.realwear.sdk.Util;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,20 +35,6 @@ import java.util.TimerTask;
  */
 public class LanguageDialog extends FullScreenDialog {
     private static final String TAG = LanguageDialog.class.getCanonicalName();
-
-    private static final String[] LOCALES_FILTER = new String[]{
-            "en-GB",
-            "pt-PT",
-            "zh-CN",
-            "de-DE",
-            "es-ES",
-            "fr-FR",
-            "it-IT",
-            "jp-JP",
-            "kr-KR",
-            "pt-PT",
-            "ru-RU"
-    };
 
     public static class LocaleInfo implements Comparable<LocaleInfo> {
         static final Collator COLLATOR = Collator.getInstance();
@@ -78,13 +67,15 @@ public class LanguageDialog extends FullScreenDialog {
     }
 
     private Locale mSelectedLocale;
-    private Handler mHandler;
     private Timer mAnimationTimer;
+    private LanguageCarouselAdapter.ViewHolder mPreviewViewHolder;
 
     private int mCurrentPosition = -1;
 
+    private Handler mUIHandler = new Handler(Looper.getMainLooper());
+
     public LanguageDialog(Context context) {
-        super(context);
+        this(context, 0);
     }
 
     public LanguageDialog(Context context, int themeResId) {
@@ -97,11 +88,6 @@ public class LanguageDialog extends FullScreenDialog {
 
     public Locale getSelectedLanguage() {
         return mSelectedLocale;
-    }
-
-    @Override
-    public void show() {
-        super.show();
     }
 
     private void setCurrentLanguage() {
@@ -123,8 +109,10 @@ public class LanguageDialog extends FullScreenDialog {
 
         final List<LocaleInfo> localeInfos = new ArrayList<>(localeList.size());
 
+        final String[] localesFilter = resources.getStringArray(R.array.supported_languages);
+
         for (String localeName : localeList) {
-            if (!filterLanguage(localeName, LOCALES_FILTER)) {
+            if (!filterLanguage(localeName, localesFilter)) {
                 continue;
             }
 
@@ -189,6 +177,20 @@ public class LanguageDialog extends FullScreenDialog {
         // Center the item to the middle of the screen.
         mCurrentPosition = index + localeInfos.size() * 10;
         linearLayoutManager.scrollToPositionWithOffset(mCurrentPosition, (int) ((displayMetrics.widthPixels - itemWidth) / 2));
+        linearLayoutManager.smoothScrollToPosition(recyclerView, null, mCurrentPosition);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mPreviewViewHolder = (LanguageCarouselAdapter.ViewHolder) recyclerView.findViewHolderForAdapterPosition(mCurrentPosition);
+
+                if (mPreviewViewHolder != null) {
+                    mPreviewViewHolder.getBackground().setBackgroundColor(getContext().getResources().getColor(R.color.radio));
+                    mPreviewViewHolder.getLabel().getBackground().setTint(getContext().getResources().getColor(R.color.radio));
+                    mPreviewViewHolder.getLabel().setTextColor(getContext().getResources().getColor(android.R.color.white));
+                }
+            }
+        }, 100);
     }
 
     @Override
@@ -209,10 +211,6 @@ public class LanguageDialog extends FullScreenDialog {
     @Override
     public boolean onKeyUp(int keyCode, @NonNull KeyEvent event) {
         if (keyCode == 500) {
-            if (mHandler != null) {
-                mHandler.removeCallbacks(null);
-            }
-
             Language.setLanguage(mSelectedLocale);
 
             dismiss();
@@ -227,18 +225,65 @@ public class LanguageDialog extends FullScreenDialog {
 
         setCurrentLanguage();
 
-        mHandler = new Handler();
-
         mAnimationTimer = new Timer();
         mAnimationTimer.schedule(new TimerTask() {
             @Override
             public void run() {
+                final Resources resources = getContext().getResources();
+
                 final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list_view);
                 final LanguageCarouselLayoutManager linearLayoutManager = (LanguageCarouselLayoutManager) recyclerView.getLayoutManager();
 
                 linearLayoutManager.smoothScrollToPosition(recyclerView, null, ++mCurrentPosition);
 
-                mSelectedLocale = ((LanguageCarouselAdapter)recyclerView.getAdapter()).getLocaleForPosition(mCurrentPosition);
+                final LanguageCarouselAdapter.ViewHolder viewHolder = (LanguageCarouselAdapter.ViewHolder) recyclerView.findViewHolderForAdapterPosition(mCurrentPosition);
+                final LanguageCarouselAdapter.ViewHolder previousViewHolder = mPreviewViewHolder;
+
+                mUIHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        ObjectAnimator animator;
+
+                        if (viewHolder != null) {
+                            animator = ObjectAnimator
+                                    .ofArgb(viewHolder.getBackground(), "backgroundColor", resources.getColor(R.color.language_bg), resources.getColor(R.color.radio));
+                            animator.setDuration(100);
+                            animator.start();
+
+                            animator = ObjectAnimator
+                                    .ofArgb(viewHolder.getLabel().getBackground(), "tint", resources.getColor(R.color.language_bg), resources.getColor(R.color.radio));
+                            animator.setDuration(100);
+                            animator.start();
+
+                            animator = ObjectAnimator
+                                    .ofArgb(viewHolder.getLabel(), "textColor", resources.getColor(R.color.language_text_color), resources.getColor(android.R.color.white));
+                            animator.setDuration(100);
+                            animator.start();
+                        }
+
+                        if (previousViewHolder != null) {
+                            // Previous item.
+                            animator = ObjectAnimator
+                                    .ofArgb(previousViewHolder.getBackground(), "backgroundColor", resources.getColor(R.color.radio), resources.getColor(R.color.language_bg));
+                            animator.setDuration(100);
+                            animator.start();
+
+                            animator = ObjectAnimator
+                                    .ofArgb(previousViewHolder.getLabel().getBackground(), "tint", resources.getColor(R.color.radio), resources.getColor(R.color.language_bg));
+                            animator.setDuration(100);
+                            animator.start();
+
+                            animator = ObjectAnimator
+                                    .ofArgb(previousViewHolder.getLabel(), "textColor", resources.getColor(android.R.color.white), resources.getColor(R.color.language_text_color));
+                            animator.setDuration(100);
+                            animator.start();
+                        }
+                    }
+                });
+
+                mPreviewViewHolder = viewHolder;
+
+                mSelectedLocale = ((LanguageCarouselAdapter) recyclerView.getAdapter()).getLocaleForPosition(mCurrentPosition);
             }
         }, 2000, 2000);
     }
