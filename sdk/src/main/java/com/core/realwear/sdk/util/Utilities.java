@@ -1,4 +1,4 @@
-package com.core.realwear.sdk.util;
+package com.core.realwear.sdk.Util;
 
 import android.os.Environment;
 import android.os.StatFs;
