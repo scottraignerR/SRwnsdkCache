@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="realwear_accent">#8F24FE</color>
+
     <color name="dim_background">#73000000</color>
     <color name="barTop">#EAEAEA</color>
     <color name="radio">#8F26FD</color>

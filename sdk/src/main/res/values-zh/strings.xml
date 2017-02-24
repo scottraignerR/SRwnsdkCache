@@ -1,0 +1,30 @@
+<resources>
+<!--SDK -->
+<string name="app_name">软件开发包</string>
+<!--My Controls-->
+<!--<string name="my_controls">我的控件</string>-->
+<!--Go Home-->
+<!--<string name="go_home">回到主页</string>-->
+<!--Go Back-->
+<!--<string name="go_back">上一步</string>-->
+<!--Listening Off mute microphone-->
+<!--<string name="listening_off">静音麦克风</string>-->
+<!--Listening On unmute microphone-->
+<!--<string name="listening_on">开启麦克风</string>-->
+<!--Show Commands-->
+<!--<string name="show_help">显示命令</string>-->
+<!--Hide Commands-->
+<!--<string name="hide_help">隐藏命令</string>-->
+<!--zoom level 1-->
+<string name="zoom_level_1">缩放级别 1</string>
+<!--zoom level 2-->
+<string name="zoom_level_2">缩放级别 2</string>
+<!--zoom level 3-->
+<string name="zoom_level_3">缩放级别 3</string>
+<!--zoom level 4-->
+<string name="zoom_level_4">缩放级别 4</string>
+<!--zoom level 5-->
+<string name="zoom_level_5">缩放级别 5</string>
+<!--Zoom Level 1-5-->
+<string name="zoom_level_instruction">缩放级别 1-5</string>
+</resources>
