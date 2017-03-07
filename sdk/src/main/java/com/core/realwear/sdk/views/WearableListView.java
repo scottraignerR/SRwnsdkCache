@@ -126,7 +126,7 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
                 mDecoration.setCount(mAdapter.getItemCount());
 
                 if (mAdapter.getItemCount() > 6)
-                    mRecycleView.scrollToPosition((mAdapter.getItemCount() / 10) - 4);
+                    mRecycleView.scrollToPosition((mAdapter.getItemCount() / 2));
 
             }
         });

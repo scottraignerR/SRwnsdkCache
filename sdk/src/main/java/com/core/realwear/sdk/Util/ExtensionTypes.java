@@ -14,7 +14,8 @@ public class ExtensionTypes {
         MKV,
         GPP,
         WEBM,
-        BMP, NOT_SUPPORTED
+        WEBP,
+        BMP, NOT_SUPPORTED;
     }
 
     public static final String PNG = ".png";
@@ -27,6 +28,7 @@ public class ExtensionTypes {
     public static final String GP = ".3gp";
     public static final String GPP = ".3gpp";
     public static final String WEBM = ".webm";
+    public static final String WEBP = ".webp";
 
     public static Supported ParseLocationToType(String location)
     {
@@ -45,6 +47,9 @@ public class ExtensionTypes {
         }
         else if(location.toLowerCase().endsWith(BMP)) {
             return Supported.BMP;
+        }
+        else if(location.toLowerCase().endsWith(WEBP)) {
+            return Supported.WEBP;
         }
         else if(location.toLowerCase().endsWith(MKV)) {
             return Supported.MKV;
