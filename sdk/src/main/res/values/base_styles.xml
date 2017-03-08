@@ -48,5 +48,9 @@
         <item name="android:windowIsFloating">false</item>
     </style>
 
+    <style name="WearActionBar">
+        <item name="android:height">55dp</item>
+        <item name="android:background">@drawable/wear_action_bar</item>
+    </style>
 
 </resources>

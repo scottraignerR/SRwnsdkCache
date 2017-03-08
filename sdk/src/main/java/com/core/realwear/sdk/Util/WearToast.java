@@ -46,7 +46,7 @@ public class WearToast extends Toast {
 
         final String nbspString = text.toString().replaceAll(" ", Character.toString((char)0xA0));
 
-        final LayoutInflater inflater = context.getLayoutInflater();
+        final LayoutInflater inflater = LayoutInflater.from(context);//context.getLayoutInflater();
         final View layout = inflater.inflate(R.layout.toast, null);
 
         final TextView view = (TextView)layout.findViewById(R.id.textView);
