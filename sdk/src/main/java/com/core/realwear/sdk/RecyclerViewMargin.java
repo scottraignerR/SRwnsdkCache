@@ -42,8 +42,12 @@ public class RecyclerViewMargin extends RecyclerView.ItemDecoration {
         int position = parent.getChildLayoutPosition(view);
 
 
+
+        if(count <= 10)
+            margin = -5;
+
         if(count <= 6)
-            margin = 75;
+            margin = 30;
 
         if(count <= 4)
             margin = 50;
