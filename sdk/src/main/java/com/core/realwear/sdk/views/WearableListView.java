@@ -169,7 +169,7 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
             builder.append(mAdditional.getCommands());
 
         mRootGroup.setContentDescription(builder.toString());
-        mRootGroup.requestLayout();
+
         /*mHiddenCommandLayout.removeAllViews();
 
         if(mAdapter instanceof iVoiceAdapter) {
@@ -196,7 +196,13 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
             }
         }*/
 
-        mRootGroup.requestLayout();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRootGroup.requestLayout();
+            }
+        }, 500);
+
     }
 
     @Override
