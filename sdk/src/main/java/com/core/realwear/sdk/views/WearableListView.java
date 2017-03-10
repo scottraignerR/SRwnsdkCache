@@ -125,8 +125,9 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
 
                 mDecoration.setCount(mAdapter.getItemCount());
 
-                if (mAdapter.getItemCount() > 6)
-                    mRecycleView.scrollToPosition((mAdapter.getItemCount() / 2));
+                if (mAdapter.getItemCount() > 10)
+                        mRecycleView.scrollToPosition((mAdapter.getItemCount() / 2));
+
 
             }
         });
@@ -168,6 +169,7 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
             builder.append(mAdditional.getCommands());
 
         mRootGroup.setContentDescription(builder.toString());
+        mRootGroup.requestLayout();
         /*mHiddenCommandLayout.removeAllViews();
 
         if(mAdapter instanceof iVoiceAdapter) {
@@ -212,7 +214,7 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
     public void onHeadMoved(int deltaX, int deltaY) {
         //mX += (deltaX * -1) / 2;
 
-        if (mAdapter.getItemCount() > 6) {
+        if (mAdapter.getItemCount() > 8) {
             if (mRecycleView != null) {
                 mRecycleView.scrollBy((deltaX * -1) / 2, 0);
             }
@@ -247,8 +249,10 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
             if (action.equals(ACTION_SPEECH_EVENT)) {
                 String asrCommand = intent.getStringExtra("command");
 
-                if (asrCommand.toLowerCase().contains("select item")) {
-                    String strIndex = asrCommand.toLowerCase().replace("select item", "").replace(" ", "");
+                String select_item = context.getString(R.string.select_item);
+
+                if (asrCommand.toLowerCase().contains(select_item)) {
+                    String strIndex = asrCommand.toLowerCase().replace(context.getString(R.string.select_item), "").replace(" ", "");
 
                     int i = Integer.parseInt(strIndex);
 
