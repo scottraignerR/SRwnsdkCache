@@ -6,6 +6,11 @@
         <item name="android:textViewStyle">@style/SpeechButton</item>
     </style>
 
+    <style name="WindowAnimationTransition">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
     <style name="SpeechButton_smallest" parent="android:Widget.Holo.TextView">
         <item name="fontPath">?attr/fontThin</item>
         <item name="android:textSize">@dimen/font_smallest</item>
@@ -52,5 +57,10 @@
         <item name="android:height">55dp</item>
         <item name="android:background">@drawable/wear_action_bar</item>
     </style>
+
+    <style name="WearActionBarCamera" parent="WearActionBar">
+        <item name="android:alpha">0.7</item>
+    </style>
+
 
 </resources>
