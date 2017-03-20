@@ -125,7 +125,7 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
 
                 mDecoration.setCount(mAdapter.getItemCount());
 
-                if (mAdapter.getItemCount() > 10)
+                if (mAdapter.getItemCount() > 6)
                         mRecycleView.scrollToPosition((mAdapter.getItemCount() / 2));
 
 
@@ -220,7 +220,7 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
     public void onHeadMoved(int deltaX, int deltaY) {
         //mX += (deltaX * -1) / 2;
 
-        if (mAdapter.getItemCount() > 8) {
+        if (mAdapter.getItemCount() > 6) {
             if (mRecycleView != null) {
                 mRecycleView.scrollBy((deltaX * -1) / 2, 0);
             }

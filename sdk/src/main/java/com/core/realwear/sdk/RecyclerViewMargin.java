@@ -46,10 +46,8 @@ public class RecyclerViewMargin extends RecyclerView.ItemDecoration {
         if(count <= 10)
             margin = -5;
 
-        if(count <= 6)
-            margin = 30;
 
-        if(count <= 4)
+        if(count <= 8)
             margin = 50;
 
         int dobotth = count % 2;
