@@ -158,7 +158,7 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
         if (mAdapter instanceof iVoiceAdapter) {
             iVoiceAdapter adapter = (iVoiceAdapter) mAdapter;
             for (int i = 0; i < mAdapter.getItemCount(); i++) {
-                String voiceCommand = adapter.getVoiceCommand(i);
+                String voiceCommand = adapter.getVoiceCommand(i).replace(".", "");
 
                 builder.append(voiceCommand);
                 builder.append(" # ");
@@ -255,7 +255,7 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
             if (action.equals(ACTION_SPEECH_EVENT)) {
                 String asrCommand = intent.getStringExtra("command");
 
-                String select_item = context.getString(R.string.select_item);
+                String select_item = context.getString(R.string.select_item).toLowerCase();
 
                 if (asrCommand.toLowerCase().contains(select_item)) {
                     String strIndex = asrCommand.toLowerCase().replace(context.getString(R.string.select_item), "").replace(" ", "");
