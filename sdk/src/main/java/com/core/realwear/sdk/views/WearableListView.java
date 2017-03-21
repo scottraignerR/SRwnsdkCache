@@ -124,7 +124,7 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
 
                 mDecoration.setCount(mAdapter.getItemCount());
 
-                if (mAdapter.getItemCount() > 10)
+                if (mAdapter.getItemCount() > 6)
                         mRecycleView.scrollToPosition((mAdapter.getItemCount() / 2));
 
 
@@ -152,7 +152,7 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
 
     private void setCommands() {
         StringBuilder builder = new StringBuilder();
-        builder.append("hf_override: ");
+        builder.append("hf_override:");
 
         if (mAdapter instanceof IVoiceAdapter) {
             IVoiceAdapter adapter = (IVoiceAdapter) mAdapter;
@@ -160,7 +160,7 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
                 String voiceCommand = adapter.getVoiceCommand(i);
 
                 builder.append(voiceCommand);
-                builder.append(" # ");
+                builder.append("|");
             }
         }
 
@@ -219,7 +219,7 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
     public void onHeadMoved(int deltaX, int deltaY) {
         //mX += (deltaX * -1) / 2;
 
-        if (mAdapter.getItemCount() > 8) {
+        if (mAdapter.getItemCount() > 6) {
             if (mRecycleView != null) {
                 mRecycleView.scrollBy((deltaX * -1) / 2, 0);
             }
