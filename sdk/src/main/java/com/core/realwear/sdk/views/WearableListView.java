@@ -36,7 +36,7 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
     private RecyclerViewMargin mDecoration;
     private int mX;
     private Handler mHandler;
-    private injectCommands mAdditional;
+    private InjectCommands mAdditional;
 
 
     public WearableListView(Context context) {
@@ -132,15 +132,14 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
         });
     }
 
-    public interface injectCommands {
+    public interface InjectCommands {
         String getCommands();
 
         void onCommandReceived(String command);
     }
 
-    public void setCommands(injectCommands addtionCommands) {
-        mAdditional = addtionCommands;
-
+    public void setCommands(InjectCommands additionalCommands) {
+        mAdditional = additionalCommands;
     }
 
     /**
@@ -164,36 +163,11 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
             }
         }
 
-        if (mAdditional != null)
+        if (mAdditional != null) {
             builder.append(mAdditional.getCommands());
+        }
 
         mRootGroup.setContentDescription(builder.toString());
-
-        /*mHiddenCommandLayout.removeAllViews();
-
-        if(mAdapter instanceof IVoiceAdapter) {
-            IVoiceAdapter adapter = (IVoiceAdapter)mAdapter;
-
-            for(int i =0; i < mAdapter.getItemCount(); i++){
-                HiddenTextView txt = new HiddenTextView(getContext());
-                String voiceCommand = adapter.getVoiceCommand(i);
-                txt.setText(voiceCommand);
-                txt.setContentDescription(voiceCommand);
-                txt.setTag(i);
-                txt.setOnClickListener(this);
-
-                HiddenTextView hidden = new HiddenTextView(getContext());
-                String voiceCommand2 = adapter.getSecondaryCommand(getContext(), i);
-                hidden.setText(voiceCommand2);
-                hidden.setContentDescription(voiceCommand2);
-                hidden.setTag(i);
-                hidden.setOnClickListener(this);
-
-
-                //mHiddenCommandLayout.addView(txt);
-               //mHiddenCommandLayout.addView(hidden);
-            }
-        }*/
 
         mHandler.postDelayed(new Runnable() {
             @Override
@@ -201,7 +175,6 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
                 mRootGroup.requestLayout();
             }
         }, 500);
-
     }
 
     @Override
