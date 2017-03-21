@@ -16,8 +16,7 @@ import com.core.realwear.sdk.HFHeadtrackerListener;
 import com.core.realwear.sdk.HFHeadtrackerManager;
 import com.core.realwear.sdk.R;
 import com.core.realwear.sdk.RecyclerViewMargin;
-import com.core.realwear.sdk.iAdapter.iVoiceAdapter;
-import com.google.common.base.CharMatcher;
+import com.core.realwear.sdk.IVoiceAdapter;
 
 /**
  * Created by Fin on 31/08/2016.
@@ -155,8 +154,8 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
         StringBuilder builder = new StringBuilder();
         builder.append("hf_override: ");
 
-        if (mAdapter instanceof iVoiceAdapter) {
-            iVoiceAdapter adapter = (iVoiceAdapter) mAdapter;
+        if (mAdapter instanceof IVoiceAdapter) {
+            IVoiceAdapter adapter = (IVoiceAdapter) mAdapter;
             for (int i = 0; i < mAdapter.getItemCount(); i++) {
                 String voiceCommand = adapter.getVoiceCommand(i);
 
@@ -172,8 +171,8 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
 
         /*mHiddenCommandLayout.removeAllViews();
 
-        if(mAdapter instanceof iVoiceAdapter) {
-            iVoiceAdapter adapter = (iVoiceAdapter)mAdapter;
+        if(mAdapter instanceof IVoiceAdapter) {
+            IVoiceAdapter adapter = (IVoiceAdapter)mAdapter;
 
             for(int i =0; i < mAdapter.getItemCount(); i++){
                 HiddenTextView txt = new HiddenTextView(getContext());
@@ -209,8 +208,8 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
     public void onClick(View v) {
         if (v instanceof HiddenTextView) {
             int index = (Integer) v.getTag();
-            if (mAdapter instanceof iVoiceAdapter) {
-                iVoiceAdapter adapter = (iVoiceAdapter) mAdapter;
+            if (mAdapter instanceof IVoiceAdapter) {
+                IVoiceAdapter adapter = (IVoiceAdapter) mAdapter;
                 adapter.clickView(getContext(), index);
             }
         }
@@ -237,11 +236,6 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
         //super.sendAccessibilityEventUnchecked(event);
     }
 
-
-    private static final CharMatcher PUNCT_PATTERN = CharMatcher.JAVA_LETTER_OR_DIGIT
-            .or(CharMatcher.anyOf(". "))
-            .precomputed();
-
     /////////////////////////////////////////////////////////////////////////////
     //
     // Broadcast Receiver - Get ASR Results
@@ -251,43 +245,25 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
         @Override
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
-            //     Log.d(TAG, "Broadcast Action=" + action);
             if (action.equals(ACTION_SPEECH_EVENT)) {
-                String asrCommand = intent.getStringExtra("command");
+                final String asrCommand = intent.getStringExtra("command").trim();
 
-                String select_item = context.getString(R.string.select_item);
-
-                if (asrCommand.toLowerCase().contains(select_item)) {
-                    String strIndex = asrCommand.toLowerCase().replace(context.getString(R.string.select_item), "").replace(" ", "");
-
-                    int i = Integer.parseInt(strIndex);
-
-                    if (mAdapter instanceof iVoiceAdapter) {
-                        iVoiceAdapter adapter = (iVoiceAdapter) mAdapter;
-                        adapter.clickView(getContext(), i - 1);
-                        return;
-                    }
-                }
-
-                if (mAdapter instanceof iVoiceAdapter) {
-                    iVoiceAdapter adapter = (iVoiceAdapter) mAdapter;
+                if (mAdapter instanceof IVoiceAdapter) {
+                    final IVoiceAdapter adapter = (IVoiceAdapter) mAdapter;
 
                     for (int i = 0; i < mAdapter.getItemCount(); i++) {
-                        HiddenTextView txt = new HiddenTextView(getContext());
-                        String voiceCommand = adapter.getVoiceCommand(i);
+                        final String voiceCommand = adapter.getVoiceCommand(i).trim();
 
-                        String resultString = PUNCT_PATTERN.retainFrom(voiceCommand);
-                        resultString = resultString.trim();
-
-                        if (asrCommand.equals(resultString) || asrCommand == resultString) {
+                        if (asrCommand.equalsIgnoreCase(voiceCommand)) {
                             adapter.clickView(getContext(), i);
                             return;
                         }
                     }
                 }
 
-                if (mAdditional != null)
+                if (mAdditional != null) {
                     mAdditional.onCommandReceived(asrCommand);
+                }
             }
         }
     };
