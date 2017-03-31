@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Fin on 18/09/2016.
@@ -18,20 +19,23 @@ public class SpeechCommands {
 
     @Deprecated
     public static void UpdateHelp(Context context, String commands) {
-        ArrayList<String> list = new ArrayList<>(Arrays.asList(commands.split(",")));
-        updateHelp(context, list);
+        updateHelp(context, Arrays.asList(commands.split(",")));
     }
 
     @Deprecated
-    public static void UpdateHelp(Context context, ArrayList<String> commands){
+    public static void UpdateHelp(Context context, List<String> commands){
         updateHelp(context, commands);
     }
 
-    public static void updateHelp(Context context, ArrayList<String> commands) {
+    public static void updateHelp(Context context, List<String> commands) {
         final Intent intent = new Intent();
         intent.setPackage(WEARHF_PACKAGE);
         intent.setAction(ACTION_UPDATE_HELP_COMMANDS);
-        intent.putStringArrayListExtra(EXTRA_HELP_COMMANDS, commands);
+        if (commands instanceof ArrayList) {
+            intent.putStringArrayListExtra(EXTRA_HELP_COMMANDS, (ArrayList<String>) commands);
+        } else {
+            intent.putStringArrayListExtra(EXTRA_HELP_COMMANDS, new ArrayList<>(commands));
+        }
         intent.putExtra(EXTRA_SOURCE_PACKAGE, context.getPackageName());
         context.sendBroadcast(intent);
     }
