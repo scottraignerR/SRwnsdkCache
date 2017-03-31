@@ -158,7 +158,10 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
             for (int i = 0; i < mAdapter.getItemCount(); i++) {
                 String voiceCommand = adapter.getVoiceCommand(i);
 
+                // The # indicates that the command has an associated 'Select Item <n>' command.
+                builder.append('#');
                 builder.append(voiceCommand);
+
                 builder.append("|");
             }
         }
