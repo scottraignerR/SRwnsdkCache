@@ -1,4 +1,4 @@
-package com.core.realwear.sdk.Util;
+package com.core.realwear.sdk.util;
 
 import android.app.Activity;
 import android.app.Application;

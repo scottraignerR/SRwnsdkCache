@@ -1,4 +1,4 @@
-package com.core.realwear.sdk.Util;
+package com.core.realwear.sdk.util;
 
 /**
  * Created by Luke Hopkins on 28/12/2016.
@@ -6,10 +6,6 @@ package com.core.realwear.sdk.Util;
 
 
 import java.util.Locale;
-import android.app.backup.BackupManager;
-import android.content.res.Configuration;
-import android.os.RemoteException;
-import android.util.Log;
 
 public class Language {
 

@@ -1,6 +1,5 @@
-package com.core.realwear.sdk.Util;
+package com.core.realwear.sdk.util;
 
-import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.Resources;

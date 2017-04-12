@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.core.realwear.sdk.R;
-import com.core.realwear.sdk.Util.LanguageDialog;
+import com.core.realwear.sdk.util.LanguageDialog;
 
 import java.util.List;
 import java.util.Locale;

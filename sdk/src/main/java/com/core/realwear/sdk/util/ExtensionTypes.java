@@ -1,4 +1,4 @@
-package com.core.realwear.sdk.Util;
+package com.core.realwear.sdk.util;
 
 /**
  * Created by Fin on 05/09/2016.
