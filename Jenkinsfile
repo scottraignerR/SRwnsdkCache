@@ -7,5 +7,10 @@ pipeline {
         sh './gradlew clean assemble'
       }
     }
+    stage('Finish') {
+      steps {
+        archiveArtifacts '**/outputs/aar/*.aar'
+      }
+    }
   }
 }
