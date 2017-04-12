@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="LevelView">
+        <attr name="text" format="string"/>
+        <attr name="content_description_template" format="string"/>
+        <attr name="level" format="integer" />
+    </declare-styleable>
+
     <attr name="backgroundColor" format="color" />
     <attr name="wearActionBarColor" format="color"/>
     <attr name="fontThin" format="string"/>

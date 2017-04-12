@@ -22,30 +22,22 @@ package com.core.realwear.sdk;
  |
   +--------------------------------------------------------------------------*/
 
-        import android.content.Context;
-        import android.hardware.Sensor;
-        import android.hardware.SensorEvent;
-        import android.hardware.SensorEventListener;
-        import android.hardware.SensorManager;
-        import android.os.Build;
-        import android.util.Log;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.os.Build;
+import android.util.Log;
 
-        import java.util.List;
+import java.util.List;
 
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Class
-//
-/////////////////////////////////////////////////////////////////////////////
 public class HFHeadtrackerManager implements SensorEventListener {
-
     private static final String TAG = "HeadtrackerManager";
 
-    public static final int TRACK_HORIZONTAL_MOTION =0;
-    public static final int TRACK_VERTICAL_MOTION =1;
-    public static final int TRACK_ALL_MOTION =2;
-
+    public static final int TRACK_HORIZONTAL_MOTION = 0;
+    public static final int TRACK_VERTICAL_MOTION = 1;
+    public static final int TRACK_ALL_MOTION = 2;
 
     private static final int DEVICE_HMT = 0;
     private static final int DEVICE_HDK = 1;
@@ -63,35 +55,23 @@ public class HFHeadtrackerManager implements SensorEventListener {
     private boolean antiJitter;
     private float lastXValue = 0;
     private float lastXDeltaValue;
-    private float lastYValue =0;
+    private float lastYValue = 0;
     private float lastYDeltaValue;
     private int trendCounterX, trendCounterY; //Simple Anti jitter filter
 
-
-    /////////////////////////////////////////////////////////////////////////////
-//
-// Constructor
-//
-/////////////////////////////////////////////////////////////////////////////
     public HFHeadtrackerManager(HFHeadtrackerListener eventListener) {
         this.eventListener = eventListener;
-        deviceType =  getDeviceType();
+        deviceType = getDeviceType();
     }
 
-
-    /////////////////////////////////////////////////////////////////////////////
-    //
-    // Start
-    //
-    /////////////////////////////////////////////////////////////////////////////
     public void startHeadtracker(Context context, int trackingMode) {
-        if (eventListener==null)return; //No one listening, so don't start
-        this.trackingMode=trackingMode;
+        if (eventListener == null) return; //No one listening, so don't start
+        this.trackingMode = trackingMode;
 
         //Each device has specific tuning parameters here...
         int sensorSpeed = SensorManager.SENSOR_DELAY_FASTEST;
 
-        if (deviceType==DEVICE_HMT) {
+        if (deviceType == DEVICE_HMT) {
             minMovementThreshold = 0.02f;
             xScaleFactor = -100f;
             yScaleFactor = 100f;
@@ -100,7 +80,7 @@ public class HFHeadtrackerManager implements SensorEventListener {
 
         }
 
-        if (deviceType==DEVICE_HDK){
+        if (deviceType == DEVICE_HDK) {
             minMovementThreshold = 0.02f;
             xScaleFactor = -20f;
             yScaleFactor = -15f;
@@ -113,73 +93,58 @@ public class HFHeadtrackerManager implements SensorEventListener {
 
         //Get list of all sensors on device
         List<Sensor> sensorList = mSensorManager.getSensorList(Sensor.TYPE_ALL);
-        for (int i=0; i<sensorList.size(); i++){
-            Sensor sensor = (Sensor)sensorList.get(i);
+        for (int i = 0; i < sensorList.size(); i++) {
+            final Sensor sensor = sensorList.get(i);
             Log.d(TAG, "Sensor " + i + " = " + sensor.getName() + "  Vendor: " + sensor.getVendor() + "  Version: " + sensor.getVersion());
         }
 
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
         Log.d(TAG, "Default Sensor = " + mSensor.getName());
+
         mSensorManager.registerListener(this, mSensor, sensorSpeed);
         Log.d(TAG, "Registering Headtracker");
-
     }
 
-
-
-    /////////////////////////////////////////////////////////////////////////////
-    //
-    // Stop
-    //
-    /////////////////////////////////////////////////////////////////////////////
     public void stopHeadtracker() {
-
-
-        if (mSensorManager!=null){
+        if (mSensorManager != null) {
             mSensorManager.unregisterListener(this);
             Log.d(TAG, "Unregistering Headtracker");
         }
-        mSensorManager=null;
-        mSensor=null;
+
+        mSensorManager = null;
+        mSensor = null;
     }
 
-
-    /////////////////////////////////////////////////////////////////////////////
-    //
-    // On Sensor Change
-    //
-    /////////////////////////////////////////////////////////////////////////////
     public void onSensorChanged(SensorEvent event) {
         float x = 0;
-        float y =0;
-        float z=0;
+        float y = 0;
+        float z = 0;
 
         //  Log.d(TAG, "Sensor Changed " + System.currentTimeMillis());
 
-        if (deviceType==DEVICE_HDK){
+        if (deviceType == DEVICE_HDK) {
             x = event.values[1];
             y = event.values[2];
             z = event.values[0];
         }
 
-        if (deviceType==DEVICE_HMT){
+        if (deviceType == DEVICE_HMT) {
             x = event.values[0];
             y = -event.values[1];
             z = event.values[2];
         }
 
-        int newXOffset =0;
-        int newYOffset =0;
-
+        int newXOffset = 0;
+        int newYOffset = 0;
 
 
         //Process X-direction
-        if (trackingMode==TRACK_HORIZONTAL_MOTION || trackingMode==TRACK_ALL_MOTION) {
+        if (trackingMode == TRACK_HORIZONTAL_MOTION || trackingMode == TRACK_ALL_MOTION) {
             //Following two lines throw out the finest movement to attempt to smooth the motion
             float deltaX = (x - lastXValue);
             if (deltaX < -minMovementThreshold || deltaX > minMovementThreshold) {
                 //Crude Anti-Jitter filter
-                if (antiJitter == true) {
+                if (antiJitter) {
                     if (lastXDeltaValue < 0 && deltaX < 0) trendCounterX++;
                     if (lastXDeltaValue > 0 && deltaX > 0) trendCounterX++;
                     if (lastXDeltaValue < 0 && deltaX > 0) trendCounterX = 0;
@@ -192,9 +157,9 @@ public class HFHeadtrackerManager implements SensorEventListener {
         }
 
         //Process Y-direction
-        if (trackingMode==TRACK_VERTICAL_MOTION || trackingMode==TRACK_ALL_MOTION) {
+        if (trackingMode == TRACK_VERTICAL_MOTION || trackingMode == TRACK_ALL_MOTION) {
             //Following two lines throw out the finest movement to attempt to smooth the motion
-            float deltaY= (y - lastYValue);
+            float deltaY = (y - lastYValue);
             if (deltaY < -minMovementThreshold || deltaY > minMovementThreshold) {
 
                 //Crude Anti-Jitter filter
@@ -203,7 +168,7 @@ public class HFHeadtrackerManager implements SensorEventListener {
                     if (lastYDeltaValue > 0 && deltaY > 0) trendCounterY++;
                     if (lastYDeltaValue < 0 && deltaY > 0) trendCounterY = 0;
                     if (lastYDeltaValue > 0 && deltaY < 0) trendCounterY = 0;
-                    if (trendCounterY > 3)newYOffset = (int) (deltaY * yScaleFactor);
+                    if (trendCounterY > 3) newYOffset = (int) (deltaY * yScaleFactor);
                 } else newYOffset = (int) (deltaY * yScaleFactor);
 
                 lastYValue = y;
@@ -212,41 +177,23 @@ public class HFHeadtrackerManager implements SensorEventListener {
         }
 
         //Only allow movement in one axis, the bigger one
-        if (Math.abs(newXOffset) > Math.abs(newYOffset))newYOffset=0;
-        else newXOffset=0;
+        if (Math.abs(newXOffset) > Math.abs(newYOffset)) newYOffset = 0;
+        else newXOffset = 0;
         //   Log.d(TAG, "xyz = " + x + ", " + y + ", " + z );
-        if (newXOffset == 0 && newYOffset==0) return;
-        if (eventListener!=null)eventListener.onHeadMoved(newXOffset, newYOffset);
+        if (newXOffset == 0 && newYOffset == 0) return;
+        if (eventListener != null) eventListener.onHeadMoved(newXOffset, newYOffset);
 
     }
 
-
-
-    /////////////////////////////////////////////////////////////////////////////
-    //
-    // On Accuracy Change
-    //
-    /////////////////////////////////////////////////////////////////////////////
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
 
-
-    /////////////////////////////////////////////////////////////////////////////
-    //
-    // Get Device Type
-    //
-    /////////////////////////////////////////////////////////////////////////////
-    public static int getDeviceType(){
-
-        if (Build.DEVICE.equals("bullhead"))return DEVICE_HDK;
-        if (Build.PRODUCT.equals("HMT-1"))return DEVICE_HMT;
+    public static int getDeviceType() {
+        if (Build.DEVICE.equals("bullhead")) return DEVICE_HDK;
+        if (Build.PRODUCT.equals("HMT-1")) return DEVICE_HMT;
 
         return DEVICE_HMT;
     }
-
-
-
-
 }

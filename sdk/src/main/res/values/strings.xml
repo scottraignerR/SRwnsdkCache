@@ -12,7 +12,8 @@
     <string name="zoom_level_3">Zoom Level 3</string>
     <string name="zoom_level_4">Zoom Level 4</string>
     <string name="zoom_level_5">Zoom Level 5</string>
-    <string name="zoom_level_instruction">Zoom Level 1-5</string>
+    <string name="zoom_level">Zoom Level %d</string>
+    <string name="zoom_level_instruction">Zoom Level 1–5</string>
 
     <!--<string name="select_item">select item</string>-->
 

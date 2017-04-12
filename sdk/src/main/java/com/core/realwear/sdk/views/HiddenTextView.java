@@ -2,6 +2,7 @@ package com.core.realwear.sdk.views;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -9,15 +10,13 @@ import android.widget.TextView;
  * Created by Luke on 22/01/2017.
  */
 
-public class HiddenTextView extends TextView {
+public class HiddenTextView extends AppCompatTextView {
     public HiddenTextView(Context context) {
-        super(context);
-        init();
+        this(context, null);
     }
 
     public HiddenTextView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
+        this(context, attrs, 0);
     }
 
     public HiddenTextView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -25,12 +24,7 @@ public class HiddenTextView extends TextView {
         init();
     }
 
-    public HiddenTextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
-
-    private void init(){
+    private void init() {
         setAlpha(0.01f);
         setClickable(true);
         setTextColor(ContextCompat.getColor(getContext(), android.R.color.transparent));
