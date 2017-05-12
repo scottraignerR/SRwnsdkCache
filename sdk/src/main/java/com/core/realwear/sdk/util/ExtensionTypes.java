@@ -16,8 +16,14 @@ public class ExtensionTypes {
         WEBP,
         BMP,
         MOV,
-        GIF,
+        AMR,
+        WMA,
+        MP3,
+        WAV,
+        OGG,
+        MIDI,
         AVI,
+        GIF,
         NOT_SUPPORTED;
     }
 
@@ -33,8 +39,16 @@ public class ExtensionTypes {
     public static final String WEBM = ".webm";
     public static final String WEBP = ".webp";
     public static final String MOV = ".mov";
-    public static final String GIF = ".gif";
+    public static final String AMR = ".amr";
+    public static final String AWB = ".awb";
+    public static final String AMRWB = ".amrwb";
+    public static final String WMA = ".wma";
+    public static final String MP3 = ".mp3";
+    public static final String WAV = ".wav";
+    public static final String OGG = ".ogg";
+    public static final String MIDI = ".midi";
     public static final String AVI = ".avi";
+    public static final String GIF = ".gif";
 
     public static Supported ParseLocationToType(String location)
     {
@@ -64,11 +78,29 @@ public class ExtensionTypes {
         else if(location.toLowerCase().endsWith(MOV)) {
             return Supported.MOV;
         }
-        else if(location.toLowerCase().endsWith(GIF)) {
-            return Supported.GIF;
+        else if(location.toLowerCase().endsWith(AMR) || location.toLowerCase().endsWith(AWB) || location.toLowerCase().endsWith(AMRWB)) {
+            return Supported.AMR;
+        }
+        else if(location.toLowerCase().endsWith(WMA)) {
+            return Supported.WMA;
+        }
+        else if(location.toLowerCase().endsWith(MP3)) {
+            return Supported.MP3;
+        }
+        else if(location.toLowerCase().endsWith(WAV)) {
+            return Supported.WAV;
+        }
+        else if(location.toLowerCase().endsWith(OGG)) {
+            return Supported.OGG;
+        }
+        else if(location.toLowerCase().endsWith(MIDI)) {
+            return Supported.MIDI;
         }
         else if(location.toLowerCase().endsWith(AVI)) {
             return Supported.AVI;
+        }
+        else if(location.toLowerCase().endsWith(GIF)) {
+            return Supported.GIF;
         }
 
         return Supported.NOT_SUPPORTED;
@@ -88,14 +120,36 @@ public class ExtensionTypes {
         }
     }
 
-    public static boolean isVideo(String location) {
+    public static boolean isVideo(String location, boolean strict) {
         switch (ParseLocationToType(location)) {
             case MP4:
             case MKV:
             case GPP:
+                if (strict) {
+                    return false;
+                }
             case WEBM:
             case MOV:
             case AVI:
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isAudio(String location, boolean strict) {
+        switch (ParseLocationToType(location)) {
+            case GPP:
+                if (strict) {
+                    return false;
+                }
+            case AMR:
+            case WMA:
+            case MP3:
+            case WAV:
+            case OGG:
+            case MIDI:
                 return true;
 
             default:
