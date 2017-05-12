@@ -9,13 +9,16 @@ public class ExtensionTypes {
         PDF,
         PNG,
         JPEG,
-        JPG,
         MP4,
         MKV,
         GPP,
         WEBM,
         WEBP,
-        BMP, NOT_SUPPORTED;
+        BMP,
+        MOV,
+        AMR,
+        WMA,
+        NOT_SUPPORTED;
     }
 
     public static final String PNG = ".png";
@@ -29,6 +32,11 @@ public class ExtensionTypes {
     public static final String GPP = ".3gpp";
     public static final String WEBM = ".webm";
     public static final String WEBP = ".webp";
+    public static final String MOV = ".mov";
+    public static final String AMR = ".amr";
+    public static final String AWB = ".awb";
+    public static final String AMRWB = ".amrwb";
+    public static final String WMA = ".wma";
 
     public static Supported ParseLocationToType(String location)
     {
@@ -36,16 +44,11 @@ public class ExtensionTypes {
             return Supported.PNG;
         }else if(location.toLowerCase().endsWith(PDF)){
             return Supported.PDF;
-        }else if(location.toLowerCase().endsWith(JPEG)) {
+        }else if(location.toLowerCase().endsWith(JPEG) || location.toLowerCase().endsWith(JPG)) {
             return Supported.JPEG;
-        }else if(location.toLowerCase().endsWith(JPG)) {
-            return Supported.JPG;
         }else if(location.toLowerCase().endsWith(MP4)) {
             return Supported.MP4;
         }else if(location.toLowerCase().endsWith(BMP)) {
-            return Supported.BMP;
-        }
-        else if(location.toLowerCase().endsWith(BMP)) {
             return Supported.BMP;
         }
         else if(location.toLowerCase().endsWith(WEBP)) {
@@ -54,17 +57,55 @@ public class ExtensionTypes {
         else if(location.toLowerCase().endsWith(MKV)) {
             return Supported.MKV;
         }
-        else if(location.toLowerCase().endsWith(GPP)) {
-            return Supported.GPP;
-        }
-        else if(location.toLowerCase().endsWith(GP)) {
+        else if(location.toLowerCase().endsWith(GPP) || location.toLowerCase().endsWith(GP)) {
             return Supported.GPP;
         }
         else if(location.toLowerCase().endsWith(WEBM)) {
             return Supported.WEBM;
         }
+        else if(location.toLowerCase().endsWith(MOV)) {
+            return Supported.MOV;
+        }
+        else if(location.toLowerCase().endsWith(AMR) || location.toLowerCase().endsWith(AWB) || location.toLowerCase().endsWith(AMRWB)) {
+            return Supported.AMR;
+        }
+        else if(location.toLowerCase().endsWith(WMA)) {
+            return Supported.WMA;
+        }
 
         return Supported.NOT_SUPPORTED;
+    }
+
+    public static boolean isImage(String location) {
+        switch (ParseLocationToType(location)) {
+            case PNG:
+            case JPEG:
+            case GPP:
+            case WEBP:
+            case BMP:
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isVideo(String location) {
+        switch (ParseLocationToType(location)) {
+            case MP4:
+            case MKV:
+            case GPP:
+            case WEBM:
+            case MOV:
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isPdf(String location) {
+        return ParseLocationToType(location) == Supported.PDF;
     }
 
 }
