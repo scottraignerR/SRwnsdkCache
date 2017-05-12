@@ -18,6 +18,7 @@ public class ExtensionTypes {
         MOV,
         AMR,
         WMA,
+        GIF,
         NOT_SUPPORTED;
     }
 
@@ -37,6 +38,7 @@ public class ExtensionTypes {
     public static final String AWB = ".awb";
     public static final String AMRWB = ".amrwb";
     public static final String WMA = ".wma";
+    public static final String GIF = ".gif";
 
     public static Supported ParseLocationToType(String location)
     {
@@ -72,6 +74,9 @@ public class ExtensionTypes {
         else if(location.toLowerCase().endsWith(WMA)) {
             return Supported.WMA;
         }
+        else if(location.toLowerCase().endsWith(GIF)) {
+            return Supported.GIF;
+        }
 
         return Supported.NOT_SUPPORTED;
     }
@@ -83,6 +88,7 @@ public class ExtensionTypes {
             case GPP:
             case WEBP:
             case BMP:
+            case GIF:
                 return true;
 
             default:
