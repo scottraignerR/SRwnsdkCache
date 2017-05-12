@@ -16,9 +16,8 @@ public class ExtensionTypes {
         WEBP,
         BMP,
         MOV,
-        AMR,
-        WMA,
         GIF,
+        AVI,
         NOT_SUPPORTED;
     }
 
@@ -34,11 +33,8 @@ public class ExtensionTypes {
     public static final String WEBM = ".webm";
     public static final String WEBP = ".webp";
     public static final String MOV = ".mov";
-    public static final String AMR = ".amr";
-    public static final String AWB = ".awb";
-    public static final String AMRWB = ".amrwb";
-    public static final String WMA = ".wma";
     public static final String GIF = ".gif";
+    public static final String AVI = ".avi";
 
     public static Supported ParseLocationToType(String location)
     {
@@ -68,14 +64,11 @@ public class ExtensionTypes {
         else if(location.toLowerCase().endsWith(MOV)) {
             return Supported.MOV;
         }
-        else if(location.toLowerCase().endsWith(AMR) || location.toLowerCase().endsWith(AWB) || location.toLowerCase().endsWith(AMRWB)) {
-            return Supported.AMR;
-        }
-        else if(location.toLowerCase().endsWith(WMA)) {
-            return Supported.WMA;
-        }
         else if(location.toLowerCase().endsWith(GIF)) {
             return Supported.GIF;
+        }
+        else if(location.toLowerCase().endsWith(AVI)) {
+            return Supported.AVI;
         }
 
         return Supported.NOT_SUPPORTED;
@@ -85,7 +78,6 @@ public class ExtensionTypes {
         switch (ParseLocationToType(location)) {
             case PNG:
             case JPEG:
-            case GPP:
             case WEBP:
             case BMP:
             case GIF:
@@ -103,6 +95,7 @@ public class ExtensionTypes {
             case GPP:
             case WEBM:
             case MOV:
+            case AVI:
                 return true;
 
             default:
