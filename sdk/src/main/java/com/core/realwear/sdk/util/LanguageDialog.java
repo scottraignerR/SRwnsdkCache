@@ -147,7 +147,10 @@ public class LanguageDialog extends FullScreenDialog {
 
         Collections.sort(localeInfos);
 
-        final Locale currentLocale = Locale.getDefault();
+        Locale currentLocale = Locale.getDefault();
+        if (currentLocale.equals(Locale.US)) {
+            currentLocale = Locale.UK;
+        }
         int index = 0;
         for (LocaleInfo localeInfo : localeInfos) {
             if (localeInfo.locale.equals(currentLocale)) {
