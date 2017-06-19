@@ -118,6 +118,8 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
 
 
         mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            int lastCount = -1;
+
             @Override
             public void onChanged() {
                 super.onChanged();
@@ -125,26 +127,24 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
 
                 mDecoration.setCount(mAdapter.getItemCount());
 
-                if (mAdapter.getItemCount() > 6) {
-                    mRecycleView.scrollToPosition((mAdapter.getItemCount() / 2) - 3);
-                    mRecycleView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            View initial = mRecycleView.getChildAt(0);
-                            if (initial != null) {
-                                mRecycleView.scrollBy(initial.getWidth() / 2, 0);
+                if (lastCount != mAdapter.getItemCount()) {
+                    lastCount = mAdapter.getItemCount();
+
+                    if (mAdapter.getItemCount() > 6) {
+                        mRecycleView.scrollToPosition((mAdapter.getItemCount() / 2) - 3);
+                        mRecycleView.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                View initial = mRecycleView.getChildAt(0);
+                                if (initial != null) {
+                                    mRecycleView.scrollBy(initial.getWidth() / 2, 0);
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             }
         });
-    }
-
-    public interface InjectCommands {
-        String getCommands();
-
-        void onCommandReceived(String command);
     }
 
     public void setCommands(InjectCommands additionalCommands) {
@@ -258,4 +258,9 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
         }
     };
 
+    public interface InjectCommands {
+        String getCommands();
+
+        void onCommandReceived(String command);
+    }
 }
