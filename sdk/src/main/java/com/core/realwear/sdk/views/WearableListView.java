@@ -22,6 +22,8 @@ import com.core.realwear.sdk.IVoiceAdapter;
  * Created by Fin on 31/08/2016.
  */
 public class WearableListView extends RelativeLayout implements View.OnClickListener, HFHeadtrackerListener {
+    private static final String ACTION_SPEECH_EVENT = "com.realwear.wearhf.intent.action.SPEECH_EVENT";
+    private static final String EXTRA_INDEX = "com.realwear.wearhf.intent.extra.INDEX";
 
     private RecyclerView mRecycleView;
     private RecyclerView.Adapter mAdapter;
@@ -32,7 +34,6 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
     private HFHeadtrackerManager mHeadTracker;
     private View mRootGroup;
 
-    private static final String ACTION_SPEECH_EVENT = "com.realwear.wearhf.intent.action.SPEECH_EVENT";
     private RecyclerViewMargin mDecoration;
     private int mX;
     private Handler mHandler;
@@ -235,12 +236,17 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
                 if (mAdapter instanceof IVoiceAdapter) {
                     final IVoiceAdapter adapter = (IVoiceAdapter) mAdapter;
 
-                    for (int i = 0; i < mAdapter.getItemCount(); i++) {
-                        final String voiceCommand = adapter.getVoiceCommand(i).trim();
+                    int index = intent.getIntExtra(EXTRA_INDEX, -1);
+                    if (index >= 0 && index < mAdapter.getItemCount()) {
+                        adapter.clickView(getContext(), index);
+                    } else {
+                        for (int i = 0; i < mAdapter.getItemCount(); i++) {
+                            final String voiceCommand = adapter.getVoiceCommand(i).trim();
 
-                        if (asrCommand.equalsIgnoreCase(voiceCommand)) {
-                            adapter.clickView(getContext(), i);
-                            return;
+                            if (asrCommand.equalsIgnoreCase(voiceCommand)) {
+                                adapter.clickView(getContext(), i);
+                                break;
+                            }
                         }
                     }
                 }
