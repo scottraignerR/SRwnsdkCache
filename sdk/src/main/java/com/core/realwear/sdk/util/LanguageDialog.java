@@ -115,13 +115,7 @@ public class LanguageDialog extends FullScreenDialog {
                 continue;
             }
 
-            final Locale locale;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                locale = Locale.forLanguageTag(localeName.replace("_", "-"));
-            } else {
-                // TODO: Fix this.
-                locale = Locale.CANADA;
-            }
+            final Locale locale = Locale.forLanguageTag(localeName.replace("_", "-"));
 
             if (locale == null || "und".equals(locale.getLanguage()) ||
                     locale.getLanguage().isEmpty() || locale.getCountry().isEmpty()) {
