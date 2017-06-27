@@ -4,6 +4,8 @@
         <item name="fontPath">fonts/Montserrat-Medium.otf</item>
         <item name="fontThin">fonts/Montserrat-Medium.otf</item>
         <item name="android:textViewStyle">@style/SpeechButton</item>
+
+        <item name="android:colorPrimary">#4816AC</item>
     </style>
 
     <style name="WindowAnimationTransition">
