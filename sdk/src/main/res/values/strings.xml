@@ -18,7 +18,7 @@
     <!--<string name="select_item">select item</string>-->
 
     <string-array name="supported_languages" translatable="false">
-        <item>en-GB</item>
+        <item>en-US</item>
         <item>pt-PT</item>
         <item>zh-CN</item>
         <item>de-DE</item>
