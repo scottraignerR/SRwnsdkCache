@@ -4,10 +4,13 @@ import android.os.Environment;
 import android.os.StatFs;
 
 public final class Utilities {
+    private static final long SIZE_KB = 1024L;
+    private static final long SIZE_MB = SIZE_KB * SIZE_KB;
+
     /**
      * @return Number of bytes available on External storage
      */
-    public static long getAvailableSpaceInBytes() {
+    public static long getAvailableSpace() {
         long availableSpace;
         StatFs stat = new StatFs(Environment.getExternalStorageDirectory().getPath());
         availableSpace = stat.getAvailableBlocksLong() * stat.getBlockSizeLong();
@@ -17,24 +20,14 @@ public final class Utilities {
     /**
      * @return Number of kilo bytes available on External storage
      */
-    public static long getAvailableSpaceInKB() {
-        final long SIZE_KB = 1024L;
-        long availableSpace;
-        StatFs stat = new StatFs(Environment.getExternalStorageDirectory().getPath());
-        availableSpace = stat.getAvailableBlocksLong() * stat.getBlockSizeLong();
-        return availableSpace / SIZE_KB;
+    public static long getAvailableSpaceKB() {
+        return getAvailableSpace() / SIZE_KB;
     }
 
     /**
      * @return Number of Mega bytes available on External storage
      */
-    public static long getAvailableSpaceInMB() {
-        final long SIZE_KB = 1024L;
-        final long SIZE_MB = SIZE_KB * SIZE_KB;
-
-        long availableSpace;
-        StatFs stat = new StatFs(Environment.getExternalStorageDirectory().getPath());
-        availableSpace = stat.getAvailableBlocksLong() * stat.getBlockSizeLong();
-        return availableSpace / SIZE_MB;
+    public static long getAvailableSpaceMB() {
+        return getAvailableSpace() / SIZE_MB;
     }
 }
