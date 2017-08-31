@@ -211,19 +211,21 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
     private BroadcastReceiver asrBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            final String action = intent.getAction();
-            if (action.equals(ACTION_SPEECH_EVENT)) {
-                final String asrCommand = intent.getStringExtra("command").trim();
+            if (!intent.getAction().equals(ACTION_SPEECH_EVENT)) {
+                return;
+            }
 
-                if (mAdapter instanceof IVoiceAdapter) {
-                    final IVoiceAdapter adapter = (IVoiceAdapter) mAdapter;
+            final String asrCommand = intent.getStringExtra("command").trim();
 
-                    int index = intent.getIntExtra(EXTRA_INDEX, -1);
-                    if (index >= 0 && index < mAdapter.getItemCount()) {
-                        adapter.clickView(getContext(), index);
-                    } else {
-                        for (int i = 0; i < mAdapter.getItemCount(); i++) {
-                            final String voiceCommand = adapter.getVoiceCommand(i).trim();
+            if (mAdapter instanceof IVoiceAdapter) {
+                final IVoiceAdapter adapter = (IVoiceAdapter) mAdapter;
+
+                int index = intent.getIntExtra(EXTRA_INDEX, -1);
+                if (index >= 0 && index < mAdapter.getItemCount()) {
+                    adapter.selectItem(getContext(), index);
+                } else {
+                    for (int i = 0; i < mAdapter.getItemCount(); i++) {
+                        final String voiceCommand = adapter.getVoiceCommand(i).trim();
 
                         if (asrCommand.equalsIgnoreCase(voiceCommand)) {
                             adapter.selectItem(getContext(), i);
@@ -239,7 +241,7 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
         }
     };
 
-    public interface InjectCommands {
+    interface InjectCommands {
         String getCommands();
 
         void onCommandReceived(String command);
