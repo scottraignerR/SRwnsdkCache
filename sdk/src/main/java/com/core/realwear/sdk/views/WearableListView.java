@@ -241,7 +241,7 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
         }
     };
 
-    interface InjectCommands {
+    public interface InjectCommands {
         String getCommands();
 
         void onCommandReceived(String command);
