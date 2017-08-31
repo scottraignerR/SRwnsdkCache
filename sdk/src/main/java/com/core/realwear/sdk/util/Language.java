@@ -5,12 +5,13 @@ package com.core.realwear.sdk.util;
  */
 
 
+import android.util.Log;
+
 import java.util.Locale;
 
 public class Language {
 
-    public static Locale getLanguage()
-    {
+    public static Locale getLanguage() {
         return Locale.getDefault();
     }
 
@@ -19,30 +20,16 @@ public class Language {
      * for a while during the Locale migration, so the caller need to take care of it.
      */
     public static void setLanguage(Locale locale) {
+        try {
+            Class<?> activityManagerNative = Class.forName("android.app.ActivityManagerNative");
+            Object am = activityManagerNative.getMethod("getDefault").invoke(activityManagerNative);
+            Object config = am.getClass().getMethod("getConfiguration").invoke(am);
+            config.getClass().getDeclaredField("locale").set(config, locale);
+            config.getClass().getDeclaredField("userSetLocale").setBoolean(config, true);
 
-		/*IActivityManager am = ActivityManagerNative.getDefault();
-		Configuration config;
-		try {
-			config = am.getConfiguration();
-			config.locale = Locale.CHINA;
-			am.updateConfiguration(config);
-			//Trigger the dirty bit for the Settings Provider.
-			BackupManager.dataChanged("com.android.providers.settings");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
-		try {
-			Class<?> activityManagerNative = Class.forName("android.app.ActivityManagerNative");
-			Object am=activityManagerNative.getMethod("getDefault").invoke(activityManagerNative);
-			Object config=am.getClass().getMethod("getConfiguration").invoke(am);
-			config.getClass().getDeclaredField("locale").set(config, locale);
-			config.getClass().getDeclaredField("userSetLocale").setBoolean(config, true);
-
-			am.getClass().getMethod("updateConfiguration",android.content.res.Configuration.class).invoke(am,config);
-
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
+            am.getClass().getMethod("updateConfiguration", android.content.res.Configuration.class).invoke(am, config);
+        } catch (Exception e) {
+            Log.e("Language", "", e);
+        }
     }
-
 }

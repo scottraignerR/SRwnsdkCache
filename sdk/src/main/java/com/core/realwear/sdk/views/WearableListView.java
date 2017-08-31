@@ -23,7 +23,9 @@ import com.core.realwear.sdk.IVoiceAdapter;
  */
 public class WearableListView extends RelativeLayout implements View.OnClickListener, HFHeadtrackerListener {
     private static final String NO_SCROLL = "hf_scroll_none";
+
     private static final String ACTION_SPEECH_EVENT = "com.realwear.wearhf.intent.action.SPEECH_EVENT";
+    private static final String EXTRA_INDEX = "com.realwear.wearhf.intent.extra.INDEX";
 
     private RecyclerView mRecycleView;
     private RecyclerView.Adapter mAdapter;
@@ -97,6 +99,8 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
 
 
         mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            int lastCount = -1;
+
             @Override
             public void onChanged() {
                 super.onChanged();
@@ -104,16 +108,24 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
 
                 mDecoration.setCount(mAdapter.getItemCount());
 
-                if (mAdapter.getItemCount() > 6)
-                    mRecycleView.scrollToPosition((mAdapter.getItemCount() / 2));
+                if (lastCount != mAdapter.getItemCount()) {
+                    lastCount = mAdapter.getItemCount();
+
+                    if (mAdapter.getItemCount() > 6) {
+                        mRecycleView.scrollToPosition((mAdapter.getItemCount() / 2) - 3);
+                        mRecycleView.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                View initial = mRecycleView.getChildAt(0);
+                                if (initial != null) {
+                                    mRecycleView.scrollBy(initial.getWidth() / 2, 0);
+                                }
+                            }
+                        });
+                    }
+                }
             }
         });
-    }
-
-    public interface InjectCommands {
-        String getCommands();
-
-        void onCommandReceived(String command);
     }
 
     public void setCommands(InjectCommands additionalCommands) {
@@ -206,8 +218,12 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
                 if (mAdapter instanceof IVoiceAdapter) {
                     final IVoiceAdapter adapter = (IVoiceAdapter) mAdapter;
 
-                    for (int i = 0; i < mAdapter.getItemCount(); i++) {
-                        final String voiceCommand = adapter.getVoiceCommand(i).trim();
+                    int index = intent.getIntExtra(EXTRA_INDEX, -1);
+                    if (index >= 0 && index < mAdapter.getItemCount()) {
+                        adapter.clickView(getContext(), index);
+                    } else {
+                        for (int i = 0; i < mAdapter.getItemCount(); i++) {
+                            final String voiceCommand = adapter.getVoiceCommand(i).trim();
 
                         if (asrCommand.equalsIgnoreCase(voiceCommand)) {
                             adapter.selectItem(getContext(), i);
@@ -222,4 +238,10 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
             }
         }
     };
+
+    public interface InjectCommands {
+        String getCommands();
+
+        void onCommandReceived(String command);
+    }
 }
