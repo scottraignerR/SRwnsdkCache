@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,6 +26,14 @@ public class SpeechCommands {
     @Deprecated
     public static void UpdateHelp(Context context, List<String> commands){
         updateHelp(context, commands);
+    }
+
+    public static void updateHelp(Context context, String... commands) {
+        if (commands == null || commands.length == 0) {
+            return;
+        }
+
+        updateHelp(context, Arrays.asList(commands));
     }
 
     public static void updateHelp(Context context, List<String> commands) {

@@ -22,22 +22,18 @@ import com.core.realwear.sdk.IVoiceAdapter;
  * Created by Fin on 31/08/2016.
  */
 public class WearableListView extends RelativeLayout implements View.OnClickListener, HFHeadtrackerListener {
+    private static final String NO_SCROLL = "hf_scroll_none";
+    private static final String ACTION_SPEECH_EVENT = "com.realwear.wearhf.intent.action.SPEECH_EVENT";
 
     private RecyclerView mRecycleView;
     private RecyclerView.Adapter mAdapter;
-    private RelativeLayout mHiddenCommandLayout;
-
-    private static String NO_SCROLL = "hf_scroll_none";
 
     private HFHeadtrackerManager mHeadTracker;
     private View mRootGroup;
 
-    private static final String ACTION_SPEECH_EVENT = "com.realwear.wearhf.intent.action.SPEECH_EVENT";
     private RecyclerViewMargin mDecoration;
-    private int mX;
     private Handler mHandler;
     private InjectCommands mAdditional;
-
 
     public WearableListView(Context context) {
         super(context);
@@ -58,35 +54,19 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
         mHeadTracker = new HFHeadtrackerManager(this);
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.custom_recycleview, null);
-
-        addView(view);
+        View view = inflater.inflate(R.layout.custom_recycleview, this);
 
         mRecycleView = (RecyclerView) view.findViewById(R.id.list2);
         mRecycleView.setContentDescription(NO_SCROLL);
 
         mDecoration = new RecyclerViewMargin(250, 1);
         mRecycleView.addItemDecoration(mDecoration);
-        mHiddenCommandLayout = (RelativeLayout) view.findViewById(R.id.hidden_commands);
 
         mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 //updateScroll();
-            }
-        }, 5);
-
-    }
-
-    public void updateScroll() {
-        if (mRecycleView != null)
-            mRecycleView.scrollBy(mX, 0);
-
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                updateScroll();
             }
         }, 5);
     }
@@ -125,9 +105,7 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
                 mDecoration.setCount(mAdapter.getItemCount());
 
                 if (mAdapter.getItemCount() > 6)
-                        mRecycleView.scrollToPosition((mAdapter.getItemCount() / 2));
-
-
+                    mRecycleView.scrollToPosition((mAdapter.getItemCount() / 2));
             }
         });
     }
@@ -181,13 +159,16 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
     }
 
     @Override
-    public void onClick(View v) {
-        if (v instanceof HiddenTextView) {
-            int index = (Integer) v.getTag();
-            if (mAdapter instanceof IVoiceAdapter) {
-                IVoiceAdapter adapter = (IVoiceAdapter) mAdapter;
-                adapter.clickView(getContext(), index);
-            }
+    public void onClick(View view) {
+        if (!(view instanceof HiddenTextView)) {
+            return;
+        }
+
+        final int index = (Integer) view.getTag();
+
+        if (mAdapter instanceof IVoiceAdapter) {
+            IVoiceAdapter adapter = (IVoiceAdapter) mAdapter;
+            adapter.selectItem(getContext(), index);
         }
     }
 
@@ -212,11 +193,9 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
         //super.sendAccessibilityEventUnchecked(event);
     }
 
-    /////////////////////////////////////////////////////////////////////////////
-    //
-    // Broadcast Receiver - Get ASR Results
-    //
-    /////////////////////////////////////////////////////////////////////////////
+    /**
+     * Receives broadcasts for ASR.
+     */
     private BroadcastReceiver asrBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -231,7 +210,7 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
                         final String voiceCommand = adapter.getVoiceCommand(i).trim();
 
                         if (asrCommand.equalsIgnoreCase(voiceCommand)) {
-                            adapter.clickView(getContext(), i);
+                            adapter.selectItem(getContext(), i);
                             return;
                         }
                     }
@@ -243,5 +222,4 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
             }
         }
     };
-
 }

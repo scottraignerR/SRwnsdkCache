@@ -7,6 +7,5 @@ import android.content.Context;
  */
 public interface IVoiceAdapter {
     String getVoiceCommand(int index);
-    String getSecondaryCommand(Context context, int index);
-    void clickView(Context context, int index);
+    void selectItem(Context context, int index);
 }
