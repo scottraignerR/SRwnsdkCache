@@ -48,16 +48,26 @@ public class StorageUtils {
     }
 
     /**
-     * Returns the external storage directory
-     * @param context used to determine if it should use
-     * @return
+     * @param context used to determine what is the default storage
+     * @return the index of the storage location
      */
-    public static File getExternalStorageDirectory(Context context) {
+    public static int getDefaultStorage(Context context) {
         int defaultStorage = Settings.Global.getInt(context.getContentResolver(), KEY_DEFAULT_STORAGE, -1);
 
         if (defaultStorage < 0) {
             defaultStorage = 0;
         }
+        return defaultStorage;
+    }
+
+    /**
+     * Returns the external storage directory
+     *
+     * @param context used to determine what is the default storage
+     * @return the default storage or {@link Environment#getExternalStorageDirectory()} in case of error
+     */
+    public static File getExternalStorageDirectory(Context context) {
+        int defaultStorage = getDefaultStorage(context);
 
         File[] dirs = getExternalStorageDirectories();
         if (dirs != null && defaultStorage < dirs.length) {
@@ -70,6 +80,11 @@ public class StorageUtils {
         return Environment.getExternalStorageDirectory();
     }
 
+    /**
+     * Uses internal {@link Environment}
+     *
+     * @return a list of files pointing to mount locations or null if there was an error
+     */
     public static File[] getExternalStorageDirectories() {
         try {
             Field sCurrentUserField = Environment.class.getDeclaredField("sCurrentUser");
@@ -84,12 +99,16 @@ public class StorageUtils {
         }
     }
 
+    /**
+     * Returns the external storage directory for given type
+     *
+     * @param context used to determine what is the default storage
+     * @param type    see {@link Environment#getExternalStoragePublicDirectory(String)}
+     * @return the default storage for given type or
+     * {@link Environment#getExternalStoragePublicDirectory(String)} in case of error
+     */
     public static File getExternalStoragePublicDirectory(Context context, String type) {
-        int defaultStorage = Settings.Global.getInt(context.getContentResolver(), KEY_DEFAULT_STORAGE, -1);
-
-        if (defaultStorage < 0) {
-            defaultStorage = 0;
-        }
+        int defaultStorage = getDefaultStorage(context);
 
         File[] dirs = getExternalStoragePublicDirectories(type);
         if (dirs != null && defaultStorage < dirs.length) {
@@ -102,6 +121,12 @@ public class StorageUtils {
         return Environment.getExternalStoragePublicDirectory(type);
     }
 
+    /**
+     * Uses internal {@link Environment}
+     *
+     * @param type see {@link Environment#getExternalStoragePublicDirectory(String)}
+     * @return a list of files pointing to mount locations for given type or null if there was an error
+     */
     public static File[] getExternalStoragePublicDirectories(String type) {
         try {
             Field sCurrentUserField = Environment.class.getDeclaredField("sCurrentUser");
