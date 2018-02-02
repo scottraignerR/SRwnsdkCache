@@ -9,6 +9,8 @@ import android.util.Log;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by alexandru.ghitulescu on 27/12/2017.
@@ -69,9 +71,9 @@ public class StorageUtils {
     public static File getExternalStorageDirectory(Context context) {
         int defaultStorage = getDefaultStorage(context);
 
-        File[] dirs = getExternalStorageDirectories();
-        if (dirs != null && defaultStorage < dirs.length) {
-            File storage = dirs[defaultStorage];
+        List<File> dirs = getExternalStorageDirectories();
+        if (dirs != null && defaultStorage < dirs.size()) {
+            File storage = dirs.get(defaultStorage);
             if (!storage.exists()) {
                 storage.mkdirs();
             }
@@ -85,14 +87,21 @@ public class StorageUtils {
      *
      * @return a list of files pointing to mount locations or null if there was an error
      */
-    public static File[] getExternalStorageDirectories() {
+    public static List<File> getExternalStorageDirectories() {
         try {
             Field sCurrentUserField = Environment.class.getDeclaredField("sCurrentUser");
             sCurrentUserField.setAccessible(true);
 
             Object sCurrentUser = sCurrentUserField.get(null);
             Method getExternalDirs = sCurrentUser.getClass().getDeclaredMethod("getExternalDirs");
-            return (File[]) getExternalDirs.invoke(sCurrentUser);
+            File[] paths = (File[]) getExternalDirs.invoke(sCurrentUser);
+            ArrayList<File> usablePaths = new ArrayList<>();
+            for (File file : paths) {
+                if (file.getTotalSpace() > 0) {
+                    usablePaths.add(file);
+                }
+            }
+            return usablePaths;
         } catch (Exception e) {
             Log.w(TAG, "", e);
             return null;
@@ -110,9 +119,9 @@ public class StorageUtils {
     public static File getExternalStoragePublicDirectory(Context context, String type) {
         int defaultStorage = getDefaultStorage(context);
 
-        File[] dirs = getExternalStoragePublicDirectories(type);
-        if (dirs != null && defaultStorage < dirs.length) {
-            File storage = dirs[defaultStorage];
+        List<File> dirs = getExternalStoragePublicDirectories(type);
+        if (dirs != null && defaultStorage < dirs.size()) {
+            File storage = dirs.get(defaultStorage);
             if (!storage.exists()) {
                 storage.mkdirs();
             }
@@ -127,7 +136,7 @@ public class StorageUtils {
      * @param type see {@link Environment#getExternalStoragePublicDirectory(String)}
      * @return a list of files pointing to mount locations for given type or null if there was an error
      */
-    public static File[] getExternalStoragePublicDirectories(String type) {
+    public static List<File> getExternalStoragePublicDirectories(String type) {
         try {
             Field sCurrentUserField = Environment.class.getDeclaredField("sCurrentUser");
             sCurrentUserField.setAccessible(true);
@@ -135,10 +144,22 @@ public class StorageUtils {
             Object sCurrentUser = sCurrentUserField.get(null);
             Method buildExternalStoragePublicDirs = sCurrentUser.getClass().getDeclaredMethod("buildExternalStoragePublicDirs", String.class);
 
-            return (File[]) buildExternalStoragePublicDirs.invoke(sCurrentUser, type);
+            File[] paths = (File[]) buildExternalStoragePublicDirs.invoke(sCurrentUser, type);
+            ArrayList<File> usablePaths = new ArrayList<>();
+            for (File file : paths) {
+                if (file.getTotalSpace() > 0) {
+                    usablePaths.add(file);
+                }
+            }
+            return usablePaths;
         } catch (Exception e) {
             Log.w(TAG, "", e);
             return null;
         }
+    }
+
+    public static boolean hasSDCard() {
+        List<File> paths = getExternalStorageDirectories();
+        return paths != null && paths.size() > 1;
     }
 }
