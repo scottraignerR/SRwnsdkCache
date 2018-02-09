@@ -147,7 +147,7 @@ public class StorageUtils {
             File[] paths = (File[]) buildExternalStoragePublicDirs.invoke(sCurrentUser, type);
             ArrayList<File> usablePaths = new ArrayList<>();
             for (File file : paths) {
-                if (file.getTotalSpace() > 0) {
+                if (file.getParentFile().getTotalSpace() > 0) {
                     usablePaths.add(file);
                 }
             }
