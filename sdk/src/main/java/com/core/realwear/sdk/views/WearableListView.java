@@ -185,12 +185,12 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
     }
 
     @Override
-    public void onHeadMoved(int deltaX, int deltaY) {
+    public void onHeadMoved(float deltaX, float deltaY) {
         //mX += (deltaX * -1) / 2;
 
         if (mAdapter.getItemCount() > 6) {
             if (mRecycleView != null) {
-                mRecycleView.scrollBy((deltaX * -1) / 2, 0);
+                mRecycleView.scrollBy((int) ((deltaX * -1) / 2), 0);
             }
         }
     }

@@ -31,7 +31,6 @@ public interface HFHeadtrackerListener {
     // Head Movement Event
     //
     /////////////////////////////////////////////////////////////////////////////
-    void onHeadMoved(int deltaX, int deltaY);
-
+    void onHeadMoved(float deltaX, float deltaY);
 
 }

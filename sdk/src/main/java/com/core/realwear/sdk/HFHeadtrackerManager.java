@@ -30,8 +30,6 @@ import android.hardware.SensorManager;
 import android.os.Build;
 import android.util.Log;
 
-import java.util.List;
-
 public class HFHeadtrackerManager implements SensorEventListener {
     private static final String TAG = "HeadtrackerManager";
 
@@ -92,11 +90,11 @@ public class HFHeadtrackerManager implements SensorEventListener {
         mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
 
         //Get list of all sensors on device
-        List<Sensor> sensorList = mSensorManager.getSensorList(Sensor.TYPE_ALL);
-        for (int i = 0; i < sensorList.size(); i++) {
-            final Sensor sensor = sensorList.get(i);
-            Log.d(TAG, "Sensor " + i + " = " + sensor.getName() + "  Vendor: " + sensor.getVendor() + "  Version: " + sensor.getVersion());
-        }
+//        List<Sensor> sensorList = mSensorManager.getSensorList(Sensor.TYPE_ALL);
+//        for (int i = 0; i < sensorList.size(); i++) {
+//            final Sensor sensor = sensorList.get(i);
+//            Log.d(TAG, "Sensor " + i + " = " + sensor.getName() + "  Vendor: " + sensor.getVendor() + "  Version: " + sensor.getVersion());
+//        }
 
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
         Log.d(TAG, "Default Sensor = " + mSensor.getName());
@@ -115,6 +113,7 @@ public class HFHeadtrackerManager implements SensorEventListener {
         mSensor = null;
     }
 
+    @Override
     public void onSensorChanged(SensorEvent event) {
         float x = 0;
         float y = 0;
@@ -134,8 +133,8 @@ public class HFHeadtrackerManager implements SensorEventListener {
             z = event.values[2];
         }
 
-        int newXOffset = 0;
-        int newYOffset = 0;
+        float newXOffset = 0;
+        float newYOffset = 0;
 
 
         //Process X-direction
@@ -149,8 +148,8 @@ public class HFHeadtrackerManager implements SensorEventListener {
                     if (lastXDeltaValue > 0 && deltaX > 0) trendCounterX++;
                     if (lastXDeltaValue < 0 && deltaX > 0) trendCounterX = 0;
                     if (lastXDeltaValue > 0 && deltaX < 0) trendCounterX = 0;
-                    if (trendCounterX > 3) newXOffset = (int) (deltaX * xScaleFactor);
-                } else newXOffset = (int) (deltaX * xScaleFactor);
+                    if (trendCounterX > 3) newXOffset = (deltaX * xScaleFactor);
+                } else newXOffset = (deltaX * xScaleFactor);
                 lastXValue = x;
                 lastXDeltaValue = deltaX;
             }
@@ -163,13 +162,13 @@ public class HFHeadtrackerManager implements SensorEventListener {
             if (deltaY < -minMovementThreshold || deltaY > minMovementThreshold) {
 
                 //Crude Anti-Jitter filter
-                if (antiJitter == true) {
+                if (antiJitter) {
                     if (lastYDeltaValue < 0 && deltaY < 0) trendCounterY++;
                     if (lastYDeltaValue > 0 && deltaY > 0) trendCounterY++;
                     if (lastYDeltaValue < 0 && deltaY > 0) trendCounterY = 0;
                     if (lastYDeltaValue > 0 && deltaY < 0) trendCounterY = 0;
-                    if (trendCounterY > 3) newYOffset = (int) (deltaY * yScaleFactor);
-                } else newYOffset = (int) (deltaY * yScaleFactor);
+                    if (trendCounterY > 3) newYOffset = (deltaY * yScaleFactor);
+                } else newYOffset = (deltaY * yScaleFactor);
 
                 lastYValue = y;
                 lastYDeltaValue = deltaY;
