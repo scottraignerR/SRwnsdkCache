@@ -1,17 +1,6 @@
 <resources>
     <!--SDK-->
     <string name="app_name">SDK</string>
-    <!--zoom level 1-->
-    <string name="zoom_level_1">Vergrößerung 1</string>
-    <!--zoom level 2-->
-    <string name="zoom_level_2">Vergrößerung 2</string>
-    <!--zoom level 3-->
-    <string name="zoom_level_3">Vergrößerung 3</string>
-    <!--zoom level 4-->
-    <string name="zoom_level_4">Vergrößerung 4</string>
-    <!--zoom level 5-->
-    <string name="zoom_level_5">Vergrößerung 5</string>
-    <string name="zoom_level">Vergrößerung %d</string>
     <!--Zoom Level 1-5-->
     <string name="zoom_level_instruction">Vergrößerung 1–5</string>
 </resources>

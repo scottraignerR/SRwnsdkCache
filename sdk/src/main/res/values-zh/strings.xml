@@ -1,18 +1,6 @@
 <resources>
     <!--SDK -->
     <string name="app_name">SDK</string>
-    <!--zoom level 1-->
-    <string name="zoom_level_1">缩放级别 1</string>
-    <!--zoom level 2-->
-    <string name="zoom_level_2">缩放级别 2</string>
-    <!--zoom level 3-->
-    <string name="zoom_level_3">缩放级别 3</string>
-    <!--zoom level 4-->
-    <string name="zoom_level_4">缩放级别 4</string>
-    <!--zoom level 5-->
-    <string name="zoom_level_5">缩放级别 5</string>
-
-    <string name="zoom_level">缩放级别 %d</string>
     <!--Zoom Level 1-5-->
     <string name="zoom_level_instruction">缩放级别 1–5</string>
 </resources>
