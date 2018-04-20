@@ -1,17 +1,7 @@
 <resources>
-<!--SDK-->
-<string name="app_name">SDK</string>
-<!--zoom level 1-->
-<string name="zoom_level_1">ズーム レベル 1</string>
-<!--zoom level 2-->
-<string name="zoom_level_2">ズーム レベル 2</string>
-<!--zoom level 3-->
-<string name="zoom_level_3">ズーム レベル 3</string>
-<!--zoom level 4-->
-<string name="zoom_level_4">ズーム レベル 4</string>
-<!--zoom level 5-->
-<string name="zoom_level_5">ズーム レベル 5</string>
-<string name="zoom_level">ズーム レベル %d</string>
-<!--Zoom Level 1-5-->
-<string name="zoom_level_instruction">ズーム レベル 1-5</string>
+    <!--SDK-->
+    <string name="app_name">SDK</string>
+    <string name="zoom_level">ズーム レベル %d</string>
+    <!--Zoom Level 1-5-->
+    <string name="zoom_level_instruction">ズーム レベル 1-5</string>
 </resources>
