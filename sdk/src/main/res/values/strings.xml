@@ -1,12 +1,5 @@
 <resources>
     <string name="app_name">SDK</string>
-    <!--<string name="my_controls">My Controls</string>-->
-    <!--<string name="go_home">Go Home</string>-->
-    <!--<string name="go_back">Go Back</string>-->
-    <!--<string name="listening_off">Listening Off</string>-->
-    <!--<string name="listening_on">Listening On</string>-->
-    <!--<string name="show_help">Show Commands</string>-->
-    <!--<string name="hide_help">Hide Commands</string>-->
     <string name="zoom_level_1">Zoom Level 1</string>
     <string name="zoom_level_2">Zoom Level 2</string>
     <string name="zoom_level_3">Zoom Level 3</string>
