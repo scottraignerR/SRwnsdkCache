@@ -1,7 +1,17 @@
 <resources>
-    <!--SDK-->
-    <string name="app_name">SDK</string>
-    <string name="zoom_level">확대/축소 레벨 %d</string>
-    <!--Zoom Level 1-5-->
-    <string name="zoom_level_instruction">확대/축소 레벨 1–5</string>
+<!--SDK-->
+<string name="app_name">SDK</string>
+<!--zoom level 1-->
+<string name="zoom_level_1">확대/축소 수준 1</string>
+<!--zoom level 2-->
+<string name="zoom_level_2">확대/축소 수준 2</string>
+<!--zoom level 3-->
+<string name="zoom_level_3">확대/축소 수준 3</string>
+<!--zoom level 4-->
+<string name="zoom_level_4">확대/축소 수준 4</string>
+<!--zoom level 5-->
+<string name="zoom_level_5">확대/축소 레벨 5</string>
+<string name="zoom_level">확대/축소 레벨 %d</string>
+<!--Zoom Level 1-5-->
+<string name="zoom_level_instruction">확대/축소 레벨 1–5</string>
 </resources>
