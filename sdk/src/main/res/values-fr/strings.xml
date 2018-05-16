@@ -11,7 +11,7 @@
     <string name="zoom_level_4">Niveau De Zoom  4</string>
     <!--zoom level 5-->
     <string name="zoom_level_5">Niveau De Zoom  5</string>
-    <!--Zoom Level 1-5-->
     <string name="zoom_level">Niveau De Zoom %d</string>
+    <!--Zoom Level 1-5-->
     <string name="zoom_level_instruction">Niveau De Zoom  1–5</string>
 </resources>
