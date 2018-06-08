@@ -6,4 +6,7 @@
     <color name="barTop">#EAEAEA</color>
     <color name="radio">#8F26FD</color>
     <color name="outline">#BEBEBE</color>
+
+    <!--75% opacity -> BF-->
+    <color name="warning_sb_bg">#BFCB2026</color>
 </resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ RealWear Development Software, Source Code and Object Code.
+  ~ (C) RealWear, Inc. All rights reserved.
+  ~
+  ~ Contact info@realwear.com for further information about the use of this code.
+  ~
+  ~ Filename: warninig_status_bar.xml
+  ~ Class: warninig_status_bar.xml
+  ~ Author: alexandru.ghitulescu
+  ~
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/warning_sb_bg"
+    android:padding="@dimen/warning_sb_inner_padding">
+
+    <ImageView
+        android:id="@+id/warning_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/warning" />
+
+    <TextView
+        android:id="@+id/warning_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/warning_icon"
+        android:layout_marginStart="6dp"
+        android:layout_toEndOf="@id/warning_icon"
+        android:text="System Warning"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/warning_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/warning_title"
+        android:layout_below="@id/warning_title"
+        android:text="High power use."
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+</RelativeLayout>
