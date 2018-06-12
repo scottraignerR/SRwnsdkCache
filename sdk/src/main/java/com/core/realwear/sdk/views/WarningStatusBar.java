@@ -66,13 +66,17 @@ public class WarningStatusBar {
     };
 
     public WarningStatusBar(Context context, Runnable onHideRunnable) {
+        this(context, onHideRunnable, WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY);
+    }
+
+    public WarningStatusBar(Context context, Runnable onHideRunnable, int layoutType) {
         mOnHideRunnable = onHideRunnable;
 
         mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         mContainer = new SilentFrameLayout(context);
 
         mLayoutParams = new WindowManager.LayoutParams();
-        mLayoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY;
+        mLayoutParams.type = layoutType;
         mLayoutParams.format = PixelFormat.TRANSLUCENT;
         mLayoutParams.flags |= WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
 
