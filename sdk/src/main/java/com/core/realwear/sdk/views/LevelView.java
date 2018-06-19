@@ -8,9 +8,9 @@ package com.core.realwear.sdk.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -30,13 +30,17 @@ public class LevelView extends LinearLayout {
     private int mLevel;
     private String mContentDescriptionTemplate;
 
+    private OnLevelSelectedListener mOnLevelSelectedListener;
+
     private OnClickListener mButtonOnClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
             mLevel = (int) v.getTag();
             updateButtonStates();
 
-            LevelView.this.callOnClick();
+            if (mOnLevelSelectedListener != null) {
+                mOnLevelSelectedListener.onLevelSelected(mLevel);
+            }
         }
     };
 
@@ -102,6 +106,20 @@ public class LevelView extends LinearLayout {
         return mLevel;
     }
 
+    @Override
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        throw new UnsupportedOperationException("Use the OnLevelSelectedListener instead of this. " +
+                "Due to the way WearHF was built, if a ViewGroup (like this one) is clickable, " +
+                "has no text, but has child nodes that 1. have text and 2. aren't clickable then, " +
+                "the child node text will be used for this view. This results in things like " +
+                "adding a voice command Select Volume 1-5, which gets translated to " +
+                "Select Volume 15");
+    }
+
+    public void setOnLevelSelectedListener(OnLevelSelectedListener onLevelSelectedListener) {
+        mOnLevelSelectedListener = onLevelSelectedListener;
+    }
+
     /**
      * Initialise the views that make up this control.
      *
@@ -109,25 +127,24 @@ public class LevelView extends LinearLayout {
      * @param text
      */
     private void initialiseViews(Context context, String text) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.radio_button_layout, this, true);
+        View.inflate(context, R.layout.radio_button_layout, this);
 
-        mLabelTextView = (TextView) findViewById(R.id.text);
+        mLabelTextView = findViewById(R.id.text);
         mLabelTextView.setText(text);
 
-        final RadioButton level1Button = (RadioButton) findViewById(R.id.level_1);
+        final RadioButton level1Button = findViewById(R.id.level_1);
         level1Button.setTag(1);
 
-        final RadioButton level2Button = (RadioButton) findViewById(R.id.level_2);
+        final RadioButton level2Button = findViewById(R.id.level_2);
         level2Button.setTag(2);
 
-        final RadioButton level3Button = (RadioButton) findViewById(R.id.level_3);
+        final RadioButton level3Button = findViewById(R.id.level_3);
         level3Button.setTag(3);
 
-        final RadioButton level4Button = (RadioButton) findViewById(R.id.level_4);
+        final RadioButton level4Button = findViewById(R.id.level_4);
         level4Button.setTag(4);
 
-        final RadioButton level5Button = (RadioButton) findViewById(R.id.level_5);
+        final RadioButton level5Button = findViewById(R.id.level_5);
         level5Button.setTag(5);
 
         // Store the buttons in an array to make them easier to access.
@@ -150,5 +167,9 @@ public class LevelView extends LinearLayout {
         for (RadioButton button : mLevelButtons) {
             button.setChecked((int) button.getTag() <= mLevel);
         }
+    }
+
+    public interface OnLevelSelectedListener {
+        void onLevelSelected(int level);
     }
 }
