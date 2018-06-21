@@ -157,7 +157,7 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
             IVoiceAdapter adapter = (IVoiceAdapter) mAdapter;
             for (int i = 0; i < mAdapter.getItemCount(); i++) {
                 final String voiceCommand = adapter.getVoiceCommand(i);
-                if(voiceCommand.isEmpty()) {
+                if(voiceCommand == null || voiceCommand.isEmpty()) {
                     continue;
                 }
 
