@@ -4,6 +4,7 @@
  * <p>
  * Contact info@realwear.com for further information about the use of this code.
  */
+
 package com.core.realwear.sdk.views;
 
 import android.content.BroadcastReceiver;
@@ -25,7 +26,7 @@ import com.core.realwear.sdk.RecyclerViewMargin;
 import com.core.realwear.sdk.IVoiceAdapter;
 
 /**
- * Created by Fin on 31/08/2016.
+ * Scrollable list view for viewing items on the HMT-1
  */
 public class WearableListView extends RelativeLayout implements View.OnClickListener, HFHeadtrackerListener {
     private static final String NO_SCROLL = "hf_scroll_none";
@@ -145,6 +146,9 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
         setCommands();
     }
 
+    /**
+     * Set up all the speech commands for the list view
+     */
     private void setCommands() {
         StringBuilder builder = new StringBuilder();
         builder.append("hf_override:");
@@ -152,12 +156,14 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
         if (mAdapter instanceof IVoiceAdapter) {
             IVoiceAdapter adapter = (IVoiceAdapter) mAdapter;
             for (int i = 0; i < mAdapter.getItemCount(); i++) {
-                String voiceCommand = adapter.getVoiceCommand(i);
+                final String voiceCommand = adapter.getVoiceCommand(i);
+                if(voiceCommand.isEmpty()) {
+                    continue;
+                }
 
                 // The # indicates that the command has an associated 'Select Item <n>' command.
                 builder.append('#');
                 builder.append(voiceCommand);
-
                 builder.append("|");
             }
         }
