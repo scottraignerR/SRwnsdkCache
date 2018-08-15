@@ -16,25 +16,17 @@ import android.support.annotation.NonNull;
 
 import com.core.realwear.sdk.util.replacements.Consumer;
 
-import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 import java.util.Collection;
-import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class Observable<T> {
 
-    public Observable() {
-        this(null);
+    Observable(ObservableWriteView<T> parent) {
+        mParent = parent;
     }
 
-    public Observable(T initialValue) {
-        mCurrentValue.set(initialValue);
-    }
-
-    public void update(T value) {
-        mCurrentValue.set(value);
+    void notify(T value) {
         for (Consumer<T> listener : mStrongListeners) {
             listener.accept(value);
         }
@@ -47,7 +39,7 @@ public class Observable<T> {
     }
 
     public T getCurrentValue() {
-        return mCurrentValue.get();
+        return mParent.get();
     }
 
     public void addListener(Consumer<T> newListener) {
@@ -67,7 +59,7 @@ public class Observable<T> {
         mWeakListeners.add(new WeakReference<>(newListener));
     }
 
-    private final AtomicReference<T> mCurrentValue = new AtomicReference<>();
+    private final ObservableWriteView<T> mParent;
     private final Collection<Consumer<T>> mStrongListeners = new CopyOnWriteArrayList<>();
     private final Collection<WeakReference<Consumer<T>>> mWeakListeners = new CopyOnWriteArrayList<>();
 }
