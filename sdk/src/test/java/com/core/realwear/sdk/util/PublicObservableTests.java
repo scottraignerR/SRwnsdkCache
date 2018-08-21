@@ -22,21 +22,21 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class ObservableTests {
+public class PublicObservableTests {
 
     @Test
     public void currentValueUpdatesOk() {
-        assertThat(objectUnderTestView.getCurrentValue(), equalTo(INITIAL_VALUE));
+        assertThat(objectUnderTest.getValue(), equalTo(INITIAL_VALUE));
         final int value = randomInt();
-        objectUnderTest.update(value);
-        assertThat(objectUnderTestView.getCurrentValue(), equalTo(value));
+        objectUnderTest.setValue(value);
+        assertThat(objectUnderTest.getValue(), equalTo(value));
     }
 
     @Test
     public void strongListenerWorks() {
         final int value = randomInt();
-        objectUnderTestView.addListener(flag::set);
-        objectUnderTest.update(value);
+        objectUnderTest.addListener(flag::set);
+        objectUnderTest.setValue(value);
         assertThat(flag.get(), equalTo(value));
     }
 
@@ -45,10 +45,10 @@ public class ObservableTests {
         final int value = randomInt();
         final AtomicInteger flagA = new AtomicInteger(INITIAL_VALUE);
         final AtomicInteger flagB = new AtomicInteger(INITIAL_VALUE);
-        objectUnderTestView.addListener(flag::set);
-        objectUnderTestView.addListener(flagA::set);
-        objectUnderTestView.addListener(flagB::set);
-        objectUnderTest.update(value);
+        objectUnderTest.addListener(flag::set);
+        objectUnderTest.addListener(flagA::set);
+        objectUnderTest.addListener(flagB::set);
+        objectUnderTest.setValue(value);
         assertThat(flag.get(), equalTo(value));
         assertThat(flagA.get(), equalTo(value));
         assertThat(flagB.get(), equalTo(value));
@@ -58,18 +58,18 @@ public class ObservableTests {
     public void weakListenerWorks() {
         final int value = randomInt();
         final Consumer<Integer> strongRef = flag::set;
-        objectUnderTestView.addWeakReferenceListener(strongRef);
+        objectUnderTest.addWeakReferenceListener(strongRef);
         System.gc(); // NB: This might not call the garbage collector so the test can not be guaranteed reliable.
-        objectUnderTest.update(value);
+        objectUnderTest.setValue(value);
         assertThat(flag.get(), equalTo(value));
     }
 
     @Test
     public void weakListenerCleansUpWorks() {
         final int value = randomInt();
-        objectUnderTestView.addWeakReferenceListener(flag::set);
+        objectUnderTest.addWeakReferenceListener(flag::set);
         System.gc(); // NB: This might not call the garbage collector so the test can not be guaranteed reliable.
-        objectUnderTest.update(value);
+        objectUnderTest.setValue(value);
         assertThat(flag.get(), equalTo(INITIAL_VALUE));
     }
 
@@ -79,8 +79,7 @@ public class ObservableTests {
     }
 
     private static final int INITIAL_VALUE = -1;
-    private final ObservableWriteView<Integer> objectUnderTest = new ObservableWriteView<>(INITIAL_VALUE);
-    private final Observable<Integer> objectUnderTestView = objectUnderTest.getObservable();
+    private final Observable<Integer> objectUnderTest = new Observable<>(INITIAL_VALUE);
     private final AtomicInteger flag = new AtomicInteger(INITIAL_VALUE);
 }
 

@@ -7,3 +7,8 @@
 /build
 /captures
 app/build/
+.idea/runConfigurations.xml
+.idea/codeStyles/Project.xml
+.idea/modules.xml
+.idea/misc.xml
+.idea/gradle.xml

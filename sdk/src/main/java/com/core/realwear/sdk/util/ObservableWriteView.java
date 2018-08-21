@@ -23,13 +23,13 @@ public class ObservableWriteView<T> {
         mCurrentValue = new AtomicReference<>(initialValue);
     }
 
-    public Observable<T> getObservable() {
-        return mObservable;
+    public ObservableReadValue<T> getObservableReadValue() {
+        return mObservableReadValue;
     }
 
     public void update(T newValue) {
         mCurrentValue.set(newValue);
-        mObservable.notify(newValue);
+        mObservableReadValue.notify(newValue);
     }
 
     public T get() {
@@ -37,5 +37,5 @@ public class ObservableWriteView<T> {
     }
 
     private final AtomicReference<T> mCurrentValue;
-    private final Observable<T> mObservable = new Observable<>(this);
+    private final ObservableReadValue<T> mObservableReadValue = new ObservableReadValue<>(this);
 }
