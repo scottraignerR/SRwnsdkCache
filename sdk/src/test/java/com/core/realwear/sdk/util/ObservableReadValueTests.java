@@ -21,6 +21,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 public class ObservableReadValueTests {
 
@@ -73,6 +77,15 @@ public class ObservableReadValueTests {
         assertThat(flag.get(), equalTo(INITIAL_VALUE));
     }
 
+    @Test
+    public void updateWithSameDoesNotNotify() {
+        final int value = randomInt();
+        objectUnderTest.update(value);
+        Consumer<Integer> testListener = mock(Consumer.class);
+        objectUnderTestView.addListener(testListener);
+        objectUnderTest.update(value);
+        verify(testListener, never()).accept(any());
+    }
 
     private int randomInt() {
         return ThreadLocalRandom.current().nextInt(0, Integer.MAX_VALUE);

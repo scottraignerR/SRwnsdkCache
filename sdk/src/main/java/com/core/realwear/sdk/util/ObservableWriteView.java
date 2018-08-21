@@ -12,6 +12,7 @@
 
 package com.core.realwear.sdk.util;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ObservableWriteView<T> {
@@ -28,8 +29,10 @@ public class ObservableWriteView<T> {
     }
 
     public void update(T newValue) {
-        mCurrentValue.set(newValue);
-        mObservableReadValue.notify(newValue);
+        final T oldValue = mCurrentValue.getAndSet(newValue);
+        if (!Objects.equals(oldValue, newValue)) {
+            mObservableReadValue.notify(newValue);
+        }
     }
 
     public T get() {
