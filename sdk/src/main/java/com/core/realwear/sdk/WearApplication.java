@@ -41,8 +41,6 @@ public class WearApplication extends Application implements Application.Activity
     public void onActivityCreated(Activity activity, Bundle bundle) {
         mCurrentActivity = activity;
         Resources.Theme theme = activity.getTheme();
-        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        //activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
         TypedArray ta = activity.getTheme().obtainStyledAttributes(R.styleable.Themes);
         int darkStyle = ta.getResourceId(R.styleable.Themes_styleDark, -1);
         int lightStyle = ta.getResourceId(R.styleable.Themes_styleLight, -1);
