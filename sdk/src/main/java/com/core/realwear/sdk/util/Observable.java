@@ -1,7 +1,8 @@
 package com.core.realwear.sdk.util;
 
+import com.core.realwear.sdk.util.replacements.UnaryOperator;
+
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 
 public final class Observable<T> extends Publisher<T> {
 
@@ -10,20 +11,27 @@ public final class Observable<T> extends Publisher<T> {
     }
 
     public Observable(T initialValue) {
-        mCurrentValue = new AtomicReference<>(initialValue);
+        mCurrentValue = initialValue;
     }
 
-    public void setValue(T newValue) {
-        T lastValue = mCurrentValue.getAndSet(newValue);
+    public synchronized void setValue(T newValue) {
+        T previous = mCurrentValue;
+        mCurrentValue = newValue;
 
-        if (!Objects.equals(newValue, lastValue)) {
+        if (!Objects.equals(newValue, previous)) {
             notify(newValue);
         }
     }
 
-    public T getValue() {
-        return mCurrentValue.get();
+    public synchronized T getValue() {
+        return mCurrentValue;
     }
 
-    private final AtomicReference<T> mCurrentValue;
+    public synchronized T modify(UnaryOperator<T> modifyOperation) {
+        T next = modifyOperation.apply(mCurrentValue);
+        setValue(next);
+        return next;
+    }
+
+    private T mCurrentValue;
 }
