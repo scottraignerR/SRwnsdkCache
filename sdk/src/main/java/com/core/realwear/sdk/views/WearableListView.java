@@ -14,6 +14,7 @@ import android.content.IntentFilter;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
@@ -21,9 +22,9 @@ import android.widget.RelativeLayout;
 
 import com.core.realwear.sdk.HFHeadtrackerListener;
 import com.core.realwear.sdk.HFHeadtrackerManager;
+import com.core.realwear.sdk.IVoiceAdapter;
 import com.core.realwear.sdk.R;
 import com.core.realwear.sdk.RecyclerViewMargin;
-import com.core.realwear.sdk.IVoiceAdapter;
 
 /**
  * Scrollable list view for viewing items on the HMT-1
@@ -65,18 +66,15 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.custom_recycleview, this);
 
-        mRecycleView = (RecyclerView) view.findViewById(R.id.list2);
+        mRecycleView = view.findViewById(R.id.list2);
         mRecycleView.setContentDescription(NO_SCROLL);
 
         mDecoration = new RecyclerViewMargin(250, 1);
         mRecycleView.addItemDecoration(mDecoration);
 
         mHandler = new Handler();
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //updateScroll();
-            }
+        mHandler.postDelayed(() -> {
+            //updateScroll();
         }, 5);
     }
 
@@ -120,13 +118,10 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
 
                     if (mAdapter.getItemCount() > 6) {
                         mRecycleView.scrollToPosition((mAdapter.getItemCount() / 2) - 3);
-                        mRecycleView.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                View initial = mRecycleView.getChildAt(0);
-                                if (initial != null) {
-                                    mRecycleView.scrollBy(initial.getWidth() / 2, 0);
-                                }
+                        mRecycleView.post(() -> {
+                            View initial = mRecycleView.getChildAt(0);
+                            if (initial != null) {
+                                mRecycleView.scrollBy(initial.getWidth() / 2, 0);
                             }
                         });
                     }
@@ -151,7 +146,7 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
      */
     private void setCommands() {
         StringBuilder builder = new StringBuilder();
-        builder.append("hf_override:");
+        builder.append("hf_add_commands:");
 
         if (mAdapter instanceof IVoiceAdapter) {
             IVoiceAdapter adapter = (IVoiceAdapter) mAdapter;
@@ -174,12 +169,7 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
 
         mRootGroup.setContentDescription(builder.toString());
 
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mRootGroup.requestLayout();
-            }
-        }, 500);
+        mHandler.postDelayed(() -> mRootGroup.requestLayout(), 500);
     }
 
     @Override
@@ -223,7 +213,8 @@ public class WearableListView extends RelativeLayout implements View.OnClickList
     private BroadcastReceiver asrBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (!intent.getAction().equals(ACTION_SPEECH_EVENT)) {
+            String action = intent.getAction();
+            if (action == null || !action.equals(ACTION_SPEECH_EVENT)) {
                 return;
             }
 
