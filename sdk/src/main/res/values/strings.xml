@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">SDK</string>
     <string name="zoom_level_1">Zoom Level 1</string>
     <string name="zoom_level_2">Zoom Level 2</string>
     <string name="zoom_level_3">Zoom Level 3</string>
