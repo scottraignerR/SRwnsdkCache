@@ -1,3 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <!--SDK-->
     <string name="app_name">SDK</string>
@@ -11,7 +12,7 @@
     <string name="zoom_level_4">Livello Zoom 4</string>
     <!--zoom level 5-->
     <string name="zoom_level_5">Livello Zoom 5</string>
-    <string name="zoom_level">Livello Zoom %d</string>
+    <string name="zoom_level">Il Livello di Zoom %d</string>
     <!--Zoom Level 1-5-->
     <string name="zoom_level_instruction">Livello Zoom 1–5</string>
 </resources>
