@@ -2,6 +2,8 @@ package com.core.realwear.sdk.util;
 
 import android.os.Build;
 
+import java.io.File;
+
 public class DeviceUtils {
     public static boolean isHoneywellDevice() {
         return Build.DISPLAY.endsWith("HW");
@@ -15,6 +17,13 @@ public class DeviceUtils {
             brandFolder = "rw";
         }
 
-        return "/etc/wearhf/branding/" + brandFolder + "/";
+        String folder = "/etc/wearhf/branding/" + brandFolder + "/";
+        File file = new File(folder);
+        if (file.exists()) {
+            return folder;
+        } else {
+            // default to realwear
+            return "/etc/wearhf/branding/rw/";
+        }
     }
 }
