@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-    <!--SDK -->
-    <string name="app_name">SDK</string>
     <!--zoom level 1-->
     <string name="zoom_level_1">缩放级别 1</string>
     <!--zoom level 2-->
@@ -13,7 +11,7 @@
     <!--zoom level 5-->
     <string name="zoom_level_5">缩放级别 5</string>
 
-    <string name="zoom_level">缩放级别 ％d</string>
+    <string name="zoom_level">缩放级别 %d</string>
     <!--Zoom Level 1-5-->
     <string name="zoom_level_instruction">缩放级别 1–5</string>
 </resources>

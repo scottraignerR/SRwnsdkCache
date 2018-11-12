@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-    <!--SDK-->
-    <string name="app_name">SDK</string>
     <!--zoom level 1-->
     <string name="zoom_level_1">ズーム レベル 1</string>
     <!--zoom level 2-->
@@ -12,7 +10,7 @@
     <string name="zoom_level_4">ズーム レベル 4</string>
     <!--zoom level 5-->
     <string name="zoom_level_5">ズーム レベル 5</string>
-    <string name="zoom_level">ズームレベル ％d</string>
+    <string name="zoom_level">ズームレベル %d</string>
     <!--Zoom Level 1-5-->
     <string name="zoom_level_instruction">ズーム レベル 1-5</string>
 </resources>

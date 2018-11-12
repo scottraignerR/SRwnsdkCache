@@ -1,6 +1,4 @@
 <resources>
-    <!--SDK-->
-    <string name="app_name">SDK</string>
     <!--zoom level 1-->
     <string name="zoom_level_1">Nivel de zoom 1</string>
     <!--zoom level 2-->

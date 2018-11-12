@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="app_name">SDK</string>
+<resources>
     <string name="zoom_level_1">Poziom powiększenia 1</string>
     <string name="zoom_level_2">Poziom powiększenia 2</string>
     <string name="zoom_level_3">Poziom powiększenia 3</string>

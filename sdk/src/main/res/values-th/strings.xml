@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="app_name">SDK</string>
+<resources>
     <string name="zoom_level_1">ระดับการซูม 1</string>
     <string name="zoom_level_2">ระดับการซูม 2</string>
     <string name="zoom_level_3">ระดับการซูม 3</string>
