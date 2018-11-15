@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 27
     buildToolsVersion '28.0.3'
 
     defaultConfig {
@@ -31,7 +31,7 @@ dependencies {
     api 'com.android.support:appcompat-v7:27.1.1'
     api 'uk.co.chrisjenx:calligraphy:2.3.0'
     api 'com.google.guava:guava-base:r03'
-    testImplementation "org.mockito:mockito-core:2.+"
+    testImplementation "org.mockito:mockito-core:2.23.0"
 }
 
 repositories {

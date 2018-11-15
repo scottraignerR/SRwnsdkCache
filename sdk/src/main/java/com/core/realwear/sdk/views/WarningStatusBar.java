@@ -58,12 +58,7 @@ public class WarningStatusBar {
 
     private Runnable mOnHideRunnable;
 
-    private Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            hide();
-        }
-    };
+    private Runnable mHideRunnable = this::hide;
 
     public WarningStatusBar(Context context, Runnable onHideRunnable) {
         this(context, onHideRunnable, WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY);
@@ -112,16 +107,13 @@ public class WarningStatusBar {
         mVisible = true;
         mWindowManager.addView(mContainer, mLayoutParams);
 
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Transition transition = new Slide(Gravity.TOP);
-                transition.setDuration(ANIMATION_DURATION);
-                transition.setInterpolator(new FastOutSlowInInterpolator());
+        mHandler.postDelayed(() -> {
+            Transition transition = new Slide(Gravity.TOP);
+            transition.setDuration(ANIMATION_DURATION);
+            transition.setInterpolator(new FastOutSlowInInterpolator());
 
-                TransitionManager.beginDelayedTransition(mContainer, transition);
-                mContainer.addView(mContent);
-            }
+            TransitionManager.beginDelayedTransition(mContainer, transition);
+            mContainer.addView(mContent);
         }, 300);
     }
 
@@ -138,12 +130,7 @@ public class WarningStatusBar {
         TransitionManager.beginDelayedTransition(mContainer, transition);
         mContainer.removeAllViews();
 
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mWindowManager.removeView(mContainer);
-            }
-        }, ANIMATION_DURATION);
+        mHandler.postDelayed(() -> mWindowManager.removeView(mContainer), ANIMATION_DURATION);
 
         if (mOnHideRunnable != null) {
             mOnHideRunnable.run();
