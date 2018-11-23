@@ -15,6 +15,11 @@ package com.core.realwear.sdk.util;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * @param <T>
+ * @Deprecated Use the Realwear styles library version of this class instead
+ */
+@Deprecated
 public class ObservableWriteView<T> {
     public ObservableWriteView() {
         this(null);

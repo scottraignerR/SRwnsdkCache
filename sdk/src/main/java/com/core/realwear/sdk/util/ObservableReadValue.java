@@ -12,8 +12,12 @@
 
 package com.core.realwear.sdk.util;
 
+/**
+ * @param <T>
+ * @Deprecated Use the Realwear styles library version of this class instead
+ */
+@Deprecated
 public class ObservableReadValue<T> extends Publisher<T> {
-
     ObservableReadValue(ObservableWriteView<T> parent) {
         mParent = parent;
     }
