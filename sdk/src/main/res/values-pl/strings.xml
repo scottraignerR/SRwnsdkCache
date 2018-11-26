@@ -2,7 +2,7 @@
 <resources>
     <string name="zoom_level_1">Powiększenie 1</string>
     <string name="zoom_level_2">Powiększenie 2</string>
-    <string name="zoom_level_3">Poziom powiększenia 3</string>
+    <string name="zoom_level_3">Powiększenie 3</string>
     <string name="zoom_level_4">Poziom powiększenia 4</string>
     <string name="zoom_level_5">Poziom powiększenia 5</string>
     <string name="zoom_level">Powiększenie %d</string>
