@@ -10,7 +10,7 @@
     <string name="zoom_level_4">Vergrößerung 4</string>
     <!--zoom level 5-->
     <string name="zoom_level_5">Vergrößerung 5</string>
-    <string name="zoom_level">Zoomstufe %d</string>
+    <string name="zoom_level">Vergrößerung %d</string>
     <!--Zoom Level 1-5-->
     <string name="zoom_level_instruction">Vergrößerung 1–5</string>
 </resources>
