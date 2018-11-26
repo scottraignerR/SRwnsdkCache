@@ -4,7 +4,7 @@
     <string name="zoom_level_2">Powiększenie 2</string>
     <string name="zoom_level_3">Powiększenie 3</string>
     <string name="zoom_level_4">Powiększenie 4</string>
-    <string name="zoom_level_5">Poziom powiększenia 5</string>
+    <string name="zoom_level_5">Powiększenie 5</string>
     <string name="zoom_level">Powiększenie %d</string>
     <string name="zoom_level_instruction">Poziom powiększenia 1-5</string>
 </resources>
