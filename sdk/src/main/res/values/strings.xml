@@ -4,11 +4,6 @@
     <string name="zoom_level_3">Zoom Level 3</string>
     <string name="zoom_level_4">Zoom Level 4</string>
     <string name="zoom_level_5">Zoom Level 5</string>
-    <string name="zoom_level_6">Zoom Level 6</string>
-    <string name="zoom_level_7">Zoom Level 7</string>
-    <string name="zoom_level_8">Zoom Level 8</string>
-    <string name="zoom_level_9">Zoom Level 9</string>
-    <string name="zoom_level_10">Zoom Level 10</string>
     <string name="zoom_level">Zoom Level %d</string>
     <string name="zoom_level_instruction">Zoom Level 1–5</string>
 </resources>
