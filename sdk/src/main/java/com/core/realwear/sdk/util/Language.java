@@ -11,6 +11,7 @@ package com.core.realwear.sdk.util;
  */
 
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import java.util.Locale;
@@ -27,7 +28,7 @@ public class Language {
      */
     public static void setLanguage(Locale locale) {
         try {
-            Class<?> activityManagerNative = Class.forName("android.app.ActivityManagerNative");
+            @SuppressLint("PrivateApi") Class<?> activityManagerNative = Class.forName("android.app.ActivityManagerNative");
             Object am = activityManagerNative.getMethod("getDefault").invoke(activityManagerNative);
             Object config = am.getClass().getMethod("getConfiguration").invoke(am);
             config.getClass().getDeclaredField("locale").set(config, locale);
