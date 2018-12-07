@@ -6,10 +6,8 @@
  */
 package com.core.realwear.sdk.util;
 
-import android.content.Context;
 import android.os.Environment;
 import android.os.StatFs;
-import android.provider.Settings;
 import android.util.Log;
 
 import java.io.File;
@@ -26,17 +24,21 @@ import java.util.List;
 
 public class StorageUtils {
     private static final String TAG = "StorageUtils";
-    private static final String KEY_DEFAULT_STORAGE = "default_storage";
 
     private static final long SIZE_KB = 1024L;
     private static final long SIZE_MB = SIZE_KB * SIZE_KB;
 
+    @SuppressWarnings("WeakerAccess")
+    public static final int INTERNAL_STORAGE = 0;
+    @SuppressWarnings("WeakerAccess")
+    public static final int SD_STORAGE = 1;
+
     /**
      * @return Number of bytes available on External storage
      */
-    public static long getAvailableSpace(Context context) {
+    public static long getAvailableSpace() {
         long availableSpace;
-        StatFs stat = new StatFs(getExternalStorageDirectory(context).getPath());
+        StatFs stat = new StatFs(Environment.getExternalStorageDirectory().getPath());
         availableSpace = stat.getAvailableBlocksLong() * stat.getBlockSizeLong();
         return availableSpace;
     }
@@ -44,55 +46,38 @@ public class StorageUtils {
     /**
      * @return Number of kilo bytes available on External storage
      */
-    public static long getAvailableSpaceKB(Context context) {
-        return getAvailableSpace(context) / SIZE_KB;
+    public static long getAvailableSpaceKB() {
+        return getAvailableSpace() / SIZE_KB;
     }
 
     /**
      * @return Number of Mega bytes available on External storage
      */
-    public static long getAvailableSpaceMB(Context context) {
-        return getAvailableSpace(context) / SIZE_MB;
+    public static long getAvailableSpaceMB() {
+        return getAvailableSpace() / SIZE_MB;
     }
 
     /**
-     * @param context used to determine what is the default storage
+     * {@link StorageUtils#INTERNAL_STORAGE} for internal storage
+     * {@link StorageUtils#SD_STORAGE} for sd card
+     *
      * @return the index of the storage location
      */
-    public static int getDefaultStorage(Context context) {
-        int defaultStorage = Settings.Global.getInt(context.getContentResolver(), KEY_DEFAULT_STORAGE, -1);
-
-        if (defaultStorage < 0) {
-            defaultStorage = 0;
+    public static int getDefaultStorage() {
+        if (Environment.isExternalStorageRemovable()) {
+            return SD_STORAGE;
+        } else {
+            return INTERNAL_STORAGE;
         }
-        return defaultStorage;
-    }
-
-    /**
-     * Returns the external storage directory
-     *
-     * @param context used to determine what is the default storage
-     * @return the default storage or {@link Environment#getExternalStorageDirectory()} in case of error
-     */
-    public static File getExternalStorageDirectory(Context context) {
-        int defaultStorage = getDefaultStorage(context);
-
-        List<File> dirs = getExternalStorageDirectories();
-        if (dirs != null && defaultStorage < dirs.size()) {
-            File storage = dirs.get(defaultStorage);
-            if (!storage.exists()) {
-                storage.mkdirs();
-            }
-            return storage;
-        }
-        return Environment.getExternalStorageDirectory();
     }
 
     /**
      * Uses internal {@link Environment}
      *
      * @return a list of files pointing to mount locations or null if there was an error
+     * @deprecated Use {@link Environment#getExternalStorageDirectory()} directly
      */
+    @Deprecated
     public static List<File> getExternalStorageDirectories() {
         try {
             Field sCurrentUserField = Environment.class.getDeclaredField("sCurrentUser");
@@ -115,33 +100,13 @@ public class StorageUtils {
     }
 
     /**
-     * Returns the external storage directory for given type
-     *
-     * @param context used to determine what is the default storage
-     * @param type    see {@link Environment#getExternalStoragePublicDirectory(String)}
-     * @return the default storage for given type or
-     * {@link Environment#getExternalStoragePublicDirectory(String)} in case of error
-     */
-    public static File getExternalStoragePublicDirectory(Context context, String type) {
-        int defaultStorage = getDefaultStorage(context);
-
-        List<File> dirs = getExternalStoragePublicDirectories(type);
-        if (dirs != null && defaultStorage < dirs.size()) {
-            File storage = dirs.get(defaultStorage);
-            if (!storage.exists()) {
-                storage.mkdirs();
-            }
-            return storage;
-        }
-        return Environment.getExternalStoragePublicDirectory(type);
-    }
-
-    /**
      * Uses internal {@link Environment}
      *
      * @param type see {@link Environment#getExternalStoragePublicDirectory(String)}
      * @return a list of files pointing to mount locations for given type or null if there was an error
+     * @deprecated Use {@link Environment#getExternalStoragePublicDirectory(String)} directly
      */
+    @Deprecated
     public static List<File> getExternalStoragePublicDirectories(String type) {
         try {
             Field sCurrentUserField = Environment.class.getDeclaredField("sCurrentUser");
