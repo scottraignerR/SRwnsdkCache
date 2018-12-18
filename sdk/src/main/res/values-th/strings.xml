@@ -6,5 +6,5 @@
     <string name="zoom_level_4">ซูมระดับ 4</string>
     <string name="zoom_level_5">ซูมระดับ 5</string>
     <string name="zoom_level">การซูมระดับ %d</string>
-    <string name="zoom_level_instruction">ระดับการซูม 1-5</string>
+    <string name="zoom_level_instruction">ระดับการซูม 1 - 5</string>
 </resources>
