@@ -52,7 +52,7 @@ public class FullScreenDialog extends Dialog {
 
         // Setting position of content, relative to window.
         WindowManager.LayoutParams params = this.getWindow().getAttributes();
-        params.gravity = Gravity.TOP | Gravity.LEFT;
+        params.gravity = Gravity.TOP | Gravity.START;
         params.x = 0;
         params.y = 0;
 
