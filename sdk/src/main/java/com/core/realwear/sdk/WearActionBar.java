@@ -40,7 +40,7 @@ public class WearActionBar extends RelativeLayout implements View.OnClickListene
 
     protected void init(){
         View.inflate(getContext(), R.layout.wear_actionbar, this);
-        mInnerLayout = (RelativeLayout)findViewById(R.id.innerCommands);
+        mInnerLayout = findViewById(R.id.innerCommands);
     }
 
     @Override

@@ -6,17 +6,24 @@
  */
 package com.core.realwear.sdk.util;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
+import android.os.storage.StorageManager;
+import android.os.storage.StorageVolume;
 import android.provider.Settings;
 import android.util.Log;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Created by alexandru.ghitulescu on 27/12/2017.
@@ -24,35 +31,53 @@ import java.util.List;
  * Utilities class that contains methods for getting the current storage path
  */
 
-public class StorageUtils {
+public final class StorageUtils {
     private static final String TAG = "StorageUtils";
     private static final String KEY_DEFAULT_STORAGE = "default_storage";
 
     private static final long SIZE_KB = 1024L;
     private static final long SIZE_MB = SIZE_KB * SIZE_KB;
 
+    public static class SpaceInformation {
+        private final long mAvailableSpaceBytes;
+        private final long mTotalSpaceBytes;
+
+        private SpaceInformation(final long availableSpace, final long totalSpace) {
+            mAvailableSpaceBytes = availableSpace;
+            mTotalSpaceBytes = totalSpace;
+        }
+
+        public long getAvailableSpace() {
+            return mAvailableSpaceBytes;
+        }
+
+        public long getTotalSpace() {
+            return mTotalSpaceBytes;
+        }
+
+        public long getAvailableSpaceKiB() {
+            return mAvailableSpaceBytes / SIZE_KB;
+        }
+
+        public long getTotalSpaceKiB() {
+            return mTotalSpaceBytes / SIZE_KB;
+        }
+
+        public long getAvailableSpaceMiB() {
+            return mAvailableSpaceBytes / SIZE_MB;
+        }
+
+        public long getTotalSpaceMiB() {
+            return mTotalSpaceBytes / SIZE_MB;
+        }
+    }
+
     /**
      * @return Number of bytes available on External storage
      */
-    public static long getAvailableSpace(Context context) {
-        long availableSpace;
+    public static SpaceInformation getSpaceInformation(Context context) {
         StatFs stat = new StatFs(getExternalStorageDirectory(context).getPath());
-        availableSpace = stat.getAvailableBlocksLong() * stat.getBlockSizeLong();
-        return availableSpace;
-    }
-
-    /**
-     * @return Number of kilo bytes available on External storage
-     */
-    public static long getAvailableSpaceKB(Context context) {
-        return getAvailableSpace(context) / SIZE_KB;
-    }
-
-    /**
-     * @return Number of Mega bytes available on External storage
-     */
-    public static long getAvailableSpaceMB(Context context) {
-        return getAvailableSpace(context) / SIZE_MB;
+        return new SpaceInformation(stat.getAvailableBytes(), stat.getTotalBytes());
     }
 
     /**

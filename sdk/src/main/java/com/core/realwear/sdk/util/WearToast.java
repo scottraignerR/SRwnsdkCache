@@ -36,7 +36,7 @@ public class WearToast extends Toast {
 
         final LayoutInflater inflater = context.getLayoutInflater();
         final View layout = inflater.inflate(R.layout.toast, null);
-        mView = (TextView)layout.findViewById(R.id.textView);
+        mView = layout.findViewById(R.id.textView);
 
         setView(layout);//setting the view of custom toast layout
     }
@@ -55,7 +55,7 @@ public class WearToast extends Toast {
         final LayoutInflater inflater = LayoutInflater.from(context);//context.getLayoutInflater();
         final View layout = inflater.inflate(R.layout.toast, null);
 
-        final TextView view = (TextView)layout.findViewById(R.id.textView);
+        final TextView view = layout.findViewById(R.id.textView);
         view.setText(nbspString);
 
         // gravity, xOffset, yOffset

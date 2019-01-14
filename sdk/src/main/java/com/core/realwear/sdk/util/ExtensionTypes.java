@@ -30,7 +30,7 @@ public class ExtensionTypes {
         MIDI,
         AVI,
         GIF,
-        NOT_SUPPORTED;
+        NOT_SUPPORTED
     }
 
     public static final String PNG = ".png";
