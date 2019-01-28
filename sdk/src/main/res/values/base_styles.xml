@@ -1,4 +1,4 @@
-<resources xmlns:android="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="WearStyle" parent="Theme.AppCompat.NoActionBar">
         <item name="fontPath">fonts/Montserrat-Medium.otf</item>

@@ -1,4 +1,4 @@
-<resources xmlns:android="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="WearLight" parent="WearStyle">
         <item name="backgroundColor">#FFFFFF</item>
@@ -6,6 +6,4 @@
         <item name="android:textColor">#FFFFFF</item>
         <item name="flipFontColor">#000000</item>
     </style>
-
-
 </resources>
