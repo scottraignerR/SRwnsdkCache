@@ -1,15 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <!--zoom level 1-->
-    <string name="zoom_level_1">Уровень масштабирования 1</string>
+    <string name="zoom_level_1">Масштабирования 1</string>
     <!--zoom level 2-->
-    <string name="zoom_level_2">Уровень масштабирования 2</string>
+    <string name="zoom_level_2">Масштабирования 2</string>
     <!--zoom level 3-->
-    <string name="zoom_level_3">Уровень масштабирования 3</string>
+    <string name="zoom_level_3">Масштабирования 3</string>
     <!--zoom level 4-->
-    <string name="zoom_level_4">Уровень масштабирования 4</string>
+    <string name="zoom_level_4">Масштабирования 4</string>
     <!--zoom level 5-->
-    <string name="zoom_level_5">Уровень масштабирования 5</string>
-    <string name="zoom_level">Уровень масштабирования %d</string>
+    <string name="zoom_level_5">Масштабирования 5</string>
+    <string name="zoom_level">Масштабирования %d</string>
     <!--Zoom Level 1-5-->
-    <string name="zoom_level_instruction">Уровень масштабирования 1–5</string>
+    <string name="zoom_level_instruction">Масштабирования 1–5</string>
 </resources>
