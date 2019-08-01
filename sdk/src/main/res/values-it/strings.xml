@@ -1,16 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <!--zoom level 1-->
-    <string name="zoom_level_1">Livello di Zoom 1</string>
+    <string name="zoom_level_1">Livello Zoom 1</string>
     <!--zoom level 2-->
-    <string name="zoom_level_2">Livello di Zoom 2</string>
+    <string name="zoom_level_2">Livello Zoom 2</string>
     <!--zoom level 3-->
-    <string name="zoom_level_3">Livello di Zoom 3</string>
+    <string name="zoom_level_3">Livello Zoom 3</string>
     <!--zoom level 4-->
-    <string name="zoom_level_4">Livello di Zoom 4</string>
+    <string name="zoom_level_4">Livello Zoom 4</string>
     <!--zoom level 5-->
-    <string name="zoom_level_5">Livello di Zoom 5</string>
-    <string name="zoom_level">Livello di Zoom %d</string>
+    <string name="zoom_level_5">Livello Zoom 5</string>
+    <string name="zoom_level">Livello Zoom %d</string>
     <!--Zoom Level 1-5-->
-    <string name="zoom_level_instruction">Livello di Zoom 1–5</string>
+    <string name="zoom_level_instruction">Livello Zoom 1–5</string>
 </resources>
