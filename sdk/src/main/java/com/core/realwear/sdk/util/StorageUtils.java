@@ -6,24 +6,17 @@
  */
 package com.core.realwear.sdk.util;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
-import android.os.storage.StorageManager;
-import android.os.storage.StorageVolume;
 import android.provider.Settings;
 import android.util.Log;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 
 /**
  * Created by alexandru.ghitulescu on 27/12/2017.
@@ -37,6 +30,11 @@ public final class StorageUtils {
 
     private static final long SIZE_KB = 1024L;
     private static final long SIZE_MB = SIZE_KB * SIZE_KB;
+
+    private static final float MINIMUM_PERCENTAGE_INTERNAL = 0.06f;
+    private static final long MIN_FILESYSTEM_SPACE_NEEDED = 390 * SIZE_MB;
+
+    private static final int TYPE_INTERNAL_STORAGE = 0;
 
     public static class SpaceInformation {
         private final long mAvailableSpaceBytes;
@@ -192,5 +190,27 @@ public final class StorageUtils {
     public static boolean hasSDCard() {
         List<File> paths = getExternalStorageDirectories();
         return paths != null && paths.size() > 1;
+    }
+
+    /**
+     * @param context a context
+     * @return the remaining space in bytes
+     */
+    public static long getAvailableSpace(Context context) {
+        final SpaceInformation information = getSpaceInformation(context);
+        if (isSdStorage(context)) {
+            return information.getAvailableSpaceKiB();
+        } else {
+            final long bytesToReservePercentage =
+                    (long) Math.ceil(information.getTotalSpace() * MINIMUM_PERCENTAGE_INTERNAL);
+            final long bytesToReserve = Math.max(MIN_FILESYSTEM_SPACE_NEEDED,
+                    bytesToReservePercentage);
+            Log.d(TAG, "getAvailableSpace: Reserved storage: " + bytesToReserve + " Bytes");
+            return information.getAvailableSpace() - bytesToReserve;
+        }
+    }
+
+    public static boolean isSdStorage(Context context) {
+        return StorageUtils.getDefaultStorage(context) != TYPE_INTERNAL_STORAGE;
     }
 }
