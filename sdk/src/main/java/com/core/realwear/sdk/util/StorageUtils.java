@@ -207,7 +207,6 @@ public final class StorageUtils {
                     (long) Math.ceil(information.getTotalSpace() * MINIMUM_PERCENTAGE_INTERNAL);
             final long bytesToReserve = Math.max(MIN_FILESYSTEM_SPACE_NEEDED,
                     bytesToReservePercentage);
-            Log.d(TAG, "getAvailableSpace: Reserved storage: " + bytesToReserve + " Bytes");
             return information.getAvailableSpace() - bytesToReserve;
         }
     }
