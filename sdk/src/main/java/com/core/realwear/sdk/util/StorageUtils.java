@@ -193,8 +193,10 @@ public final class StorageUtils {
     }
 
     /**
-     * @param context a context
-     * @return the remaining space in bytes
+     * Determine the safely available amount of filesystem space available for the app to use.
+     *
+     * @param context Operating context.
+     * @return The available space in bytes.
      */
     public static long getAvailableSpace(Context context) {
         final SpaceInformation information = getSpaceInformation(context);
@@ -210,6 +212,13 @@ public final class StorageUtils {
         }
     }
 
+    /**
+     * Are we storing to an SD card or not?
+     *
+     * @param context Operating context.
+     * @return True if we are writing to the SD card by default, false if internal storage by
+     * default.
+     */
     public static boolean isSdStorage(Context context) {
         return StorageUtils.getDefaultStorage(context) != TYPE_INTERNAL_STORAGE;
     }
